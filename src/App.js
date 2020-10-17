@@ -80,7 +80,9 @@ const Span = styled.Text`
   color: ${(props) => props.color};
 `;
 
-const Body = styled.ScrollView`
+const Body = styled.View`
   flex: 6;
+  flex-direction: column;
+  justify-content: center;
 `;
 export default App;
