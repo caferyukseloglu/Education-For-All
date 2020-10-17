@@ -1,9 +1,8 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * Education React Native App
+ * https://github.com/samuhay/mobile-project
  *
- * @format
- * @flow strict-local
+ * @Cafer Yükseloğlu
  */
 
 import React from 'react';
@@ -38,6 +37,11 @@ const App: () => React$Node = () => {
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
+          <View style={styles.body}>
+            <View style={styles.sectionContainer}>
+              <Text>Selam Dünyalı</Text>
+            </View>
+          </View>
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Welcome World</Text>
