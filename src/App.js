@@ -14,18 +14,17 @@ const App = () =>
     <Title>Eğitime Hoşgeldiniz</Title>
     <SubTitle>100’lerce eğitmene ve eğitime kolayca ulaşmanın yolu eğitimde eşitlik.</SubTitle>
     <Form>
-      <ButtonLogIn>
-        <Span>Giriş Yap</Span>
-      </ButtonLogIn>
-      <ButtonSignIn>
-        <Span>Kayıt Ol</Span>
-      </ButtonSignIn>
+      <Button onClick={() => alert('It works!')} color="#2d9cdb">
+        <Span color="#fdfdfd">Giriş Yap</Span>
+      </Button>
+
+      <Button onClick={() => alert('It works!')} margin="10px" color="#ffffff">
+        <Span color="#000000">Kayıt Ol</Span>
+      </Button>
     </Form>
   </Body>
 
-const GirlLogo = styled(girlLogo)`
-  margin-top: 100px;
-`;
+const GirlLogo = styled(girlLogo)``;
 const Title = styled.Text`
   margin-top: 30px;
   width: 231px;
@@ -36,7 +35,6 @@ const Title = styled.Text`
   font-weight: normal;
   font-size: 24px;
   line-height: 36px;
-  /* identical to box height */
   display: flex;
   align-items: center;
   text-align: center;
@@ -61,17 +59,11 @@ const Form = styled.View`
   padding: 0 37px;
   text-align: center;
 `;
-const ButtonLogIn = styled.TouchableOpacity`
+const Button = styled.TouchableOpacity`
+  background: ${(props) => props.color};
+  margin-top: ${(props) => (props.margin ? props.margin : 'auto')};
   width: 340px;
   height: 74px;
-  background: #2d9cdb;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-`;
-const ButtonSignIn = styled.TouchableOpacity`
-  width: 340px;
-  height: 74px;
-  background: #FFFFFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 `;
@@ -85,10 +77,10 @@ const Span = styled.Text`
   display: flex;
   align-items: center;
   text-align: center;
-  color: #fdfdfd;
+  color: ${(props) => props.color};
 `;
 
 const Body = styled.ScrollView`
-  flex: 1;
+  flex: 6;
 `;
 export default App;
