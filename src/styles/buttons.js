@@ -12,7 +12,7 @@ export const MainButton = styled.TouchableOpacity`
 
 export const MainButtonText = styled.Text`
   padding: 20px;
-  font-family: Spartan;
+  font-family: Spartan-Regular;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;

@@ -5,7 +5,7 @@ export const Title = styled.Text`
   width: 231px;
   height: 36px;
   left: 92px;
-  font-family: Poppins;
+  font-family: Poppins-Regular;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -21,7 +21,7 @@ export const SubTitle = styled.Text`
   width: 330px;
   height: 87px;
   left: 42px;
-  font-family: Poppins;
+  font-family: Poppins-ExtraLight;
   font-style: normal;
   font-weight: 200;
   font-size: 14px;
