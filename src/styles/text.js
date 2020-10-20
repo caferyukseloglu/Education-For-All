@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 export const Title = styled.Text`
   margin-top: 30px;
-  width: 231px;
+  width: auto;
   height: 36px;
-  left: 92px;
   font-family: Poppins-Regular;
   font-style: normal;
   font-weight: normal;
