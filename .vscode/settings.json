@@ -16,5 +16,9 @@
         "samuhay",
         "y"
     ],
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+        "bradius",
+        "tradius"
+    ]
 }
