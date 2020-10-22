@@ -7,12 +7,16 @@
 //Main React import
 import React from 'react';
 //Our Styles for Project
+import {TextInput} from 'react-native-paper';
 import {Form, Body} from './styles/wrapper';
 import {RoundedButton} from './styles/buttons';
 import {SubTitle, Title} from './styles/text';
 import {FinalInput} from './styles/input';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({navigation}, props) => {
+  const [textE, setEmail] = React.useState('');
+  const [textP, setPassword] = React.useState('');
+
   return (
     <Body>
       <Title>Stay in touch</Title>
@@ -29,14 +33,18 @@ const LoginScreen = ({navigation}) => {
           textContentType="emailAddress"
           /*inlineImageLeft='search_icon'*/
         />
-        <FinalInput
-          textColor="#000"
-          bottom="15"
-          color="white"
-          autoCompleteType="email"
-          keyboardType="email-address"
-          textContentType="emailAddress"
-          /*inlineImageLeft='search_icon'*/
+        <TextInput
+          label="Email"
+          value={textE}
+          onChangeText={(text) => setEmail(text)}
+          mode="outlined"
+          style={{color: colors.dark}}
+        />
+        <TextInput
+          label="Password"
+          value={textP}
+          onChangeText={(text) => setPassword(text)}
+          mode="outlined"
         />
         <RoundedButton
           color="#2d9cdb"
@@ -47,7 +55,7 @@ const LoginScreen = ({navigation}) => {
         <RoundedButton
           margin="10px"
           color="#ffffff"
-          onPress={''} //TODO: We will add register here
+          onPress={'#'} //TODO: We will add register here
           title="Sing In"
           textColor="#000000"
         />
