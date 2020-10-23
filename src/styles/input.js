@@ -1,4 +1,3 @@
-import React from 'react';
 import {TextInput, useTheme} from 'react-native-paper';
 import styled from 'styled-components';
 
