@@ -7,16 +7,14 @@
 //Main React import
 import React from 'react';
 //Our Styles for Project
-import {TextInput} from 'react-native-paper';
 import {Form, Body} from './styles/wrapper';
 import {RoundedButton} from './styles/buttons';
 import {SubTitle, Title} from './styles/text';
-import {FinalInput} from './styles/input';
+import {NewInput} from './styles/input';
+import {useTheme} from 'react-native-paper';
 
-const LoginScreen = ({navigation}, props) => {
-  const [textE, setEmail] = React.useState('');
-  const [textP, setPassword] = React.useState('');
-
+const LoginScreen = ({navigation}) => {
+  const {colors} = useTheme();
   return (
     <Body>
       <Title>Stay in touch</Title>
@@ -24,28 +22,25 @@ const LoginScreen = ({navigation}, props) => {
         You can login to your account by entering your e-mail and password.
       </SubTitle>
       <Form>
-        <FinalInput
-          textColor="#ffffff"
-          top="15"
-          color="dark"
-          autoCompleteType="email"
-          keyboardType="email-address"
-          textContentType="emailAddress"
-          /*inlineImageLeft='search_icon'*/
-        />
-        <TextInput
+        <NewInput
           label="Email"
-          value={textE}
-          onChangeText={(text) => setEmail(text)}
-          mode="outlined"
-          style={{color: colors.dark}}
+          topRadius="15"
+          topMargin="5px"
+          mode="flat"
+          theme={{colors: {text: colors.darker, primary: colors.blue, placeholder : colors.gray,background : colors.lighterGray}}}
+          left={<NewInput.Icon name="email" color={colors.gray} size={33} />}
         />
-        <TextInput
+        <NewInput
           label="Password"
-          value={textP}
-          onChangeText={(text) => setPassword(text)}
-          mode="outlined"
+          color="blue"
+          textColor="green"
+          botRadius="15"
+          botMargin="5px"
+          mode="flat"
+          theme={{colors: {text: colors.darker, primary: colors.blue, placeholder : colors.gray, background : colors.white}}}
+          left={<NewInput.Icon name="lock-open" color={colors.gray} size={33} />}
         />
+
         <RoundedButton
           color="#2d9cdb"
           onPress={() => navigation.navigate('Home')}

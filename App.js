@@ -2,13 +2,15 @@ import 'react-native-gesture-handler';
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Provider as PaperProvider} from 'react-native-paper';
-import {ThemeProvider} from 'styled-components';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+//import {ThemeProvider} from 'styled-components';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
 
 const Stack = createStackNavigator();
+
 const theme = {
+  ...DefaultTheme,
   colors: {
     darker: '#333333',
     dark: '#4F4F4F',
@@ -16,7 +18,7 @@ const theme = {
     lightGray: '#BDBDBD',
     lighterGray: '#E0E0E0',
     notWhite: '#F4F4F4',
-    white: '#F2F2F2',
+    white: '#FFFFFF',
     red: '#EB5757',
     orange: '#F2994A',
     yellow: '#F2C94C',
@@ -34,26 +36,25 @@ const theme = {
 
 const App = () => {
   return (
-    <PaperProvider>
-      <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              cardStyle: theme.colors.notWhite,
-            }}>
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ThemeProvider>
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            cardStyle: {backgroundColor: theme.colors.notWhite},
+          }}>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </PaperProvider>
   );
 };
