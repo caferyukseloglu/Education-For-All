@@ -5,16 +5,93 @@
  */
 
 //Main React import
-import React from 'react';
+import React, {useState} from 'react';
+import {useTheme} from 'react-native-paper';
 //Our Styles for Project
 import {Form, Body} from './styles/wrapper';
-import {RoundedButton} from './styles/buttons';
+import {BigButton} from './styles/buttons';
 import {SubTitle, Title} from './styles/text';
 import {NewInput} from './styles/input';
-import {useTheme} from 'react-native-paper';
 
 const LoginScreen = ({navigation}) => {
   const {colors} = useTheme();
+
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+    check_textInputChange: null,
+    secureTextEntry: true,
+    isValidUser: null,
+    isValidPassword: true,
+  });
+
+  const textInputChange = (val) => {
+    if (val.trim().length >= 4) {
+      setData({
+        ...data,
+        username: val,
+        check_textInputChange: true,
+        isValidUser: true,
+      });
+    } else if (val.trim().length > 0) {
+      setData({
+        ...data,
+        username: val,
+        check_textInputChange: false,
+        isValidUser: false,
+      });
+    } else {
+      setData({
+        ...data,
+        username: val,
+        check_textInputChange: null,
+        isValidUser: null,
+      });
+    }
+  };
+
+  const handlePasswordChange = (val) => {
+    if (val.trim().length >= 8) {
+      setData({
+        ...data,
+        password: val,
+        isValidPassword: true,
+      });
+    } else {
+      setData({
+        ...data,
+        password: val,
+        isValidPassword: false,
+      });
+    }
+  };
+
+  const updateSecureTextEntry = () => {
+    setData({
+      ...data,
+      secureTextEntry: !data.secureTextEntry,
+    });
+  };
+
+  const handleValidUser = (val) => {
+    if (val.trim().length >= 4) {
+      setData({
+        ...data,
+        isValidUser: true,
+      });
+    } else if (val.trim().length > 0) {
+      setData({
+        ...data,
+        isValidUser: false,
+      });
+    } else {
+      setData({
+        ...data,
+        isValidUser: null,
+      });
+    }
+  };
+
   return (
     <Body>
       <Title>Stay in touch</Title>
@@ -27,8 +104,28 @@ const LoginScreen = ({navigation}) => {
           topRadius="15"
           topMargin="5px"
           mode="flat"
-          theme={{colors: {text: colors.darker, primary: colors.blue, placeholder : colors.gray,background : colors.lighterGray}}}
+          onChangeText={(val) => textInputChange(val)}
+          onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+          theme={{
+            colors: {
+              text: colors.darker,
+              primary: colors.blue,
+              placeholder: colors.gray,
+              background: colors.lighterGray,
+            },
+          }}
           left={<NewInput.Icon name="email" color={colors.gray} size={33} />}
+          right={{
+            ...(data.isValidUser != null
+              ? {
+                  ...(data.isValidUser === true ? (
+                    <NewInput.Icon name="check-circle" color={colors.green} />
+                  ) : (
+                    <NewInput.Icon name="alert-circle" color={colors.red} />
+                  )),
+                }
+              : ''),
+          }}
         />
         <NewInput
           label="Password"
@@ -37,22 +134,42 @@ const LoginScreen = ({navigation}) => {
           botRadius="15"
           botMargin="5px"
           mode="flat"
-          theme={{colors: {text: colors.darker, primary: colors.blue, placeholder : colors.gray, background : colors.white}}}
-          left={<NewInput.Icon name="lock-open" color={colors.gray} size={33} />}
+          value={setData.password}
+          secureTextEntry={data.secureTextEntry ? true : false}
+          theme={{
+            colors: {
+              text: colors.darker,
+              primary: colors.blue,
+              placeholder: colors.gray,
+              background: colors.white,
+            },
+          }}
+          left={
+            <NewInput.Icon name="lock-open" color={colors.gray} size={33} />
+          }
+          right={
+            <NewInput.Icon
+              name={data.secureTextEntry ? 'eye-off' : 'eye'}
+              onPress={updateSecureTextEntry}
+              color={colors.gray}
+            />
+          }
         />
-
-        <RoundedButton
-          color="#2d9cdb"
+        <BigButton
+          margins={[0, 10, 0, 0]}
+          text="Login"
+          mode="contained"
+          bgColor="blue"
+          textColor="white"
           onPress={() => navigation.navigate('Home')}
-          title="Log In"
-          textColor="#fdfdfd"
         />
-        <RoundedButton
-          margin="10px"
-          color="#ffffff"
-          onPress={'#'} //TODO: We will add register here
-          title="Sing In"
-          textColor="#000000"
+        <BigButton
+          margins={[0, 0, 0, 0]}
+          text="Sing In"
+          mode="contained"
+          bgColor="white"
+          textColor="dark"
+          onPress={() => navigation.navigate('Home')}
         />
       </Form>
     </Body>

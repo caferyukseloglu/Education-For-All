@@ -1,3 +1,9 @@
+/**
+ * Education React Native App
+ * https://github.com/samuhay/mobile-project
+ * @Cafer Yükseloğlu
+ */
+
 import styled from 'styled-components';
 
 export const Title = styled.Text`

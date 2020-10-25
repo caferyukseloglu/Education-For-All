@@ -1,34 +1,44 @@
+/**
+ * Education React Native App
+ * https://github.com/samuhay/mobile-project
+ * @Cafer Yükseloğlu
+ */
+
 import React from 'react';
-import Button from 'react-native-paper';
 import styled from 'styled-components';
+import {useTheme, Button, Text} from 'react-native-paper';
 
-export const HomeButton = styled(Button)``;
+//Function to push colors from theme
+function colores(colored) {
+  const {colors} = useTheme();
+  return colors[colored];
+}
 
-export const MainButton = styled.TouchableOpacity`
-  background: ${(props) => props.color};
-  margin-top: ${(props) => props.margin || 'auto'};
-  width: 340px;
-  height: 74px;
-  elevation: 5;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+export const ButtonSt = styled(Button)`
   border-radius: 10px;
+  /*Box Shadows Elevation is for Android*/
+  elevation: 5;
+  background-color: ${(props) => props.color || 'white'};
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  /*Margins*/
+  margin-top: ${(props) => props.margins[0] || '0'}px;
+  margin-bottom: ${(props) => props.margins[1] || '0'}px;
+  margin-right: ${(props) => props.margins[2] || '0'}px;
+  margin-left: ${(props) => props.margins[3] || '0'}px;
+  /*Paddings*/
+  padding-left: ${(props) => props.leftPadding || '0'};
+  padding-right: ${(props) => props.rightPadding || '0'};
 `;
 
-export const MainButtonText = styled.Text`
-  padding: 20px;
+export const ButtonStText = styled(Text)`
+  textTransform: none;
   font-family: Spartan-Regular;
-  font-style: normal;
-  font-weight: normal;
   font-size: 24px;
-  line-height: 27px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: ${(props) => props.color};
+  color: ${(props) => props.color || 'black'};
 `;
 
-export const RoundedButton = ({margin, color, onPress, title, textColor}) => (
-  <MainButton margin={margin} color={color} onPress={onPress}>
-    <MainButtonText color={textColor}>{title}</MainButtonText>
-  </MainButton>
+export const BigButton = ({margins, text, mode, textColor, bgColor, onPress}) => (
+  <ButtonSt color={colores(bgColor)} mode={mode} margins={margins} contentStyle={{height: 74}} onPress={onPress}>
+    <ButtonStText color={colores(textColor)}>{text}</ButtonStText>
+  </ButtonSt>
 );
