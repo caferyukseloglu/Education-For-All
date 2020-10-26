@@ -36,3 +36,17 @@ export const SubTitle = styled.Text`
   text-align: center;
   color: rgba(0, 0, 0, 0.58);
 `;
+
+export const CheckText = styled.Text`
+  font-family: Oxygen;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 19px;
+  text-align: center;
+  color: #828282;
+  margin-top: ${(props) => props.topMargin || '0'};
+  margin-bottom: ${(props) => props.botMargin || '0'};
+  margin-right: ${(props) => props.rightMargin || '0'};
+  margin-left: ${(props) => props.leftMargin || '0'};
+`;

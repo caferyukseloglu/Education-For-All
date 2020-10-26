@@ -8,3 +8,10 @@ export const Form = styled.View`
 export const Body = styled.View`
   flex: 1;
 `;
+
+export const Line = styled.View`
+  flex-direction: row;
+  justify-content: ${(props) => props.justify || 'space-around'};
+  alignItems:  center;
+  paddingVertical: 20px;
+`;
