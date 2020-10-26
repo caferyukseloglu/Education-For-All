@@ -13,6 +13,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 //import {ThemeProvider} from 'styled-components';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
+import RegisterScreen from './src/Register';
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,11 @@ const App = () => {
           <Stack.Screen
             name="Login"
             component={LoginScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

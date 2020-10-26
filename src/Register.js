@@ -13,16 +13,17 @@ import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
 
-const LoginScreen = ({navigation}) => {
+const RegisterScreen = ({navigation}) => {
   const {colors} = useTheme();
 
   const [data, setData] = useState({
     username: '',
     password: '',
+    rePassword: '',
     check_textInputChange: null,
     secureTextEntry: true,
+    secureTextEntryRe: true,
     isValidUser: null,
-    isValidPassword: true,
     isChecked: false,
   });
 
@@ -76,6 +77,12 @@ const LoginScreen = ({navigation}) => {
       secureTextEntry: !data.secureTextEntry,
     });
   };
+  const updateSecureTextEntryRe = () => {
+    setData({
+      ...data,
+      secureTextEntryRe: !data.secureTextEntryRe,
+    });
+  };
 
   const updateChecked = () => {
     setData({
@@ -85,9 +92,9 @@ const LoginScreen = ({navigation}) => {
   };
   return (
     <Body>
-      <Title>Stay in touch</Title>
+      <Title>Join to Education</Title>
       <SubTitle>
-        You can login to your account by entering your e-mail and password.
+        You can register for education by entering your e-mail and password.
       </SubTitle>
       <Form>
         <NewInput
@@ -123,7 +130,6 @@ const LoginScreen = ({navigation}) => {
           color="blue"
           textColor="green"
           botRadius="15"
-          botMargin="5px"
           mode="flat"
           value={setData.password}
           secureTextEntry={data.secureTextEntry ? true : false}
@@ -146,21 +152,46 @@ const LoginScreen = ({navigation}) => {
             />
           }
         />
-        <Line justify='space-between'>
-          <TouchableRipple onPress={updateChecked}>
-            <Line>
-              <Checkbox
-                color={colors.green}
-                status={data.isChecked ? 'checked' : 'unchecked'}
-              />
-              <CheckText>Remember Me</CheckText>
-            </Line>
-          </TouchableRipple>
-          <CheckText leftMargin="30">Forgot Password</CheckText>
-        </Line>
+        <NewInput
+          label="Re-Password"
+          color="blue"
+          textColor="green"
+          botRadius="15"
+          botMargin="5px"
+          mode="flat"
+          value={setData.rePassword}
+          secureTextEntry={data.secureTextEntryRe ? true : false}
+          theme={{
+            colors: {
+              text: colors.darker,
+              primary: colors.blue,
+              placeholder: colors.gray,
+              background: colors.white,
+            },
+          }}
+          left={
+            <NewInput.Icon name="lock-open" color={colors.gray} size={33} />
+          }
+          right={
+            <NewInput.Icon
+              name={data.secureTextEntryRe ? 'eye-off' : 'eye'}
+              onPress={updateSecureTextEntryRe}
+              color={colors.gray}
+            />
+          }
+        />
+        <TouchableRipple onPress={updateChecked}>
+          <Line>
+            <Checkbox
+              color={colors.green}
+              status={data.isChecked ? 'checked' : 'unchecked'}
+            />
+            <CheckText>I have read and accept the Terms of use</CheckText>
+          </Line>
+        </TouchableRipple>
         <BigButton
           margins={[0, 10, 0, 0]}
-          text="Login"
+          text="Register"
           mode="contained"
           bgColor="blue"
           textColor="white"
@@ -168,15 +199,15 @@ const LoginScreen = ({navigation}) => {
         />
         <BigButton
           margins={[0, 0, 0, 0]}
-          text="Register"
+          text="Login"
           mode="contained"
           bgColor="white"
           textColor="dark"
-          onPress={() => navigation.navigate('Register')}
+          onPress={() => navigation.navigate('Login')}
         />
       </Form>
     </Body>
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
