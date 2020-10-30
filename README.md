@@ -4,12 +4,10 @@
 * Project is started at İstanbul Şehir University now at Marmara University.
 
 ## Dependincies
-```
 [React Native](https://reactnative.dev)
 [Styled Components](https://styled-components.com)
 [React Navigation](https://reactnavigation.org)
 [React Paper](https://callstack.github.io/react-native-paper/)
-```
 
 ## License
 
