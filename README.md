@@ -1,5 +1,5 @@
-# Mobile Project (EDUCATION)
-* This project started with 0 education about mobile programing.
+# EDUCATION
+* This project started without knowledge of mobile programing.
 * This only usable for educatinoal porposes.
 * Project is started at İstanbul Şehir University now at Marmara University.
 
@@ -14,6 +14,7 @@
 ## License
 
 This project is licensed under the GPLV3 License - see the [LICENSE](LICENSE) file for details
+This project cannot be shared without using our links or as a private project, you should make it global as we did.
 
 ## Authors
 
