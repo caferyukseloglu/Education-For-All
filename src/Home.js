@@ -9,7 +9,7 @@ import React from 'react';
 //Our Styles for Project
 import {Form, Body} from './styles/wrapper';
 import {GirlLogo} from './styles/image';
-import {RoundedButton} from './styles/buttons';
+import {BigButton} from './styles/buttons';
 import {Title, SubTitle} from './styles/text';
 
 const HomeScreen = ({navigation}) => {
@@ -21,18 +21,21 @@ const HomeScreen = ({navigation}) => {
         Equality in education is the way to reach 100% education and learning.
       </SubTitle>
       <Form>
-        <RoundedButton
-          color="#2d9cdb"
+        <BigButton
+          margins={[0, 10, 0, 0]}
+          text="Login"
+          mode="contained"
+          bgColor="blue"
+          textColor="white"
           onPress={() => navigation.navigate('Login')}
-          title="Log In"
-          textColor="#fdfdfd"
         />
-        <RoundedButton
-          margin="10px"
-          color="#ffffff"
-          onPress={''} //TODO: We will add register here
-          title="Sing In"
-          textColor="#000000"
+        <BigButton
+          margins={[0, 10, 0, 0]}
+          text="Sing In"
+          mode="contained"
+          bgColor="white"
+          textColor="dark"
+          onPress={() => navigation.navigate('Register')}
         />
       </Form>
     </Body>

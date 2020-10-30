@@ -1,13 +1,24 @@
+/**
+ * Education React Native App
+ * https://github.com/samuhay/mobile-project
+ * @Cafer Yükseloğlu
+ */
+
+//For the Navigation
 import 'react-native-gesture-handler';
 import * as React from 'react';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {ThemeProvider} from 'styled-components';
+//import {ThemeProvider} from 'styled-components';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
+import RegisterScreen from './src/Register';
 
 const Stack = createStackNavigator();
+
 const theme = {
+  ...DefaultTheme,
   colors: {
     darker: '#333333',
     dark: '#4F4F4F',
@@ -15,7 +26,7 @@ const theme = {
     lightGray: '#BDBDBD',
     lighterGray: '#E0E0E0',
     notWhite: '#F4F4F4',
-    white: '#F2F2F2',
+    white: '#FFFFFF',
     red: '#EB5757',
     orange: '#F2994A',
     yellow: '#F2C94C',
@@ -33,11 +44,12 @@ const theme = {
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
+    <PaperProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
+          initialRouteName="Home"
           screenOptions={{
-            cardStyle: theme.colors.notWhite,
+            cardStyle: {backgroundColor: theme.colors.notWhite},
           }}>
           <Stack.Screen
             name="Home"
@@ -49,9 +61,14 @@ const App = () => {
             component={LoginScreen}
             options={{headerShown: false}}
           />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
-    </ThemeProvider>
+    </PaperProvider>
   );
 };
 

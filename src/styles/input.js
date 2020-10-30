@@ -1,36 +1,27 @@
-import React from 'react';
+/**
+ * Education React Native App
+ * https://github.com/samuhay/mobile-project
+ * @Cafer Yükseloğlu
+ */
+
+import {TextInput} from 'react-native-paper';
 import styled from 'styled-components';
 
-export const MainInput = styled.TextInput`
-  background: ${props => props.theme.colors[props.color] || 'black'};
-  margin-top: ${(props) => props.margin || 'auto'};
-  borderTopLeftRadius: ${(props) => props.tradius || '0'}px;
-  borderTopRightRadius: ${(props) => props.tradius || '0'}px;
-  borderBottomRightRadius: ${(props) => props.bradius || '0'}px;
-  borderBottomLeftRadius: ${(props) => props.bradius || '0'}px;
-  color: ${(props) => props.fontColor || 'white'};
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 21px;
+export const NewInput = styled(TextInput)`
+  margin-top: ${(props) => props.topMargin || '0'};
+  margin-bottom: ${(props) => props.botMargin || '0'};
+  margin-right: ${(props) => props.rightMargin || '0'};
+  padding-left: ${(props) => props.leftPadding || '0'};
+  padding-right: ${(props) => props.rightPadding || '0'};
+  borderTopLeftRadius: ${(props) => props.topRadius || '0'}px;
+  borderTopRightRadius: ${(props) => props.topRadius || '0'}px;
+  borderBottomRightRadius: ${(props) => props.botRadius || '0'}px;
+  borderBottomLeftRadius: ${(props) => props.botRadius || '0'}px;
+  font-family: ${(props) => props.fontFamily || 'Poppins'};
+  font-style: ${(props) => props.fontStyle || 'normal'};
+  font-weight: ${(props) => props.fontWeight || 'normal'};
+  font-size: ${(props) => props.fontSize || '14px'};
+  line-height: ${(props) => props.fontHeight || '21px'};
+  text-decoration: ${(props) => props.textDecoration || 'none'};
+  overflow: hidden;
 `;
-
-export const FinalInput = ({
-  top,
-  bottom,
-  margin,
-  color,
-  onPress,
-  title,
-  textColor,
-}) => (
-  <MainInput
-    fontColor={textColor}
-    tradius={top}
-    bradius={bottom}
-    margin={margin}
-    color={color}
-    onPress={onPress}
-   />
-);
