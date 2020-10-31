@@ -120,8 +120,6 @@ const LoginScreen = ({navigation}) => {
         />
         <NewInput
           label="Password"
-          color="blue"
-          textColor="green"
           botRadius="15"
           botMargin="5px"
           mode="flat"
@@ -146,7 +144,7 @@ const LoginScreen = ({navigation}) => {
             />
           }
         />
-        <Line justify='space-between'>
+        <Line justify="space-between">
           <TouchableRipple onPress={updateChecked}>
             <Line>
               <Checkbox
@@ -156,7 +154,7 @@ const LoginScreen = ({navigation}) => {
               <CheckText>Remember Me</CheckText>
             </Line>
           </TouchableRipple>
-          <CheckText leftMargin="30">Forgot Password</CheckText>
+          <CheckText leftMargin="30px">Forgot Password</CheckText>
         </Line>
         <BigButton
           margins={[0, 10, 0, 0]}

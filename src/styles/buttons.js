@@ -26,8 +26,8 @@ export const ButtonSt = styled(Button)`
   margin-right: ${(props) => props.margins[2] || '0'}px;
   margin-left: ${(props) => props.margins[3] || '0'}px;
   /*Paddings*/
-  padding-left: ${(props) => props.leftPadding || '0'};
-  padding-right: ${(props) => props.rightPadding || '0'};
+  padding-left: ${(props) => props.leftPadding || '0'}px;
+  padding-right: ${(props) => props.rightPadding || '0'}px;
 `;
 
 export const ButtonStText = styled(Text)`
