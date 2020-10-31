@@ -10,7 +10,6 @@ import * as React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-//import {ThemeProvider} from 'styled-components';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
 import RegisterScreen from './src/Register';
