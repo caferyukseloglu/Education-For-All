@@ -7,8 +7,27 @@ import { BigButton, RoundedButton } from './styles/buttons';
 import { SubTitle, Title, CheckText } from './styles/text';
 import { NewInput } from './styles/input';
 
+
 const ForgotPasswordScreen = ({ navigation }) => {
 
+    const { colors } = useTheme();
+
+    const [isValid, setValidity] = useState(null);
+
+    const checkValidity = (mailInput) => {
+
+        if (mailInput.trim().length >= 4) {
+
+            setValidity(true);
+
+        }
+
+        else if (mailInput.trim().length < 4) {
+
+            setValidity(false);
+        }
+
+    }
 
     return (
 
@@ -19,39 +38,55 @@ const ForgotPasswordScreen = ({ navigation }) => {
                 <NewInput
                     label="E-mail Adress"
                     color="blue"
-                    textColor="green"
+                    topRadius="15"
                     botRadius="15"
                     botMargin="5px"
                     mode="flat"
-                    value={setData.password}
-                    secureTextEntry={data.secureTextEntry ? true : false}
+                    onChangeText={(input) => checkValidity(input)}
                     theme={{
                         colors: {
                             text: colors.darker,
                             primary: colors.blue,
                             placeholder: colors.gray,
-                            background: colors.white,
+                            background: colors.lighterGray
                         },
                     }}
                     left={
                         <NewInput.Icon name="email" color={colors.gray} size={33} />
                     }
 
+                    right={{
+                        ...(isValid != null ? {
+                            ...(isValid == true) ? (
+                                <NewInput.Icon name="check-circle" color={colors.green} />
+                            ) : (
+                                    <NewInput.Icon name="alert-circle" color={colors.red} />
+                                )
+
+                        } : ""),
+
+                    }
+
+                    }
+
                 />
 
-                <RoundedButton
-                    color="#2d9cdb"
-                    title="Send Reset Mail"
-                    onPress={""} //will be added later on 
-                    textColor="#000000"
+                <BigButton
+                    margins={[250, 40, 0, 0]}
+                    bgColor="blue"
+                    text="Send Reset Mail"
+                    onPress={""} //TODO: will be added later on 
+                    textColor="white"
+                    mode="contained"
                 />
 
-                <RoundedButton
-                    margin="10px"
-                    color="#ffff"
+                <BigButton
+                    margins={[0, 0, 0, 0]}
+                    color="white"
                     onPress={() => navigation.navigate("Login")}
-                    title="Login"
-                    textColor="#000000"
+                    text="Login"
+                    textColor="black"
+                    mode="contained"
 
                 />
 
@@ -61,15 +96,11 @@ const ForgotPasswordScreen = ({ navigation }) => {
         </Body>
 
 
-
-
-
-
-
-
     )
 
 
 
 
 }
+
+export default ForgotPasswordScreen;

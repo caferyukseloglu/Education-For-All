@@ -5,16 +5,16 @@
  */
 
 //Main React import
-import React, {useState} from 'react';
-import {useTheme, TouchableRipple, Checkbox} from 'react-native-paper';
+import React, { useState } from 'react';
+import { useTheme, TouchableRipple, Checkbox } from 'react-native-paper';
 //Our Styles for Project
-import {Form, Body, Line} from './styles/wrapper';
-import {BigButton} from './styles/buttons';
-import {SubTitle, Title, CheckText} from './styles/text';
-import {NewInput} from './styles/input';
+import { Form, Body, Line } from './styles/wrapper';
+import { BigButton } from './styles/buttons';
+import { SubTitle, Title, CheckText } from './styles/text';
+import { NewInput } from './styles/input';
 
-const RegisterScreen = ({navigation}) => {
-  const {colors} = useTheme();
+const RegisterScreen = ({ navigation }) => {
+  const { colors } = useTheme();
 
   const [data, setData] = useState({
     username: '',
@@ -116,12 +116,12 @@ const RegisterScreen = ({navigation}) => {
           right={{
             ...(data.isValidUser != null
               ? {
-                  ...(data.isValidUser === true ? (
-                    <NewInput.Icon name="check-circle" color={colors.green} />
-                  ) : (
+                ...(data.isValidUser === true ? (
+                  <NewInput.Icon name="check-circle" color={colors.green} />
+                ) : (
                     <NewInput.Icon name="alert-circle" color={colors.red} />
                   )),
-                }
+              }
               : ''),
           }}
         />

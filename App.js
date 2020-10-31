@@ -7,13 +7,15 @@
 //For the Navigation
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 //import {ThemeProvider} from 'styled-components';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
 import RegisterScreen from './src/Register';
+import ForgotPasswordScreen from './src/ForgotPassword';
+
 
 const Stack = createStackNavigator();
 
@@ -49,23 +51,26 @@ const App = () => {
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{
-            cardStyle: {backgroundColor: theme.colors.notWhite},
+            cardStyle: { backgroundColor: theme.colors.notWhite },
           }}>
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Login"
             component={LoginScreen}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Register"
             component={RegisterScreen}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
+
+          <Stack.Screen name="ForgotScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
