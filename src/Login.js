@@ -154,7 +154,7 @@ const LoginScreen = ({ navigation }) => {
               <CheckText>Remember Me</CheckText>
             </Line>
           </TouchableRipple>
-          <CheckText leftMargin="30px">Forgot Password</CheckText>
+          <CheckText leftMargin="30px" onPress={() => navigation.navigate("ForgotScreen")}>Forgot Password</CheckText>
         </Line>
         <BigButton
           margins={[0, 10, 0, 0]}

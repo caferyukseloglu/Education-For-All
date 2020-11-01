@@ -16,13 +16,20 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
     const checkValidity = (mailInput) => {
 
-        if (mailInput.trim().length >= 4) {
+
+        var trimmedInput = mailInput.trim();
+        if (trimmedInput.length >=8 && trimmedInput.includes("@") && trimmedInput.split("@")[1].includes(".")) {
 
             setValidity(true);
 
         }
 
-        else if (mailInput.trim().length < 4) {
+        else if (trimmedInput === null) {
+
+            setValidity(false);
+        }
+
+        else{
 
             setValidity(false);
         }
