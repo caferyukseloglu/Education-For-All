@@ -25,14 +25,14 @@ const ForgotPasswordScreen = ({ navigation }) => {
         }
 
         else if (trimmedInput.length === 0 || trimmedInput === null) {
-            
+
             setValidity(null);
 
         }
 
         else{
             setValidity(false);
-            console.log("hi");
+
         }
 
     }
