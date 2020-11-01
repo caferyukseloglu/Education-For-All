@@ -19,19 +19,20 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
         var trimmedInput = mailInput.trim();
         if (trimmedInput.length >=8 && trimmedInput.includes("@") && trimmedInput.split("@")[1].includes(".")) {
-
+            
             setValidity(true);
 
         }
 
-        else if (trimmedInput === null) {
+        else if (trimmedInput.length === 0 || trimmedInput === null) {
+            
+            setValidity(null);
 
-            setValidity(false);
         }
 
         else{
-
             setValidity(false);
+            console.log("hi");
         }
 
     }
