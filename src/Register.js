@@ -127,8 +127,6 @@ const RegisterScreen = ({ navigation }) => {
         />
         <NewInput
           label="Password"
-          color="blue"
-          textColor="green"
           botRadius="15"
           mode="flat"
           value={setData.password}
@@ -154,8 +152,6 @@ const RegisterScreen = ({ navigation }) => {
         />
         <NewInput
           label="Re-Password"
-          color="blue"
-          textColor="green"
           botRadius="15"
           botMargin="5px"
           mode="flat"
