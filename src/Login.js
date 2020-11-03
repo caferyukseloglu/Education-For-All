@@ -17,55 +17,32 @@ const LoginScreen = ({navigation}) => {
   const {colors} = useTheme();
 
   const [data, setData] = useState({
-    username: '',
+    email: '',
     password: '',
-    check_textInputChange: null,
     secureTextEntry: true,
-    isValidUser: null,
+    isValidEmail: null,
     isValidPassword: true,
     isChecked: false,
   });
 
-  const textInputChange = (val) => {
-    if (val.trim().length >= 4) {
+  const emailControl = (val) => {
+    var trimmedInput = val.trim();
+    if (
+      trimmedInput.length >= 8 &&
+      trimmedInput.includes('@') &&
+      trimmedInput.split('@')[1].includes('.')
+    ) {
       setData({
-        ...data,
-        username: val,
-        check_textInputChange: true,
-        isValidUser: true,
+        email: val,
+        isValidEmail: true,
       });
-    } else if (val.trim().length > 0) {
+    } else if (trimmedInput.length >= 1) {
       setData({
-        ...data,
-        username: val,
-        check_textInputChange: false,
-        isValidUser: false,
-      });
-    } else {
-      setData({
-        ...data,
-        username: val,
-        check_textInputChange: null,
-        isValidUser: null,
-      });
-    }
-  };
-
-  const handleValidUser = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidUser: true,
-      });
-    } else if (val.trim().length > 0) {
-      setData({
-        ...data,
-        isValidUser: false,
+        isValidEmail: false,
       });
     } else {
       setData({
-        ...data,
-        isValidUser: null,
+        isValidEmail: null,
       });
     }
   };
@@ -95,8 +72,8 @@ const LoginScreen = ({navigation}) => {
           topRadius="15"
           topMargin="5px"
           mode="flat"
-          onChangeText={(val) => textInputChange(val)}
-          onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+          onChangeText={(val) => emailControl(val)}
+          onEndEditing={(e) => emailControl(e.nativeEvent.text)}
           theme={{
             colors: {
               text: colors.darker,
@@ -107,9 +84,9 @@ const LoginScreen = ({navigation}) => {
           }}
           left={<NewInput.Icon name="email" color={colors.gray} size={33} />}
           right={{
-            ...(data.isValidUser != null
+            ...(data.isValidEmail != null
               ? {
-                  ...(data.isValidUser === true ? (
+                  ...(data.isValidEmail === true ? (
                     <NewInput.Icon name="check-circle" color={colors.green} />
                   ) : (
                     <NewInput.Icon name="alert-circle" color={colors.red} />

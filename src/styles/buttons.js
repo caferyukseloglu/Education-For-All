@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import {useTheme, Button, Text} from 'react-native-paper';
 
 //Function to push colors from theme
-function colores(colored) {
+function coloreds(colored) {
   const {colors} = useTheme();
   return colors[colored];
 }
@@ -38,7 +38,12 @@ export const ButtonStText = styled(Text)`
 `;
 
 export const BigButton = ({margins, text, mode, textColor, bgColor, onPress}) => (
-  <ButtonSt color={colores(bgColor)} mode={mode} margins={margins} contentStyle={{height: 74}} onPress={onPress}>
-    <ButtonStText color={colores(textColor)}>{text}</ButtonStText>
+  <ButtonSt
+    color={coloreds(bgColor)}
+    mode={mode}
+    margins={margins}
+    contentStyle={{height: 74}}
+    onPress={onPress}>
+    <ButtonStText color={coloreds(textColor)}>{text}</ButtonStText>
   </ButtonSt>
 );
