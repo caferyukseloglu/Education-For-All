@@ -6,36 +6,58 @@ import { Form, Body, Line } from './styles/wrapper';
 import { BigButton, RoundedButton } from './styles/buttons';
 import { SubTitle, Title, CheckText } from './styles/text';
 import { NewInput } from './styles/input';
+import { Value } from 'react-native-reanimated';
 
+
+
+//PASSWORD CHECK 
+/*
+Büyük küçük, özel
+if(password.length >= 8 && (password.search(/[0-9]/) > -1) && password.search(/[A-Z]/) > -1 && password.search(/[a-z]/) > -1 && password.search(/[` !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/) > -1))
+*/
 
 const ForgotPasswordScreen = ({ navigation }) => {
 
+    //using the theme colors
     const { colors } = useTheme();
 
-    const [isValid, setValidity] = useState(null);
+    //hook function to set data, we check if given input is valid and storing e-mail
+    const [data, setData] = useState({
+        isValid:null,
+        email: ""
+    });
 
+    //function check validity and set it
     const checkValidity = (mailInput) => {
 
-
+        //trimming input
         var trimmedInput = mailInput.trim();
+        //
         if (trimmedInput.length >=8 && trimmedInput.includes("@") && trimmedInput.split("@")[1].includes(".")) {
-            
-            setValidity(true);
+            setData({
+                isValid:true,
+                email: (trimmedInput.replace(/ /g,"")),
+            })
 
         }
 
         else if (trimmedInput.length === 0 || trimmedInput === null) {
 
-            setValidity(null);
+            setData({
+                isValid:null,
+            })
 
         }
 
         else{
-            setValidity(false);
+            setData({
+                isValid:false,
+            })
 
         }
 
     }
+
 
     return (
 
@@ -51,6 +73,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
                     botMargin="5px"
                     mode="flat"
                     onChangeText={(input) => checkValidity(input)}
+                    onEndEditing={(e) => checkValidity(e.nativeEvent.text)}
+                    value={data.email}
                     theme={{
                         colors: {
                             text: colors.darker,
@@ -64,8 +88,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
                     }
 
                     right={{
-                        ...(isValid != null ? {
-                            ...(isValid == true) ? (
+                        ...(data.isValid != null ? {
+                            ...(data.isValid == true) ? (
                                 <NewInput.Icon name="check-circle" color={colors.green} />
                             ) : (
                                     <NewInput.Icon name="alert-circle" color={colors.red} />
