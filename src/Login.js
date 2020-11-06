@@ -6,7 +6,7 @@
 
 //Main React import
 import React, {useState} from 'react';
-import {useTheme, TouchableRipple, Checkbox} from 'react-native-paper';
+import {useTheme, TouchableRipple, Checkbox, HelperText} from 'react-native-paper';
 //Our Styles for Project
 import {Form, Body, Line} from './styles/wrapper';
 import {BigButton} from './styles/buttons';
@@ -21,10 +21,10 @@ const LoginScreen = ({navigation}) => {
     password: '',
     secureTextEntry: true,
     isValidEmail: null,
-    isValidPassword: true,
+    isValidPassword: null,
     isChecked: false,
   });
-
+  //Controls the Email Input if short than 8 character or white space or not includes @ and . gives error else success, empty = none
   const emailControl = (val) => {
     var trimmedInput = val.trim();
     if (
@@ -33,27 +33,62 @@ const LoginScreen = ({navigation}) => {
       trimmedInput.split('@')[1].includes('.')
     ) {
       setData({
-        email: val,
+        ...data,
+        email: trimmedInput.replace(/ /g, ''),
         isValidEmail: true,
       });
     } else if (trimmedInput.length >= 1) {
       setData({
+        ...data,
+        email: trimmedInput.replace(/ /g, ''),
         isValidEmail: false,
       });
     } else {
       setData({
+        ...data,
+        email: '',
         isValidEmail: null,
       });
     }
   };
+  //Controls the Password Input Capital 1 Lower 1 Special 1 Longer than 7
+  const passwordControl = (val) => {
+    var trimmedInput = val.trim();
+    if (
+      trimmedInput.length >= 8 &&
+      trimmedInput.search(/[0-9]/) > -1 &&
+      trimmedInput.search(/[A-Z]/) > -1 &&
+      trimmedInput.search(/[a-z]/) > -1 &&
+      trimmedInput.search(/[` !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/) > -1
+    ) {
+      setData({
+        ...data,
+        password: trimmedInput,
+        isValidPassword: true,
+      });
+    } else if (trimmedInput.length >= 1) {
+      setData({
+        ...data,
+        password: trimmedInput,
+        isValidPassword: false,
+      });
+    } else {
+      setData({
+        ...data,
+        password: '',
+        isValidPassword: null,
+      });
+    }
+  };
 
+  //Controls Password is secure if text secure show *** else show password
   const updateSecureTextEntry = () => {
     setData({
       ...data,
       secureTextEntry: !data.secureTextEntry,
     });
   };
-
+  //Check checked or not
   const updateChecked = () => {
     setData({
       ...data,
@@ -74,9 +109,12 @@ const LoginScreen = ({navigation}) => {
           mode="flat"
           onChangeText={(val) => emailControl(val)}
           onEndEditing={(e) => emailControl(e.nativeEvent.text)}
+          error={!data.isValidEmail && data.isValidEmail != null}
+          value={data.email}
           theme={{
             colors: {
               text: colors.darker,
+              error: colors.red,
               primary: colors.blue,
               placeholder: colors.gray,
               background: colors.lighterGray,
@@ -95,32 +133,49 @@ const LoginScreen = ({navigation}) => {
               : ''),
           }}
         />
-        <NewInput
-          label="Password"
-          botRadius="15"
-          botMargin="5px"
-          mode="flat"
-          value={setData.password}
-          secureTextEntry={data.secureTextEntry ? true : false}
-          theme={{
-            colors: {
-              text: colors.darker,
-              primary: colors.blue,
-              placeholder: colors.gray,
-              background: colors.white,
-            },
-          }}
-          left={
-            <NewInput.Icon name="lock-open" color={colors.gray} size={33} />
-          }
-          right={
-            <NewInput.Icon
-              name={data.secureTextEntry ? 'eye-off' : 'eye'}
-              onPress={updateSecureTextEntry}
-              color={colors.gray}
-            />
-          }
-        />
+        <Form paddings={'0'}>
+          <NewInput
+            label="Password"
+            botRadius="15"
+            botMargin="5px"
+            mode="flat"
+            onChangeText={(val) => passwordControl(val)}
+            onEndEditing={(e) => passwordControl(e.nativeEvent.text)}
+            value={data.password}
+            secureTextEntry={data.secureTextEntry ? true : false}
+            error={!data.isValidPassword && data.isValidPassword != null}
+            theme={{
+              colors: {
+                text: colors.darker,
+                error: colors.red,
+                primary: colors.blue,
+                placeholder: colors.gray,
+                background: colors.white,
+              },
+            }}
+            left={
+              <NewInput.Icon name="lock-open" color={colors.gray} size={33} />
+            }
+            right={
+              <NewInput.Icon
+                name={data.secureTextEntry ? 'eye-off' : 'eye'}
+                onPress={updateSecureTextEntry}
+                color={colors.gray}
+              />
+            }
+          />
+          <HelperText
+            type="error"
+            visible={!data.isValidPassword && data.isValidPassword != null}
+            theme={{
+              colors: {
+                error: colors.red,
+              },
+            }}>
+            Error: Password Schema '1234Az1!'
+          </HelperText>
+        </Form>
+
         <Line justify="space-between">
           <TouchableRipple onPress={updateChecked}>
             <Line>

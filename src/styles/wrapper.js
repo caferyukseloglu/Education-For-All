@@ -5,7 +5,7 @@ export const Body = styled.View`
 `;
 
 export const Form = styled.View`
-  padding: 0 37px;
+  padding: ${(props) => props.paddings || '0 37px'};
   text-align: center;
 `;
 
