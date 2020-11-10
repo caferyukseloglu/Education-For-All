@@ -25,7 +25,7 @@ export const Title = styled.Text`
 export const SubTitle = styled.Text`
   margin-top: 10px;
   width: 330px;
-  height: 87px;
+  margin-bottom: 25px;
   left: 42px;
   font-family: Poppins-ExtraLight;
   font-style: normal;

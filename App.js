@@ -13,7 +13,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
 import RegisterScreen from './src/Register';
-import ForgotPasswordScreen from './src/ForgotPassword';
+import ForgotScreen from './src/Forgot';
 
 
 const Stack = createStackNavigator();
@@ -67,9 +67,11 @@ const App = () => {
             component={RegisterScreen}
             options={{ headerShown: false }}
           />
-
-          <Stack.Screen name="ForgotScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
-
+          <Stack.Screen
+            name="Forgot"
+            component={ForgotScreen}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
