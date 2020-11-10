@@ -21,6 +21,7 @@ export const Title = styled.Text`
   color: #000000;
 `;
 
+
 export const SubTitle = styled.Text`
   margin-top: 10px;
   width: 330px;

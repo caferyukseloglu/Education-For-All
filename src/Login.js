@@ -13,8 +13,8 @@ import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
 
-const LoginScreen = ({navigation}) => {
-  const {colors} = useTheme();
+const LoginScreen = ({ navigation }) => {
+  const { colors } = useTheme();
 
   const [data, setData] = useState({
     email: '',
@@ -129,7 +129,7 @@ const LoginScreen = ({navigation}) => {
                   ) : (
                     <NewInput.Icon name="alert-circle" color={colors.red} />
                   )),
-                }
+              }
               : ''),
           }}
         />

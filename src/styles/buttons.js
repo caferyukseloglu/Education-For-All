@@ -6,7 +6,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import {useTheme, Button, Text} from 'react-native-paper';
+import { useTheme, Button, Text } from 'react-native-paper';
 
 //Function to push colors from theme
 function coloreds(colored) {

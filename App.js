@@ -15,6 +15,7 @@ import LoginScreen from './src/Login';
 import RegisterScreen from './src/Register';
 import ForgotScreen from './src/Forgot';
 
+
 const Stack = createStackNavigator();
 
 const theme = {
@@ -49,22 +50,22 @@ const App = () => {
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{
-            cardStyle: {backgroundColor: theme.colors.notWhite},
+            cardStyle: { backgroundColor: theme.colors.notWhite },
           }}>
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Login"
             component={LoginScreen}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Register"
             component={RegisterScreen}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Forgot"
