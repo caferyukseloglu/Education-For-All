@@ -13,6 +13,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
 import RegisterScreen from './src/Register';
+import ForgotScreen from './src/Forgot';
 
 const Stack = createStackNavigator();
 
@@ -63,6 +64,11 @@ const App = () => {
           <Stack.Screen
             name="Register"
             component={RegisterScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Forgot"
+            component={ForgotScreen}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

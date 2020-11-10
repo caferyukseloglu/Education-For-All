@@ -8,7 +8,7 @@
 import React, {useState} from 'react';
 import {useTheme, TouchableRipple, Checkbox, HelperText} from 'react-native-paper';
 //Our Styles for Project
-import {Form, Body, Line} from './styles/wrapper';
+import {Form, Body, Line, Bottom} from './styles/wrapper';
 import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
@@ -133,48 +133,46 @@ const LoginScreen = ({navigation}) => {
               : ''),
           }}
         />
-        <Form paddings={'0'}>
-          <NewInput
-            label="Password"
-            botRadius="15"
-            botMargin="5px"
-            mode="flat"
-            onChangeText={(val) => passwordControl(val)}
-            onEndEditing={(e) => passwordControl(e.nativeEvent.text)}
-            value={data.password}
-            secureTextEntry={data.secureTextEntry ? true : false}
-            error={!data.isValidPassword && data.isValidPassword != null}
-            theme={{
-              colors: {
-                text: colors.darker,
-                error: colors.red,
-                primary: colors.blue,
-                placeholder: colors.gray,
-                background: colors.white,
-              },
-            }}
-            left={
-              <NewInput.Icon name="lock-open" color={colors.gray} size={33} />
-            }
-            right={
-              <NewInput.Icon
-                name={data.secureTextEntry ? 'eye-off' : 'eye'}
-                onPress={updateSecureTextEntry}
-                color={colors.gray}
-              />
-            }
-          />
-          <HelperText
-            type="error"
-            visible={!data.isValidPassword && data.isValidPassword != null}
-            theme={{
-              colors: {
-                error: colors.red,
-              },
-            }}>
-            Error: Password Schema '1234Az1!'
-          </HelperText>
-        </Form>
+        <NewInput
+          label="Password"
+          botRadius="15"
+          botMargin="5px"
+          mode="flat"
+          onChangeText={(val) => passwordControl(val)}
+          onEndEditing={(e) => passwordControl(e.nativeEvent.text)}
+          value={data.password}
+          secureTextEntry={data.secureTextEntry ? true : false}
+          error={!data.isValidPassword && data.isValidPassword != null}
+          theme={{
+            colors: {
+              text: colors.darker,
+              error: colors.red,
+              primary: colors.blue,
+              placeholder: colors.gray,
+              background: colors.white,
+            },
+          }}
+          left={
+            <NewInput.Icon name="lock-open" color={colors.gray} size={33} />
+          }
+          right={
+            <NewInput.Icon
+              name={data.secureTextEntry ? 'eye-off' : 'eye'}
+              onPress={updateSecureTextEntry}
+              color={colors.gray}
+            />
+          }
+        />
+        <HelperText
+          type="error"
+          visible={!data.isValidPassword && data.isValidPassword != null}
+          theme={{
+            colors: {
+              error: colors.red,
+            },
+          }}>
+          Error: Password Schema '1234Az1!'
+        </HelperText>
 
         <Line justify="space-between">
           <TouchableRipple onPress={updateChecked}>
@@ -186,25 +184,33 @@ const LoginScreen = ({navigation}) => {
               <CheckText>Remember Me</CheckText>
             </Line>
           </TouchableRipple>
-          <CheckText leftMargin="30px">Forgot Password</CheckText>
+          <CheckText
+            leftMargin="30px"
+            onPress={() => navigation.navigate('Forgot')}>
+            Forgot Password
+          </CheckText>
         </Line>
-        <BigButton
-          margins={[0, 10, 0, 0]}
-          text="Login"
-          mode="contained"
-          bgColor="blue"
-          textColor="white"
-          onPress={() => navigation.navigate('Home')}
-        />
-        <BigButton
-          margins={[0, 0, 0, 0]}
-          text="Register"
-          mode="contained"
-          bgColor="white"
-          textColor="dark"
-          onPress={() => navigation.navigate('Register')}
-        />
       </Form>
+      <Bottom>
+        <Form>
+          <BigButton
+            margins={[0, 10, 0, 0]}
+            text="Login"
+            mode="contained"
+            bgColor="blue"
+            textColor="white"
+            onPress={() => navigation.navigate('Home')}
+          />
+          <BigButton
+            margins={[0, 0, 0, 0]}
+            text="Register"
+            mode="contained"
+            bgColor="white"
+            textColor="dark"
+            onPress={() => navigation.navigate('Register')}
+          />
+        </Form>
+      </Bottom>
     </Body>
   );
 };
