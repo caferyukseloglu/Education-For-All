@@ -7,13 +7,20 @@
 //For the Navigation
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import {I18nManager, Platform, LogBox} from 'react-native'; //To Detect LTR RTL, Platform, Errors
+import {
+  DefaultTheme,
+  DarkTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
 import RegisterScreen from './src/Register';
 import ForgotScreen from './src/Forgot';
+
+LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator();
 

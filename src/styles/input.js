@@ -6,7 +6,6 @@
 
 import {TextInput} from 'react-native-paper';
 import styled from 'styled-components';
-
 export const NewInput = styled(TextInput)`
   margin-top: ${(props) => props.topMargin || '0'};
   margin-bottom: ${(props) => props.botMargin || '0'};

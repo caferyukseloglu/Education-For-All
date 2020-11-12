@@ -1,4 +1,3 @@
-import { endAsyncEvent } from 'react-native/Libraries/Performance/Systrace';
 import styled from 'styled-components';
 
 export const Body = styled.View`
