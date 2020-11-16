@@ -21,11 +21,36 @@ export const Title = styled.Text`
   color: #000000;
 `;
 
+export const CardTitle = styled.Text`
+  margin-top: 25px;
+  margin-left:15px;
+  width: auto;
+  height: 36px;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 19.5px;
+  display: flex;
+  color: #FFFFFF;
+`;
+
+export const CardSubtitle = styled.Text`
+  margin-left:15px;
+  width: auto;
+  height: 36px;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 8px;
+  line-height: 12px;
+  display: flex;
+  color: #FFFFFF;
+`;
 
 export const SubTitle = styled.Text`
   margin-top: 10px;
   width: 330px;
-  height: 87px;
   left: 42px;
   font-family: Poppins-ExtraLight;
   font-style: normal;
@@ -50,4 +75,31 @@ export const CheckText = styled.Text`
   margin-bottom: ${(props) => props.botMargin || '0'};
   margin-right: ${(props) => props.rightMargin || '0'};
   margin-left: ${(props) => props.leftMargin || '0'};
+`;
+
+export const LessonTitle = styled.Text`
+  margin-top:27px;
+  margin-left:15px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 16.5px;
+  display: flex;
+  letter-spacing: 0.12px;
+  color: #000000;
+`;
+
+export const LessonSubtitle = styled.Text`
+  margin-left:15px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 8px;
+  line-height: 9px;
+  display: flex;
+  letter-spacing: 0.12px;
+  color: rgba(0, 0, 0, 0.58);
 `;

@@ -15,3 +15,4 @@ export const Line = styled.View`
   alignItems: center;
   paddingVertical: 20px;
 `;
+
