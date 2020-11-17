@@ -17,9 +17,12 @@ function coloreds(colored) {
 export const ButtonSt = styled(Button)`
   border-radius: 10px;
   /*Box Shadows Elevation is for Android*/
-  elevation: 5;
+  shadow-color: black;
+  shadow-offset: 0 6px;
+  shadowOpacity: 0.37;
+  shadowRadius: 7.49px;
+  elevation: 12;
   background-color: ${(props) => props.color || 'white'};
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   /*Margins*/
   margin-top: ${(props) => props.margins[0] || '0'}px;
   margin-bottom: ${(props) => props.margins[1] || '0'}px;
