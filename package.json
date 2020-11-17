@@ -11,14 +11,16 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/drawer": "^5.11.2",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "react": "16.13.1",
     "react-native": "0.63.3",
+    "react-native-appearance": "^0.3.4",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-paper": "^4.2.0",
     "react-native-reanimated": "^1.13.1",
-    "react-native-safe-area-context": "^3.1.8",
+    "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.11.0",
     "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^7.1.0",
@@ -28,12 +30,17 @@
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
+    "@types/jest": "^26.0.15",
+    "@types/react": "^16.9.56",
+    "@types/react-native": "^0.63.35",
+    "@types/react-test-renderer": "^16.9.3",
     "babel-jest": "^25.1.0",
     "eslint": "^6.5.1",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-native-svg-transformer": "^0.14.3",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "typescript": "^4.0.5"
   },
   "jest": {
     "preset": "react-native"

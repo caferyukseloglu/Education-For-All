@@ -6,7 +6,12 @@
 
 //Main React import
 import React, {useState} from 'react';
-import {useTheme, TouchableRipple, Checkbox, HelperText} from 'react-native-paper';
+import {
+  useTheme,
+  TouchableRipple,
+  Checkbox,
+  HelperText,
+} from 'react-native-paper';
 //Our Styles for Project
 import {Form, Body, Line, Bottom} from './styles/wrapper';
 import {BigButton} from './styles/buttons';
@@ -24,8 +29,8 @@ const LoginScreen = ({navigation}) => {
     isValidPassword: null,
     isChecked: false,
   });
-  //Controls the Email Input if short than 8 character or white space or not includes @ and . gives error else success, empty = none
-  const emailControl = (val) => {
+  //Controls the Email Input if short than 8 character or white-space or not includes @ and . gives error else success, empty = none
+  const emailControl = (val: string) => {
     var trimmedInput = val.trim();
     if (
       trimmedInput.length >= 8 &&
@@ -52,7 +57,7 @@ const LoginScreen = ({navigation}) => {
     }
   };
   //Controls the Password Input Capital 1 Lower 1 Special 1 Longer than 7
-  const passwordControl = (val) => {
+  const passwordControl = (val: string) => {
     var trimmedInput = val.trim();
     if (
       trimmedInput.length >= 8 &&
@@ -97,8 +102,8 @@ const LoginScreen = ({navigation}) => {
   };
   return (
     <Body>
-      <Title>Stay in touch</Title>
-      <SubTitle>
+      <Title style={{color: colors.title1}}>Stay in touch</Title>
+      <SubTitle style={{color: colors.subtitle1}}>
         You can login to your account by entering your e-mail and password.
       </SubTitle>
       <Form>
@@ -107,27 +112,31 @@ const LoginScreen = ({navigation}) => {
           topRadius="15"
           topMargin="5px"
           mode="flat"
-          onChangeText={(val) => emailControl(val)}
-          onEndEditing={(e) => emailControl(e.nativeEvent.text)}
+          onChangeText={(val: string) => emailControl(val)}
+          onEndEditing={(e: {nativeEvent: {text: string}}) =>
+            emailControl(e.nativeEvent.text)
+          }
           error={!data.isValidEmail && data.isValidEmail != null}
           value={data.email}
           theme={{
             colors: {
-              text: colors.darker,
-              error: colors.red,
-              primary: colors.blue,
-              placeholder: colors.gray,
-              background: colors.lighterGray,
+              text: colors.primary,
+              error: colors.error,
+              primary: colors.accent,
+              placeholder: colors.placeholder,
+              background: colors.input1,
             },
           }}
-          left={<NewInput.Icon name="email" color={colors.gray} size={33} />}
+          left={
+            <NewInput.Icon name="email" color={colors.placeholder} size={33} />
+          }
           right={{
             ...(data.isValidEmail != null
               ? {
                   ...(data.isValidEmail === true ? (
-                    <NewInput.Icon name="check-circle" color={colors.green} />
+                    <NewInput.Icon name="check-circle" color={colors.success} />
                   ) : (
-                    <NewInput.Icon name="alert-circle" color={colors.red} />
+                    <NewInput.Icon name="alert-circle" color={colors.error} />
                   )),
                 }
               : ''),
@@ -138,28 +147,34 @@ const LoginScreen = ({navigation}) => {
           botRadius="15"
           botMargin="5px"
           mode="flat"
-          onChangeText={(val) => passwordControl(val)}
-          onEndEditing={(e) => passwordControl(e.nativeEvent.text)}
+          onChangeText={(val: any) => passwordControl(val)}
+          onEndEditing={(e: {nativeEvent: {text: any}}) =>
+            passwordControl(e.nativeEvent.text)
+          }
           value={data.password}
           secureTextEntry={data.secureTextEntry ? true : false}
           error={!data.isValidPassword && data.isValidPassword != null}
           theme={{
             colors: {
-              text: colors.darker,
-              error: colors.red,
-              primary: colors.blue,
-              placeholder: colors.gray,
-              background: colors.white,
+              text: colors.primary,
+              error: colors.error,
+              primary: colors.accent,
+              placeholder: colors.placeholder,
+              background: colors.input2,
             },
           }}
           left={
-            <NewInput.Icon name="lock-open" color={colors.gray} size={33} />
+            <NewInput.Icon
+              name="lock-open"
+              color={colors.placeholder}
+              size={33}
+            />
           }
           right={
             <NewInput.Icon
               name={data.secureTextEntry ? 'eye-off' : 'eye'}
               onPress={updateSecureTextEntry}
-              color={colors.gray}
+              color={colors.placeholder}
             />
           }
         />
@@ -168,7 +183,7 @@ const LoginScreen = ({navigation}) => {
           visible={!data.isValidPassword && data.isValidPassword != null}
           theme={{
             colors: {
-              error: colors.red,
+              error: colors.error,
             },
           }}>
           Error: Password Schema '1234Az1!'
@@ -178,15 +193,16 @@ const LoginScreen = ({navigation}) => {
           <TouchableRipple onPress={updateChecked}>
             <Line>
               <Checkbox
-                color={colors.green}
+                color={colors.success}
                 status={data.isChecked ? 'checked' : 'unchecked'}
               />
-              <CheckText>Remember Me</CheckText>
+              <CheckText style={{color: colors.text}}>Remember Me</CheckText>
             </Line>
           </TouchableRipple>
           <CheckText
             leftMargin="30px"
-            onPress={() => navigation.navigate('Forgot')}>
+            onPress={() => navigation.navigate('Forgot')}
+            style={{color: colors.text}}>
             Forgot Password
           </CheckText>
         </Line>
@@ -197,16 +213,16 @@ const LoginScreen = ({navigation}) => {
             margins={[0, 10, 0, 0]}
             text="Login"
             mode="contained"
-            bgColor="blue"
-            textColor="white"
-            onPress={() => navigation.navigate('Home')}
+            bgColor="accent"
+            textColor="buttonText1"
+            onPress={() => navigation.navigate('Main')}
           />
           <BigButton
             margins={[0, 0, 0, 0]}
             text="Register"
             mode="contained"
-            bgColor="white"
-            textColor="dark"
+            bgColor="surface"
+            textColor="buttonText2"
             onPress={() => navigation.navigate('Register')}
           />
         </Form>

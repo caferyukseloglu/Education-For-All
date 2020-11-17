@@ -25,7 +25,7 @@ const ForgotScreen = ({navigation}) => {
   });
 
   //Controls the Email Input if short than 8 character or white space or not includes @ and . gives error else success, empty = none
-  const emailControl = (val) => {
+  const emailControl = (val: string) => {
     var trimmedInput = val.trim();
     if (
       trimmedInput.length >= 8 &&
@@ -54,8 +54,8 @@ const ForgotScreen = ({navigation}) => {
 
   return (
     <Body>
-      <Title>Reset Password</Title>
-      <SubTitle>
+      <Title style={{color: colors.title1}}>Reset Password</Title>
+      <SubTitle style={{color: colors.subtitle1}}>
         Enter your mail and we will send you a rescue mail immediately.
       </SubTitle>
       <Form>
@@ -65,27 +65,31 @@ const ForgotScreen = ({navigation}) => {
           botRadius="15"
           topMargin="5px"
           mode="flat"
-          onChangeText={(val) => emailControl(val)}
-          onEndEditing={(e) => emailControl(e.nativeEvent.text)}
+          onChangeText={(val: any) => emailControl(val)}
+          onEndEditing={(e: {nativeEvent: {text: any}}) =>
+            emailControl(e.nativeEvent.text)
+          }
           error={!data.isValidEmail && data.isValidEmail != null}
           value={data.email}
           theme={{
             colors: {
-              text: colors.darker,
-              error: colors.red,
-              primary: colors.blue,
-              placeholder: colors.gray,
-              background: colors.lighterGray,
+              text: colors.primary,
+              error: colors.error,
+              primary: colors.accent,
+              placeholder: colors.placeholder,
+              background: colors.input1,
             },
           }}
-          left={<NewInput.Icon name="email" color={colors.gray} size={33} />}
+          left={
+            <NewInput.Icon name="email" color={colors.placeholder} size={33} />
+          }
           right={{
             ...(data.isValidEmail != null
               ? {
                   ...(data.isValidEmail === true ? (
-                    <NewInput.Icon name="check-circle" color={colors.green} />
+                    <NewInput.Icon name="check-circle" color={colors.success} />
                   ) : (
-                    <NewInput.Icon name="alert-circle" color={colors.red} />
+                    <NewInput.Icon name="alert-circle" color={colors.error} />
                   )),
                 }
               : ''),
@@ -96,7 +100,7 @@ const ForgotScreen = ({navigation}) => {
           visible={!data.isValidEmail && data.isValidEmail != null}
           theme={{
             colors: {
-              error: colors.red,
+              error: colors.error,
             },
           }}>
           Error: Email Schema '********@****.***'
@@ -106,19 +110,19 @@ const ForgotScreen = ({navigation}) => {
         <Form>
           <BigButton
             margins={[0, 10, 0, 0]}
-            bgColor="blue"
+            bgColor="accent"
+            textColor="buttonText1"
             text="Send Reset Mail"
-            onPress={''} //TODO: will be added later on
-            textColor="white"
             mode="contained"
+            onPress={''} //TODO: will be added later on
           />
           <BigButton
             margins={[0, 0, 0, 0]}
-            color="white"
-            onPress={() => navigation.navigate('Login')}
+            bgColor="surface"
+            textColor="buttonText2"
             text="Login"
-            textColor="black"
             mode="contained"
+            onPress={() => navigation.navigate('Login')}
           />
         </Form>
       </Bottom>

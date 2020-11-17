@@ -17,7 +17,6 @@ export const Title = styled.Text`
   display: flex;
   align-items: center;
   text-align: center;
-  color: #000000;
 `;
 
 export const SubTitle = styled.Text`
@@ -33,7 +32,6 @@ export const SubTitle = styled.Text`
   display: flex;
   align-items: center;
   text-align: center;
-  color: rgba(0, 0, 0, 0.58);
 `;
 
 export const CheckText = styled.Text`
@@ -43,9 +41,12 @@ export const CheckText = styled.Text`
   font-size: 15px;
   line-height: 19px;
   text-align: center;
-  color: #828282;
   margin-top: ${(props) => props.topMargin || '0'};
   margin-bottom: ${(props) => props.botMargin || '0'};
   margin-right: ${(props) => props.rightMargin || '0'};
   margin-left: ${(props) => props.leftMargin || '0'};
+`;
+
+export const CategoryText = styled.Text`
+  text-align: ${(props) => props.textAlign || 'center'};
 `;
