@@ -19,7 +19,6 @@ export const Title = styled.Text`
   text-align: center;
 `;
 
-
 export const SubTitle = styled.Text`
   margin-top: 10px;
   width: 330px;
