@@ -14,42 +14,40 @@ import LoginScreen from './Login';
 import RegisterScreen from './Register';
 import ForgotScreen from './Forgot';
 import MainScreen from './Main';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
 export const StackNavigator = () => {
   const theme = useTheme();
   return (
-    <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        cardStyle: {backgroundColor: theme.colors.background},
-      }}>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Forgot"
-        component={ForgotScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Main"
-        component={MainScreen}
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
+    <SafeAreaView mode="padding" style={{flex:1, backgroundColor: theme.colors.background}}>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          cardStyle: { backgroundColor: theme.colors.background },
+        }}>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Forgot"
+          component={ForgotScreen}
+          options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Main"
+          component={MainScreen}
+          options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </SafeAreaView>
   );
 };
