@@ -18,8 +18,8 @@ import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
 
-const RegisterScreen = ({navigation}) => {
-  const {colors} = useTheme();
+const RegisterScreen = ({ navigation }) => {
+  const { colors } = useTheme();
 
   const [data, setData] = useState({
     email: '',
@@ -170,7 +170,7 @@ const RegisterScreen = ({navigation}) => {
                   ) : (
                     <NewInput.Icon name="alert-circle" color={colors.error} />
                   )),
-                }
+              }
               : ''),
           }}
         />

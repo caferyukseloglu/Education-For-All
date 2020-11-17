@@ -8,6 +8,9 @@
 * [Styled Components](https://styled-components.com)
 * [React Navigation](https://reactnavigation.org)
 * [React Paper](https://callstack.github.io/react-native-paper/)
+* [Vector Icons](https://github.com/oblador/react-native-vector-icons)
+* [react-native-appearance](https://github.com/expo/react-native-appearance)
+* [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context)
 
 ## License
 
