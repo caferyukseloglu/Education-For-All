@@ -13,9 +13,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/Home';
 import LoginScreen from './src/Login';
 import RegisterScreen from './src/Register';
+<<<<<<< HEAD
 import ForgotPasswordScreen from './src/ForgotPassword';
 import SubjectScreen from './src/SubjectScreen';
 import BottomNavigation from './src/BottomNavigation';
+=======
+import ForgotScreen from './src/Forgot';
+>>>>>>> fb7fd0110e83263be216ab8d332ddd5b51db4b76
 
 
 const Stack = createStackNavigator();
@@ -69,11 +73,19 @@ const App = () => {
             component={RegisterScreen}
             options={{ headerShown: false }}
           />
+<<<<<<< HEAD
 
           <Stack.Screen name="ForgotScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
           <Stack.Screen name ="SubjectsScreen" component={SubjectScreen} options ={{headerShown:false}}/>
 
 
+=======
+          <Stack.Screen
+            name="Forgot"
+            component={ForgotScreen}
+            options={{headerShown: false}}
+          />
+>>>>>>> fb7fd0110e83263be216ab8d332ddd5b51db4b76
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

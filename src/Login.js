@@ -5,78 +5,90 @@
  */
 
 //Main React import
-import React, { useState } from 'react';
-import { useTheme, TouchableRipple, Checkbox } from 'react-native-paper';
+import React, {useState} from 'react';
+import {useTheme, TouchableRipple, Checkbox, HelperText} from 'react-native-paper';
 //Our Styles for Project
-import { Form, Body, Line } from './styles/wrapper';
-import { BigButton } from './styles/buttons';
-import { SubTitle, Title, CheckText } from './styles/text';
-import { NewInput } from './styles/input';
+import {Form, Body, Line, Bottom} from './styles/wrapper';
+import {BigButton} from './styles/buttons';
+import {SubTitle, Title, CheckText} from './styles/text';
+import {NewInput} from './styles/input';
 
 const LoginScreen = ({ navigation }) => {
   const { colors } = useTheme();
 
   const [data, setData] = useState({
-    username: '',
+    email: '',
     password: '',
-    check_textInputChange: null,
     secureTextEntry: true,
-    isValidUser: null,
-    isValidPassword: true,
+    isValidEmail: null,
+    isValidPassword: null,
     isChecked: false,
   });
-
-  const textInputChange = (val) => {
-    if (val.trim().length >= 4) {
+  //Controls the Email Input if short than 8 character or white space or not includes @ and . gives error else success, empty = none
+  const emailControl = (val) => {
+    var trimmedInput = val.trim();
+    if (
+      trimmedInput.length >= 8 &&
+      trimmedInput.includes('@') &&
+      trimmedInput.split('@')[1].includes('.')
+    ) {
       setData({
         ...data,
-        username: val,
-        check_textInputChange: true,
-        isValidUser: true,
+        email: trimmedInput.replace(/ /g, ''),
+        isValidEmail: true,
       });
-    } else if (val.trim().length > 0) {
+    } else if (trimmedInput.length >= 1) {
       setData({
         ...data,
-        username: val,
-        check_textInputChange: false,
-        isValidUser: false,
-      });
-    } else {
-      setData({
-        ...data,
-        username: val,
-        check_textInputChange: null,
-        isValidUser: null,
-      });
-    }
-  };
-
-  const handleValidUser = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidUser: true,
-      });
-    } else if (val.trim().length > 0) {
-      setData({
-        ...data,
-        isValidUser: false,
+        email: trimmedInput.replace(/ /g, ''),
+        isValidEmail: false,
       });
     } else {
       setData({
         ...data,
-        isValidUser: null,
+        email: '',
+        isValidEmail: null,
+      });
+    }
+  };
+  //Controls the Password Input Capital 1 Lower 1 Special 1 Longer than 7
+  const passwordControl = (val) => {
+    var trimmedInput = val.trim();
+    if (
+      trimmedInput.length >= 8 &&
+      trimmedInput.search(/[0-9]/) > -1 &&
+      trimmedInput.search(/[A-Z]/) > -1 &&
+      trimmedInput.search(/[a-z]/) > -1 &&
+      trimmedInput.search(/[` !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/) > -1
+    ) {
+      setData({
+        ...data,
+        password: trimmedInput,
+        isValidPassword: true,
+      });
+    } else if (trimmedInput.length >= 1) {
+      setData({
+        ...data,
+        password: trimmedInput,
+        isValidPassword: false,
+      });
+    } else {
+      setData({
+        ...data,
+        password: '',
+        isValidPassword: null,
       });
     }
   };
 
+  //Controls Password is secure if text secure show *** else show password
   const updateSecureTextEntry = () => {
     setData({
       ...data,
       secureTextEntry: !data.secureTextEntry,
     });
   };
-
+  //Check checked or not
   const updateChecked = () => {
     setData({
       ...data,
@@ -95,11 +107,14 @@ const LoginScreen = ({ navigation }) => {
           topRadius="15"
           topMargin="5px"
           mode="flat"
-          onChangeText={(val) => textInputChange(val)}
-          onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+          onChangeText={(val) => emailControl(val)}
+          onEndEditing={(e) => emailControl(e.nativeEvent.text)}
+          error={!data.isValidEmail && data.isValidEmail != null}
+          value={data.email}
           theme={{
             colors: {
               text: colors.darker,
+              error: colors.red,
               primary: colors.blue,
               placeholder: colors.gray,
               background: colors.lighterGray,
@@ -107,11 +122,11 @@ const LoginScreen = ({ navigation }) => {
           }}
           left={<NewInput.Icon name="email" color={colors.gray} size={33} />}
           right={{
-            ...(data.isValidUser != null
+            ...(data.isValidEmail != null
               ? {
-                ...(data.isValidUser === true ? (
-                  <NewInput.Icon name="check-circle" color={colors.green} />
-                ) : (
+                  ...(data.isValidEmail === true ? (
+                    <NewInput.Icon name="check-circle" color={colors.green} />
+                  ) : (
                     <NewInput.Icon name="alert-circle" color={colors.red} />
                   )),
               }
@@ -123,11 +138,15 @@ const LoginScreen = ({ navigation }) => {
           botRadius="15"
           botMargin="5px"
           mode="flat"
-          value={setData.password}
+          onChangeText={(val) => passwordControl(val)}
+          onEndEditing={(e) => passwordControl(e.nativeEvent.text)}
+          value={data.password}
           secureTextEntry={data.secureTextEntry ? true : false}
+          error={!data.isValidPassword && data.isValidPassword != null}
           theme={{
             colors: {
               text: colors.darker,
+              error: colors.red,
               primary: colors.blue,
               placeholder: colors.gray,
               background: colors.white,
@@ -144,6 +163,17 @@ const LoginScreen = ({ navigation }) => {
             />
           }
         />
+        <HelperText
+          type="error"
+          visible={!data.isValidPassword && data.isValidPassword != null}
+          theme={{
+            colors: {
+              error: colors.red,
+            },
+          }}>
+          Error: Password Schema '1234Az1!'
+        </HelperText>
+
         <Line justify="space-between">
           <TouchableRipple onPress={updateChecked}>
             <Line>
@@ -154,25 +184,33 @@ const LoginScreen = ({ navigation }) => {
               <CheckText>Remember Me</CheckText>
             </Line>
           </TouchableRipple>
-          <CheckText leftMargin="30px" onPress={() => navigation.navigate("ForgotScreen")}>Forgot Password</CheckText>
+          <CheckText
+            leftMargin="30px"
+            onPress={() => navigation.navigate('Forgot')}>
+            Forgot Password
+          </CheckText>
         </Line>
-        <BigButton
-          margins={[0, 10, 0, 0]}
-          text="Login"
-          mode="contained"
-          bgColor="blue"
-          textColor="white"
-          onPress={() => navigation.navigate('Home')}
-        />
-        <BigButton
-          margins={[0, 0, 0, 0]}
-          text="Register"
-          mode="contained"
-          bgColor="white"
-          textColor="dark"
-          onPress={() => navigation.navigate('Register')}
-        />
       </Form>
+      <Bottom>
+        <Form>
+          <BigButton
+            margins={[0, 10, 0, 0]}
+            text="Login"
+            mode="contained"
+            bgColor="blue"
+            textColor="white"
+            onPress={() => navigation.navigate('Home')}
+          />
+          <BigButton
+            margins={[0, 0, 0, 0]}
+            text="Register"
+            mode="contained"
+            bgColor="white"
+            textColor="dark"
+            onPress={() => navigation.navigate('Register')}
+          />
+        </Form>
+      </Bottom>
     </Body>
   );
 };

@@ -51,6 +51,10 @@ export const CardSubtitle = styled.Text`
 export const SubTitle = styled.Text`
   margin-top: 10px;
   width: 330px;
+<<<<<<< HEAD
+=======
+  margin-bottom: 25px;
+>>>>>>> fb7fd0110e83263be216ab8d332ddd5b51db4b76
   left: 42px;
   font-family: Poppins-ExtraLight;
   font-style: normal;
