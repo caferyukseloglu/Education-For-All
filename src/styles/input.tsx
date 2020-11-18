@@ -6,7 +6,6 @@
 
 import {TextInput} from 'react-native-paper';
 import styled from 'styled-components';
-
 export const NewInput = styled(TextInput)`
   margin-top: ${(props) => props.topMargin || '0'};
   margin-bottom: ${(props) => props.botMargin || '0'};
@@ -24,4 +23,9 @@ export const NewInput = styled(TextInput)`
   line-height: ${(props) => props.fontHeight || '21px'};
   text-decoration: ${(props) => props.textDecoration || 'none'};
   overflow: hidden;
+  shadow-color: black;
+  shadow-offset: 0 3px;
+  shadowOpacity: 0.29;
+  shadowRadius: 4.65px;
+  elevation: 7;
 `;
