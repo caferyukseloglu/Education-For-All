@@ -14,7 +14,7 @@ const MainScreen = ({navigation}) => {
   return (
     <Body>
       <Line>
-      <Categories />
+        <Categories />
       </Line>
     </Body>
   );

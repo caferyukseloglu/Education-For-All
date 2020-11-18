@@ -50,3 +50,57 @@ export const CheckText = styled.Text`
 export const CategoryText = styled.Text`
   text-align: ${(props) => props.textAlign || 'center'};
 `;
+
+export const CardTitle = styled.Text`
+  margin-top: 25px;
+  margin-left: 15px;
+  width: auto;
+  height: 36px;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 19.5px;
+  display: flex;
+  color: #ffffff;
+`;
+
+export const CardSubtitle = styled.Text`
+  margin-left: 15px;
+  width: auto;
+  height: 36px;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 8px;
+  line-height: 12px;
+  display: flex;
+  color: #ffffff;
+`;
+
+export const LessonTitle = styled.Text`
+  margin-top:27px;
+  margin-left:15px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 16.5px;
+  display: flex;
+  letter-spacing: 0.12px;
+  color: #000000;
+`;
+
+export const LessonSubtitle = styled.Text`
+  margin-left:15px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 8px;
+  line-height: 9px;
+  display: flex;
+  letter-spacing: 0.12px;
+  color: rgba(0, 0, 0, 0.58);
+`;
