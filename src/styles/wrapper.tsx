@@ -28,3 +28,4 @@ export const Bottom = styled.View`
   bottom: 20px;
   padding: ${(props) => props.paddings || '0 0 0 0'};
 `;
+
