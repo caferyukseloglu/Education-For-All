@@ -33,6 +33,31 @@ export const SubTitle = styled.Text`
   text-align: center;
 `;
 
+export const CourseTitle = styled.Text`
+  margin-top:27px;
+  margin-left: 27px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 36px;
+  display: flex;
+`;
+
+export const CourseSubtitle = styled.Text`
+  margin-left: 27px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  color: rgba(51, 51, 51, 0.56);
+`;
+
+
 export const CheckText = styled.Text`
   font-family: Oxygen;
   font-style: normal;
@@ -102,4 +127,26 @@ export const LessonSubtitle = styled.Text`
   display: flex;
   letter-spacing: 0.12px;
   color: rgba(0, 0, 0, 0.58);
+`;
+
+export const RecomTitle = styled.Text`
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+`;
+
+export const RecomInfo = styled.Text`
+  margin-bottom:15px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 15px;
+  display: flex;
+  color: rgba(51, 51, 51, 0.56);
 `;
