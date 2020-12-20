@@ -17,6 +17,8 @@ import {Form, Body, Line, Bottom} from './styles/wrapper';
 import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
+import auth from '@react-native-firebase/auth';
+
 
 const LoginScreen = ({ navigation }) => {
   const { colors } = useTheme();
@@ -29,6 +31,28 @@ const LoginScreen = ({ navigation }) => {
     isValidPassword: null,
     isChecked: false,
   });
+
+  const userLogin = (userEmail,userPassword) =>{
+    
+    if(data.isValidEmail && data.isValidPassword){
+      auth().signInWithEmailAndPassword(userEmail,userPassword).then(()=>navigation.navigate('Main'))
+      .catch(error =>{
+        if(error.code == "auth/wrong-password"){
+          console.log("Password is wrong!");
+        }
+
+      })
+      console.log(auth().currentUser);
+
+    }
+
+    else{
+      console.log("Please check the crediantials!");
+    }
+    
+  }
+
+
   //Controls the Email Input if short than 8 character or white-space or not includes @ and . gives error else success, empty = none
   const emailControl = (val: string) => {
     var trimmedInput = val.trim();
@@ -215,7 +239,7 @@ const LoginScreen = ({ navigation }) => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress={() => navigation.navigate('Main')}
+            onPress={() => userLogin(data.email,data.password)}
           />
           <BigButton
             margins={[0, 0, 0, 0]}
