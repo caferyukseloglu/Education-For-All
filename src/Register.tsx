@@ -17,13 +17,14 @@ import {Form, Body, Line, Bottom} from './styles/wrapper';
 import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
-import auth, { firebase } from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
+import "./api/DatabaseHandler";
+import { DatabaseHandler } from './api/DatabaseHandler';
+import "./api/User";
+import {User} from "./api/User";
 
-const reference = database().ref('/users');
 const RegisterScreen = ({ navigation }) => {
   const { colors } = useTheme();
-
+  var myDatabase = new DatabaseHandler();
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -37,23 +38,22 @@ const RegisterScreen = ({ navigation }) => {
   });
 
 
+  const createUserObject=(userEmail,userPassword)=>{
+    const newUser = new User();
+    newUser.setEmail(userEmail);
+    newUser.setPassword(userPassword);
+    newUser.setName("");
+    newUser.setSurname("");
+    newUser.setUserType(0);
+    newUser.setUsername("");
+    return newUser;
+  }
+
+
   const registerUser=(userEmail,userPassword)=>{
-
-    if(data.isValidEmail && data.isValidPassword){
-      console.log("Registiration crediantials are valid!");
-      auth().createUserWithEmailAndPassword(userEmail,userPassword).then(()=>navigation.navigate('Main')).catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-        
-      })
-      database().ref("users").set({email:data.email});
-    }
-
-    else{
-      console.log("Please check your credientials!");
-    }
-
+    const createdUser=createUserObject(userEmail,userPassword);
+    myDatabase.registerUser(data.isValidEmail,data.isValidPassword,createdUser);
+    navigation.navigate("Main");
   }
 
 

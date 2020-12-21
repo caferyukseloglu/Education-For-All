@@ -18,11 +18,15 @@ import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
 import auth from '@react-native-firebase/auth';
+import "./api/DatabaseHandler";
+import { DatabaseHandler } from './api/DatabaseHandler';
+import "./api/User";
+import {User} from "./api/User";
 
 
 const LoginScreen = ({ navigation }) => {
   const { colors } = useTheme();
-
+  var myDatabase = new DatabaseHandler();
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -33,23 +37,12 @@ const LoginScreen = ({ navigation }) => {
   });
 
   const userLogin = (userEmail,userPassword) =>{
-    
-    if(data.isValidEmail && data.isValidPassword){
-      auth().signInWithEmailAndPassword(userEmail,userPassword).then(()=>navigation.navigate('Main'))
-      .catch(error =>{
-        if(error.code == "auth/wrong-password"){
-          console.log("Password is wrong!");
-        }
 
-      })
-      console.log(auth().currentUser);
-
+    var loggedUser = new User();
+    loggedUser = myDatabase.loginUser(data.isValidEmail,data.isValidPassword,userEmail,userPassword);
+    if(loggedUser.getEmail() != undefined){
+      navigation.navigate("Main");
     }
-
-    else{
-      console.log("Please check the crediantials!");
-    }
-    
   }
 
 
