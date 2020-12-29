@@ -4,36 +4,32 @@ import {Category} from './Category';
 
 const categories = [
   {
-    id: 'category',
-    title: 'Category',
-    color: '#FFCE31',
+    id: 'PHP Coding',
+    title: 'PHP Coding',
+    color: '#C4C4C4',
   },
   {
-    id: 'Video Lessons',
-    title: 'Video Lessons',
-    color: '#2D9CDB',
+    id: 'Python Coding',
+    title: 'Python Coding',
+    color: '#C4C4C4',
   },
   {
-    id: 'Free Lessons',
-    title: 'Free Lessons',
-    color: '#EB5757',
+    id: 'C++ Coding',
+    title: 'C++ Coding',
+    color: '#C4C4C4',
   },
   {
-    id: 'Bookshelf',
-    title: 'Bookshelf',
-    color: '#BB6BD9',
+    id: 'C Coding',
+    title: 'C Coding',
+    color: '#C4C4C4',
   },
   {
-    id: 'Live Lessons',
-    title: 'Live Lessons',
-    color: '#F2C94C',
-  },
-  {
-    id: 'Leader Board',
-    title: 'Leader Board',
-    color: '#6FCF97',
+    id: 'RN Coding',
+    title: 'RN Coding',
+    color: '#C4C4C4',
   },
 ];
+
 
 const Categories = () => {
   return (
