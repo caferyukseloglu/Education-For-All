@@ -29,3 +29,27 @@ export const Bottom = styled.View`
   padding: ${(props) => props.paddings || '0 0 0 0'};
 `;
 
+export const PopView = styled.View`
+  padding:20px;
+  border-bottom-width: 1px;
+  border-bottom-color:#ccc;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Avatar1 = styled.View`
+  width:64px;
+  height:64px;
+  background:#219653 ;
+  border-radius:30px;
+  margin-right: 12px;
+  padding top:12px;
+  padding:20px;
+  align-items: flex-end;
+  justify-content: center;
+  borderBottomLeftRadius: 20px;
+  borderBottomRightRadius: 20px;
+  borderTopLeftRadius: 20px;
+  borderTopRightRadius: 20px;
+`;
