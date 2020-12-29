@@ -42,6 +42,8 @@ const LoginScreen = ({ navigation }) => {
     loggedUser = myDatabase.loginUser(data.isValidEmail,data.isValidPassword,userEmail,userPassword);
     if(loggedUser.getEmail() != undefined){
       navigation.navigate("Main");
+      console.log(loggedUser.getEmail());
+      console.log(loggedUser.getPassword());
     }
   }
 
