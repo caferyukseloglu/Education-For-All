@@ -15,7 +15,6 @@ import RegisterScreen from './Register';
 import ForgotScreen from './Forgot';
 import {BottomTabs} from './bottomNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 const Stack = createStackNavigator();
 
 export const StackNavigator = () => {
@@ -54,6 +53,7 @@ export const StackNavigator = () => {
           component={BottomTabs}
           options={{headerShown: false}}
         />
+
       </Stack.Navigator>
     </SafeAreaView>
   );
