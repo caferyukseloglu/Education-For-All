@@ -17,9 +17,12 @@ import {
 } from './styles/text';
 import {View, FlatList} from 'react-native';
 import {SubjectCard} from './styles/cards';
+import "./api/DatabaseHandler";
+import { DatabaseHandler } from './api/DatabaseHandler';
 
 const SubjectScreen = ({navigation}) => {
 
+  
   const [data] = useState({
     time: '15',
     subjects: ['Global', 'English', 'Physics', 'Turkish', 'German'],

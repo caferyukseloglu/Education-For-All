@@ -52,8 +52,11 @@ const RegisterScreen = ({ navigation }) => {
 
   const registerUser=(userEmail,userPassword)=>{
     const createdUser=createUserObject(userEmail,userPassword);
-    myDatabase.registerUser(data.isValidEmail,data.isValidPassword,createdUser);
-    navigation.navigate("Main");
+    var tryit=myDatabase.registerUser(data.isValidEmail,data.isValidPassword,createdUser);
+    console.log(tryit);
+    if(tryit == true){
+      navigation.navigate('Main');
+    }
   }
 
 
