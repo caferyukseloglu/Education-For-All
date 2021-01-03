@@ -53,7 +53,6 @@ export const StackNavigator = () => {
           component={BottomTabs}
           options={{headerShown: false}}
         />
-
       </Stack.Navigator>
     </SafeAreaView>
   );

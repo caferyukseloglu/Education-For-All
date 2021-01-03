@@ -24,8 +24,8 @@ import "./api/User";
 import {User} from "./api/User";
 
 
-const LoginScreen = ({ navigation }) => {
-  const { colors } = useTheme();
+const LoginScreen = ({navigation}) => {
+  const {colors} = useTheme();
   var myDatabase = new DatabaseHandler();
 
   const [data, setData] = useState({
@@ -38,7 +38,6 @@ const LoginScreen = ({ navigation }) => {
   });
 
   const userLogin = (userEmail,userPassword) =>{
-    
      myDatabase.loginUser(data.isValidEmail,data.isValidPassword,userEmail,userPassword,function(){
        console.log("I am in login page"+myDatabase.getUser().getUserID());
        if(myDatabase.getUser().getUserID()!=undefined){
@@ -46,11 +45,7 @@ const LoginScreen = ({ navigation }) => {
          console.log(myDatabase.getUser().getUserID());
        }
      });
-     
-
   }
-
-
 
   //Controls the Email Input if short than 8 character or white-space or not includes @ and . gives error else success, empty = none
   const emailControl = (val: string) => {
@@ -161,7 +156,7 @@ const LoginScreen = ({ navigation }) => {
                   ) : (
                     <NewInput.Icon name="alert-circle" color={colors.error} />
                   )),
-              }
+                }
               : ''),
           }}
         />
@@ -238,7 +233,7 @@ const LoginScreen = ({ navigation }) => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress={() => userLogin(data.email,data.password)}
+            onPress={() =>  navigation.navigate('Main')}
           />
           <BigButton
             margins={[0, 0, 0, 0]}
