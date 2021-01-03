@@ -25,6 +25,7 @@ import {User} from "./api/User";
 const RegisterScreen = ({ navigation }) => {
   const { colors } = useTheme();
   var myDatabase = new DatabaseHandler();
+  
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -51,9 +52,23 @@ const RegisterScreen = ({ navigation }) => {
 
 
   const registerUser=(userEmail,userPassword)=>{
-    const createdUser=createUserObject(userEmail,userPassword);
-    myDatabase.registerUser(data.isValidEmail,data.isValidPassword,createdUser);
-    navigation.navigate("Main");
+    if(data.password == data.rePassword){
+      const createdUser=createUserObject(userEmail,userPassword);
+      myDatabase.registerUser(data.isValidEmail,data.isValidPassword,data.isChecked,createdUser,function(){
+        if(myDatabase.getValidity()){
+          console.log("Account created.");
+          console.log(myDatabase.getUser().getUserID());
+          navigation.navigate("Main");
+        }
+        else{
+          console.log("Account couldn't create, please check your crediantials.");
+        }
+      }); 
+
+    }
+    else{
+      console.log("Please check your password.")
+    }
   }
 
 
