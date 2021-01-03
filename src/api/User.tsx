@@ -10,7 +10,7 @@ export class User{
     private surname: string;
     private username: string;
     private userType: number;
-    
+
     public setEmail(userEmail:string): void{
         this.email = userEmail;
     }

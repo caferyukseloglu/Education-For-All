@@ -7,29 +7,40 @@ export class DatabaseHandler{
 
     reference = database().ref('/users');
     private loggedUser = new User();
+    private isValid:boolean;
 
+    public validityCheck(isValid:boolean):void{
+        this.isValid = isValid;
+    }
 
-    public registerUser(emailValidity: boolean, passwordValidity:boolean, user:User):boolean{
-        if(emailValidity && passwordValidity){
+    public getValidity():boolean{
+        return this.isValid;
+    }
+
+    public registerUser(emailValidity: boolean, passwordValidity:boolean,readUserAgg:boolean, user:User,_callback):void{
+        if(emailValidity && passwordValidity && readUserAgg){
             console.log("Registiration crediantials are valid!");
             auth().createUserWithEmailAndPassword(user.getEmail(),user.getPassword()).then(()=>{
                 console.log(auth().currentUser.uid);
                 user.setUserID(auth().currentUser.uid);
                 this.addUserToDB(user);
-                
-            }).catch(error => {
+                this.validityCheck(true);
+                this.loggedUser.setUserID(auth().currentUser.uid);
+            }).then(()=>_callback()).catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
                     console.log('That email address is already in use!');
-                    
+                    this.validityCheck(false);
+                    _callback();
                 }
-                return false;
         })
-            return true;
+
         }
         else{
             console.log("Please check your credientials!");
-            return false;
+            this.validityCheck(false);
+            _callback();
         }
+        
             
         }
 
@@ -47,7 +58,6 @@ export class DatabaseHandler{
     }
 
     public loginUser(emailValidity:boolean,passwordValidity:boolean,userEmail:string,userPassword:string,_callback):void{
-
         if(emailValidity&&passwordValidity){
             firebase.auth().signInWithEmailAndPassword(userEmail,userPassword).then(()=>{
                 console.log("User logged in succesfully!");
@@ -61,8 +71,7 @@ export class DatabaseHandler{
                     this.loggedUser.setUserType(snapshot.val().usertype),
                     this.loggedUser.setUsername(snapshot.val().username)
                     console.log("Finished init of user object in method")
-                  }).then(()=>_callback());
-                  
+                  }).then(()=>_callback())
             }).catch(error=>{
                 if(error.code==="auth/wrong-password"){
                     console.log("Password is wrong try again.");
@@ -76,6 +85,10 @@ export class DatabaseHandler{
         }
 
 
+    }
+
+    private setUser():void{
+        
     }
 
     public getUser():User{

@@ -40,6 +40,7 @@ const LoginScreen = ({ navigation }) => {
   const userLogin = (userEmail,userPassword) =>{
     
      myDatabase.loginUser(data.isValidEmail,data.isValidPassword,userEmail,userPassword,function(){
+       console.log("I am in login page"+myDatabase.getUser().getUserID());
        if(myDatabase.getUser().getUserID()!=undefined){
          navigation.navigate("Main");
          console.log(myDatabase.getUser().getUserID());
