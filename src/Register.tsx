@@ -17,10 +17,15 @@ import {Form, Body, Line, Bottom} from './styles/wrapper';
 import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
+import "./api/DatabaseHandler";
+import { DatabaseHandler } from './api/DatabaseHandler';
+import "./api/User";
+import {User} from "./api/User";
 
 const RegisterScreen = ({ navigation }) => {
   const { colors } = useTheme();
-
+  var myDatabase = new DatabaseHandler();
+  
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -32,6 +37,40 @@ const RegisterScreen = ({ navigation }) => {
     isValidRePassword: null,
     isChecked: false,
   });
+
+
+  const createUserObject=(userEmail,userPassword)=>{
+    const newUser = new User();
+    newUser.setEmail(userEmail);
+    newUser.setPassword(userPassword);
+    newUser.setName("");
+    newUser.setSurname("");
+    newUser.setUserType(0);
+    newUser.setUsername("");
+    return newUser;
+  }
+
+
+  const registerUser=(userEmail,userPassword)=>{
+    if(data.password == data.rePassword){
+      const createdUser=createUserObject(userEmail,userPassword);
+      myDatabase.registerUser(data.isValidEmail,data.isValidPassword,data.isChecked,createdUser,function(){
+        if(myDatabase.getValidity()){
+          console.log("Account created.");
+          console.log(myDatabase.getUser().getUserID());
+          navigation.navigate("Main");
+        }
+        else{
+          console.log("Account couldn't create, please check your crediantials.");
+        }
+      }); 
+
+    }
+    else{
+      console.log("Please check your password.")
+    }
+  }
+
 
   //Controls the Email Input if short than 8 character or white space or not includes @ and . gives error else success, empty = none
   const emailControl = (val: string) => {
@@ -277,7 +316,7 @@ const RegisterScreen = ({ navigation }) => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => registerUser(data.email,data.password)}
           />
           <BigButton
             margins={[0, 0, 0, 0]}

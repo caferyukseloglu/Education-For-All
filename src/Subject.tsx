@@ -10,11 +10,19 @@ import {
   CardSubtitle,
   LessonTitle,
   LessonSubtitle,
+  CourseTitle,
+  CourseSubtitle,
+  RecomTitle,
+  RecomInfo,
 } from './styles/text';
 import {View, FlatList} from 'react-native';
 import {SubjectCard} from './styles/cards';
+import "./api/DatabaseHandler";
+import { DatabaseHandler } from './api/DatabaseHandler';
 
 const SubjectScreen = ({navigation}) => {
+
+  
   const [data] = useState({
     time: '15',
     subjects: ['Global', 'English', 'Physics', 'Turkish', 'German'],
@@ -39,13 +47,20 @@ const SubjectScreen = ({navigation}) => {
 
   return (
     <Body>
-      <Title>Subjects</Title>
-      <SubTitle>Today's lesson progress {data.time} min</SubTitle>
+      <View style={{flexDirection: 'row'}}>
+        <View style={{flex: 5}}>
+          <CourseTitle>Subjects</CourseTitle>
+          <CourseSubtitle>Today's lesson progress {data.time} min</CourseSubtitle>
+        </View>
+        <View style={{flex: 1}}>
+          <IconButton style={{marginTop:20}} icon="square-edit-outline" size={25} color="black" onPress={()=>console.log("Edit")}/>
+        </View>
+      </View>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          padding: 31,
+          padding: 15,
           alignItems: 'center',
         }}>
         {Object.keys(data.cards).map((eachCard) => (
@@ -66,7 +81,8 @@ const SubjectScreen = ({navigation}) => {
           padding: 20,
         }}>
         <View>
-          <Title>Recommended lessons</Title>
+          <RecomTitle>Recommended lessons</RecomTitle>
+          <RecomInfo>You recently completed {data.completedTopicCount} topic.</RecomInfo>
         </View>
         <FlatList
           data={courses}

@@ -19,6 +19,12 @@ export const Title = styled.Text`
   text-align: center;
 `;
 
+export const HeadText = styled.Text`
+  margin: 30px;
+  font-size: 15px;
+  color: #000000;
+`;
+
 export const SubTitle = styled.Text`
   margin-top: 10px;
   width: 330px;
@@ -30,8 +36,33 @@ export const SubTitle = styled.Text`
   line-height: 21px;
   display: flex;
   align-items: center;
-  text-align: center;
+  text-align: ${(props) => props.textAlign || 'center'};
 `;
+
+export const CourseTitle = styled.Text`
+  margin-top:27px;
+  margin-left: 27px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 36px;
+  display: flex;
+`;
+
+export const CourseSubtitle = styled.Text`
+  margin-left: 27px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  color: rgba(51, 51, 51, 0.56);
+`;
+
 
 export const CheckText = styled.Text`
   font-family: Oxygen;
@@ -46,13 +77,9 @@ export const CheckText = styled.Text`
   margin-left: ${(props) => props.leftMargin || '0'};
 `;
 
-export const CategoryText = styled.Text`
-  text-align: ${(props) => props.textAlign || 'center'};
-`;
-
 export const CardTitle = styled.Text`
   margin-top: 25px;
-  margin-left: 15px;
+  margin-left:15px;
   width: auto;
   height: 36px;
   font-family: Poppins-Regular;
@@ -61,11 +88,11 @@ export const CardTitle = styled.Text`
   font-size: 13px;
   line-height: 19.5px;
   display: flex;
-  color: #ffffff;
+  color: #FFFFFF;
 `;
 
 export const CardSubtitle = styled.Text`
-  margin-left: 15px;
+  margin-left:15px;
   width: auto;
   height: 36px;
   font-family: Poppins-Regular;
@@ -74,9 +101,16 @@ export const CardSubtitle = styled.Text`
   font-size: 8px;
   line-height: 12px;
   display: flex;
-  color: #ffffff;
+  color: #FFFFFF;
 `;
 
+export const CategoryText = styled.Text`
+  text-align: ${(props) => props.textAlign || 'center'};
+`;
+
+export const HPCardsyText = styled.Text`
+  text-align: ${(props) => props.textAlign || 'center'};
+`;
 export const LessonTitle = styled.Text`
   margin-top:27px;
   margin-left:15px;
@@ -102,4 +136,26 @@ export const LessonSubtitle = styled.Text`
   display: flex;
   letter-spacing: 0.12px;
   color: rgba(0, 0, 0, 0.58);
+`;
+
+export const RecomTitle = styled.Text`
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+`;
+
+export const RecomInfo = styled.Text`
+  margin-bottom:15px;
+  width: auto;
+  font-family: Poppins-Regular;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 15px;
+  display: flex;
+  color: rgba(51, 51, 51, 0.56);
 `;
