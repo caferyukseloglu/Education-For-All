@@ -15,7 +15,7 @@ function coloreds(colored) {
 }
 
 export const ButtonSt = styled(Button)`
-  border-radius: 10px;
+  border-radius: ${(props) => props.bRadius || '10'}px;
   /*Box Shadows Elevation is for Android*/
   shadow-color: black;
   shadow-offset: 0 6px;
@@ -40,12 +40,13 @@ export const ButtonStText = styled(Text)`
   color: ${(props) => props.color || 'black'};
 `;
 
-export const BigButton = ({margins, text, mode, textColor, bgColor, onPress}) => (
+export const BigButton = ({margins, text, mode, textColor, bgColor, onPress, height,radius}) => (
   <ButtonSt
+    bRadius={radius}
     color={coloreds(bgColor)}
     mode={mode}
     margins={margins}
-    contentStyle={{height: 74}}
+    contentStyle={{height: height || 74}}
     onPress={onPress}>
     <ButtonStText color={coloreds(textColor)}>{text}</ButtonStText>
   </ButtonSt>

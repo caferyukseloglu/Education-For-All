@@ -38,7 +38,7 @@ const HomeScreen = ({navigation}) => {
             mode="contained"
             bgColor="surface"
             textColor="buttonText2"
-            onPress={() => navigation.navigate('Register')}
+            onPress={() => navigation.navigate('RegisterType')}
           />
         </Form>
       </Bottom>
