@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Body = styled.View`
   flex: 1;
+  padding: ${(props) => props.paddings || '0'};
 `;
 
 export const Form = styled.View`
@@ -13,7 +14,8 @@ export const Form = styled.View`
 export const Line = styled.View`
   flex-direction: row;
   justify-content: ${(props) => props.justify || 'space-around'};
-  alignItems: center;
+  alignItems: ${(props) => props.alignItems || 'center'};
+  margin-left: ${(props) => props.marginLeft || '0'}px;
 `;
 export const Start = styled.View`
   flex: 1;

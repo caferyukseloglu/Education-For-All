@@ -36,7 +36,7 @@ export const SubTitle = styled.Text`
   line-height: 21px;
   display: flex;
   align-items: center;
-  text-align: center;
+  text-align: ${(props) => props.textAlign || 'center'};
 `;
 
 export const CourseTitle = styled.Text`

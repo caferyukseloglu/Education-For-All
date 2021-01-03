@@ -16,12 +16,13 @@ import Categories from './components/Categories';
 import {Card1} from './styles/cards';
 import {HPCardsyText} from './styles/text';
 
-const HomePageScreen = ({navigation}) => {
+const MainScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   const HeadofCategory = {
     exampleData: [
+      //TODO: Specify the colors from the theme as DarkMode
       {name: 'Category', color: '#FFCE31'},
       {name: 'Video lessons', color: '#2D9CDB'},
       {name: 'Free lessons', color: '#EB5757'},
@@ -93,23 +94,22 @@ const HomePageScreen = ({navigation}) => {
           <PopView>
             <Avatar1 />
             <Text style={{fontWeight: 'bold', fontSize: 15}}>
-              what should we pay attention to while styding?{' '}
+              what should we pay attention to while studying?{' '}
             </Text>
           </PopView>
           <PopView>
             <Avatar1 />
             <Text style={{fontWeight: 'bold', fontSize: 15}}>
-              what should we pay attention to while styding?{' '}
+              what should we pay attention to while studying?{' '}
             </Text>
           </PopView>
           <PopView>
             <Avatar1 />
             <Text style={{fontWeight: 'bold', fontSize: 15}}>
-              what should we pay attention to while styding?{' '}
+              what should we pay attention to while studying?{' '}
             </Text>
           </PopView>
           <HeadText style={{fontWeight: 'bold'}}>Threads</HeadText>
-          <Card1 />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -123,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomePageScreen;
+export default MainScreen;

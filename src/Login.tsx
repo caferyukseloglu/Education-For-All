@@ -17,15 +17,13 @@ import {Form, Body, Line, Bottom} from './styles/wrapper';
 import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
-import auth from '@react-native-firebase/auth';
-import "./api/DatabaseHandler";
-import { DatabaseHandler } from './api/DatabaseHandler';
-import "./api/User";
-import {User} from "./api/User";
+import './api/DatabaseHandler';
+import {DatabaseHandler} from './api/DatabaseHandler';
+import './api/User';
+import {User} from './api/User';
 
-
-const LoginScreen = ({ navigation }) => {
-  const { colors } = useTheme();
+const LoginScreen = ({navigation}) => {
+  const {colors} = useTheme();
   var myDatabase = new DatabaseHandler();
   const [data, setData] = useState({
     email: '',
@@ -36,17 +34,20 @@ const LoginScreen = ({ navigation }) => {
     isChecked: false,
   });
 
-  const userLogin = (userEmail,userPassword) =>{
-
+  const userLogin = (userEmail, userPassword) => {
     var loggedUser = new User();
-    loggedUser = myDatabase.loginUser(data.isValidEmail,data.isValidPassword,userEmail,userPassword);
-    if(loggedUser.getEmail() != undefined){
-      navigation.navigate("Main");
+    loggedUser = myDatabase.loginUser(
+      data.isValidEmail,
+      data.isValidPassword,
+      userEmail,
+      userPassword,
+    );
+    if (loggedUser.getEmail() != undefined) {
+      navigation.navigate('Main');
       console.log(loggedUser.getEmail());
       console.log(loggedUser.getPassword());
     }
-  }
-
+  };
 
   //Controls the Email Input if short than 8 character or white-space or not includes @ and . gives error else success, empty = none
   const emailControl = (val: string) => {
@@ -157,7 +158,7 @@ const LoginScreen = ({ navigation }) => {
                   ) : (
                     <NewInput.Icon name="alert-circle" color={colors.error} />
                   )),
-              }
+                }
               : ''),
           }}
         />
@@ -234,7 +235,7 @@ const LoginScreen = ({ navigation }) => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress={() => userLogin(data.email,data.password)}
+            onPress={() =>  navigation.navigate('Main')}
           />
           <BigButton
             margins={[0, 0, 0, 0]}
