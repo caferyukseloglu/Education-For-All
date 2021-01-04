@@ -17,15 +17,19 @@ import {Card1} from './styles/cards';
 import {HPCardsyText} from './styles/text';
 import "./api/DatabaseHandler";
 import { DatabaseHandler } from './api/DatabaseHandler';
+import { useUserData } from './states/useData';
 
 const MainScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
 
+  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+  console.log(userData.userdata.courseList);//Global state instance gets from https://github.com/pmndrs/zustand
+
   const HeadofCategory = {
     exampleData: [
       //TODO: Specify the colors from the theme as DarkMode
-      {name: "Main", color: '#FFCE31'},
+      {name: 'Main', color: '#FFCE31'},
       {name: 'Video lessons', color: '#2D9CDB'},
       {name: 'Free lessons', color: '#EB5757'},
       {name: 'Bookshelf', color: '#BB6BD9'},

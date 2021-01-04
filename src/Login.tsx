@@ -17,16 +17,17 @@ import {Form, Body, Line, Bottom} from './styles/wrapper';
 import {BigButton} from './styles/buttons';
 import {SubTitle, Title, CheckText} from './styles/text';
 import {NewInput} from './styles/input';
-import auth, { firebase } from '@react-native-firebase/auth';
-import "./api/DatabaseHandler";
-import { DatabaseHandler } from './api/DatabaseHandler';
-import "./api/User";
-import {User} from "./api/User";
-
+import auth, {firebase} from '@react-native-firebase/auth';
+import './api/DatabaseHandler';
+import {DatabaseHandler} from './api/DatabaseHandler';
+import './api/User';
+import {User} from './api/User';
+import {useUserData} from './states/useData';
 
 const LoginScreen = ({navigation}) => {
   const {colors} = useTheme();
   var myDatabase = new DatabaseHandler();
+  const userData = useUserData();
 
   const [data, setData] = useState({
     email: '',
@@ -37,18 +38,25 @@ const LoginScreen = ({navigation}) => {
     isChecked: false,
   });
 
-  const userLogin = (userEmail,userPassword) =>{
-       myDatabase.loginUser(data.isValidEmail,data.isValidPassword,userEmail,userPassword,function(){
-       console.log("I am in login page "+myDatabase.getUser().getUserID());
-       if(myDatabase.getUser().getUserID()!=undefined){
-          myDatabase.setCourses(function(){
-            console.log("Login size: "+ myDatabase.getCourses().length);
+  const userLogin = (userEmail, userPassword) => {
+    myDatabase.loginUser(
+      data.isValidEmail,
+      data.isValidPassword,
+      userEmail,
+      userPassword,
+      function () {
+        console.log('I am in login page ' + myDatabase.getUser().getUserID());
+        if (myDatabase.getUser().getUserID() != undefined) {
+          myDatabase.setCourses(function () {
+            console.log('Login size: ' + myDatabase.getCourses().length);
+            userData.setData(myDatabase);
             navigation.navigate('Main');
-         });
-       }
-     });
-  }
-  
+          });
+        }
+      },
+    );
+  };
+
   //Controls the Email Input if short than 8 character or white-space or not includes @ and . gives error else success, empty = none
   const emailControl = (val: string) => {
     var trimmedInput = val.trim();
@@ -235,7 +243,7 @@ const LoginScreen = ({navigation}) => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress={() =>  userLogin(data.email,data.password)}
+            onPress={() => userLogin(data.email, data.password)}
           />
           <BigButton
             margins={[0, 0, 0, 0]}
