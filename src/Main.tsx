@@ -15,15 +15,17 @@ import {
 import Categories from './components/Categories';
 import {Card1} from './styles/cards';
 import {HPCardsyText} from './styles/text';
+import "./api/DatabaseHandler";
+import { DatabaseHandler } from './api/DatabaseHandler';
 
-const MainScreen = ({navigation}) => {
+const MainScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
 
   const HeadofCategory = {
     exampleData: [
       //TODO: Specify the colors from the theme as DarkMode
-      {name: 'Category', color: '#FFCE31'},
+      {name: "Main", color: '#FFCE31'},
       {name: 'Video lessons', color: '#2D9CDB'},
       {name: 'Free lessons', color: '#EB5757'},
       {name: 'Bookshelf', color: '#BB6BD9'},

@@ -1,6 +1,7 @@
 import auth, { firebase } from '@react-native-firebase/auth';
 import database, { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { Alert } from 'react-native';
+import { Course } from './Course';
 import "./User";
 import {User} from "./User";
 export class DatabaseHandler{
@@ -8,6 +9,7 @@ export class DatabaseHandler{
     reference = database().ref('/users');
     private loggedUser = new User();
     private isValid:boolean;
+    private courseList = new Array<Course>();
 
     public validityCheck(isValid:boolean):void{
         this.isValid = isValid;
@@ -45,8 +47,8 @@ export class DatabaseHandler{
         }
 
     public addUserToDB(user:User): void{
-        console.log("User id is" + user.getUserID());
-        firebase.database().ref("users/"+user.getUserID()).set({
+        
+        firebase.database().ref("users/"+"/"+user.getUserID()).set({
             userid: user.getUserID(),
             email: user.getEmail(),
             password: user.getPassword(),
@@ -55,7 +57,8 @@ export class DatabaseHandler{
             surname: user.getSurname(),
             usertype: user.getUserType()
         })
-    }
+        console.log("User created with user id: " + user.getUserID());
+    } 
 
     public loginUser(emailValidity:boolean,passwordValidity:boolean,userEmail:string,userPassword:string,_callback):void{
         if(emailValidity&&passwordValidity){
@@ -87,6 +90,31 @@ export class DatabaseHandler{
 
     }
 
+    public setCourses(_callback):void{
+        var courseCount: number;
+        firebase.database().ref("courses").once("value").then(snapshot=>{
+            courseCount = Object.keys(snapshot.val()).length;
+            console.log("COURSE COUNT IS: "+courseCount);
+            Object.keys(snapshot.val()).forEach(courseTitle=>{
+                const eachCourse: Course = new Course();
+                firebase.database().ref("/courses/"+courseTitle).once("value").then(snapshot=>{
+                    eachCourse.setCourseId(snapshot.val().courseid);
+                    eachCourse.setCourseName(snapshot.val().coursename);
+                    eachCourse.setCourseDescription(snapshot.val().coursedescription);
+                    this.courseList.push(eachCourse);
+                    if(this.courseList.length==courseCount){
+                        _callback();
+                    }
+                })
+            });
+        })
+    }
+
+    public getCourses():Array<Course>{
+        return this.courseList;
+    }
+
+
     private setUser():void{
         
     }
@@ -95,5 +123,15 @@ export class DatabaseHandler{
         return this.loggedUser;
     }
     
+
+
+	public getCourseExams(): Array<Course> {
+		return this.courseExams;
+	}
+
+	public setCourseExams(value: Course) {
+		this.courseExams.push(value);
+	}
+
 
 }

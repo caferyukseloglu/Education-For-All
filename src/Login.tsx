@@ -38,15 +38,17 @@ const LoginScreen = ({navigation}) => {
   });
 
   const userLogin = (userEmail,userPassword) =>{
-     myDatabase.loginUser(data.isValidEmail,data.isValidPassword,userEmail,userPassword,function(){
-       console.log("I am in login page"+myDatabase.getUser().getUserID());
+       myDatabase.loginUser(data.isValidEmail,data.isValidPassword,userEmail,userPassword,function(){
+       console.log("I am in login page "+myDatabase.getUser().getUserID());
        if(myDatabase.getUser().getUserID()!=undefined){
-         navigation.navigate("Main");
-         console.log(myDatabase.getUser().getUserID());
+          myDatabase.setCourses(function(){
+            console.log("Login size: "+ myDatabase.getCourses().length);
+            navigation.navigate('Main');
+         });
        }
      });
   }
-
+  
   //Controls the Email Input if short than 8 character or white-space or not includes @ and . gives error else success, empty = none
   const emailControl = (val: string) => {
     var trimmedInput = val.trim();
@@ -233,7 +235,7 @@ const LoginScreen = ({navigation}) => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress={() =>  navigation.navigate('Main')}
+            onPress={() =>  userLogin(data.email,data.password)}
           />
           <BigButton
             margins={[0, 0, 0, 0]}

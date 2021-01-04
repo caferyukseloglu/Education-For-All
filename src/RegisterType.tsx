@@ -34,7 +34,7 @@ const RegisterTypeScreen = ({navigation}) => {
           mode="contained"
           bgColor="error"
           textColor="buttonText1"
-          onPress={() => navigation.navigate('Register')}
+          onPress={() => navigation.navigate('Register',{userType:1})}
           height= {120}
           radius={20}
         />
@@ -44,7 +44,7 @@ const RegisterTypeScreen = ({navigation}) => {
           mode="contained"
           bgColor="warning"
           textColor="buttonText2"
-          onPress={() => navigation.navigate('Register')}
+          onPress={() => navigation.navigate('Register',{userType:2})}
           height= {120}
           radius={20}
         />

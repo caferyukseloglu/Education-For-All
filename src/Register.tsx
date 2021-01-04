@@ -22,10 +22,12 @@ import { DatabaseHandler } from './api/DatabaseHandler';
 import "./api/User";
 import {User} from "./api/User";
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({ route ,navigation }) => {
   const { colors } = useTheme();
   var myDatabase = new DatabaseHandler();
   
+  const {userType} = route.params;
+
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -38,14 +40,13 @@ const RegisterScreen = ({ navigation }) => {
     isChecked: false,
   });
 
-
   const createUserObject=(userEmail,userPassword)=>{
     const newUser = new User();
     newUser.setEmail(userEmail);
     newUser.setPassword(userPassword);
     newUser.setName("");
     newUser.setSurname("");
-    newUser.setUserType(0);
+    newUser.setUserType(userType);
     newUser.setUsername("");
     return newUser;
   }
@@ -53,12 +54,15 @@ const RegisterScreen = ({ navigation }) => {
 
   const registerUser=(userEmail,userPassword)=>{
     if(data.password == data.rePassword){
+      console.log("Hello");
       const createdUser=createUserObject(userEmail,userPassword);
       myDatabase.registerUser(data.isValidEmail,data.isValidPassword,data.isChecked,createdUser,function(){
         if(myDatabase.getValidity()){
           console.log("Account created.");
           console.log(myDatabase.getUser().getUserID());
-          navigation.navigate("Main");
+          console.log("Start of get courses.");
+          console.log("End of get courses.");
+          navigation.navigate('Main');
         }
         else{
           console.log("Account couldn't create, please check your crediantials.");
