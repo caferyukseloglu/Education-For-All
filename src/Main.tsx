@@ -23,8 +23,8 @@ const MainScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
 
-  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
-  console.log(userData.userdata.courseList);//Global state instance gets from https://github.com/pmndrs/zustand
+  const userData = useUserData();   //Global state instance gets from https://github.com/pmndrs/zustand
+  console.log(userData.userdata.courseList);  //Global state instance gets from https://github.com/pmndrs/zustand
 
   const HeadofCategory = {
     exampleData: [

@@ -5,14 +5,14 @@ import {CategoryText} from '../styles/text';
 
 interface CategoryProps {
   category: {
-    id: string;
-    color: string;
-    title: string;
+    courseId: number;
+    courseName: string;
+    courseDescription: string;
   };
 }
 
 export const Category = ({
-  category: {color: backgroundColor, title},
+  category: {courseName},
 }: CategoryProps) => {
   return (
     <View style={{marginLeft: 20, alignItems: 'center', marginTop: 10}}>
@@ -21,7 +21,7 @@ export const Category = ({
           width: 200,
           height: 150,
           borderRadius: 110 / 2,
-          backgroundColor,
+          backgroundColor:"#C4C4C4"
         }}>
         <Card.Content>
           <Avatar.Image
@@ -31,7 +31,7 @@ export const Category = ({
           />
         </Card.Content>
       </Card>
-      <CategoryText textAlign="center">{title}</CategoryText>
+      <CategoryText textAlign="center">{courseName}</CategoryText>
       <CategoryText textAlign="center">
         8.5{' '}
         <Avatar.Icon
