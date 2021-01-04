@@ -23,8 +23,8 @@ const MainScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
 
-  const userData = useUserData();   //Global state instance gets from https://github.com/pmndrs/zustand
-  console.log(userData.userdata.courseList);  //Global state instance gets from https://github.com/pmndrs/zustand
+  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+  console.log(userData.userdata.courseList); //Global state instance gets from https://github.com/pmndrs/zustand
 
   const HeadofCategory = {
     exampleData: [
@@ -52,7 +52,7 @@ const MainScreen = ({ navigation }) => {
           <FlatList
             horizontal
             data={HeadofCategory.exampleData}
-            renderItem={({item}) => (
+            renderItem={({item, index}) => (
               <View>
                 <View
                   style={{
@@ -68,6 +68,7 @@ const MainScreen = ({ navigation }) => {
                 <HPCardsyText>{item.name}</HPCardsyText>
               </View>
             )}
+            keyExtractor={(item, index) => index.toString()}
           />
           <HeadText style={{fontWeight: 'bold'}}>Recommended courses </HeadText>
           <Body>
@@ -82,7 +83,7 @@ const MainScreen = ({ navigation }) => {
               {name: 'Event 3'},
               {name: 'Event 4'},
             ]}
-            renderItem={() => (
+            renderItem={(item, index) => (
               <View style={{padding: 10}}>
                 <View
                   style={{
@@ -95,6 +96,7 @@ const MainScreen = ({ navigation }) => {
                 />
               </View>
             )}
+            keyExtractor={(item, index) => index.toString()}
           />
           <HeadText style={{fontWeight: 'bold'}}>Populer</HeadText>
           <PopView>
