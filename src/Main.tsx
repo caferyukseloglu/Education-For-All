@@ -34,7 +34,7 @@ const MainScreen = ({ navigation }) => {
       })
     })
   })
-  
+
   
   const HeadofCategory = {
     exampleData: [

@@ -107,24 +107,27 @@ export class DatabaseHandler{
     }
 
     public setCourses(_callback):void{
-        var courseCount: number;
-        firebase.database().ref("courses").once("value").then(snapshot=>{
-            courseCount = Object.keys(snapshot.val()).length;
-            console.log("COURSE COUNT IS: "+courseCount);
-            Object.keys(snapshot.val()).forEach(courseTitle=>{
-                const eachCourse: Course = new Course();
-                firebase.database().ref("/courses/"+courseTitle).once("value").then(snapshot=>{
-                    eachCourse.setCourseId(snapshot.val().courseid);
-                    eachCourse.setCourseName(snapshot.val().coursename);
-                    eachCourse.setCourseDescription(snapshot.val().coursedescription);
-                    this.courseList.push(eachCourse);
-                    if(this.courseList.length==courseCount){
-                        _callback();
-                    }
+
+        firebase.database().ref("courses/categories").once("value").then(snapshot=>{
+            Object.keys(snapshot.val()).forEach(category=>{
+                firebase.database().ref("courses/categories/"+category).once("value").then(snapshot=>{
+                    Object.keys(snapshot.val()).forEach(courseInCategory=>{
+                        const eachCategory: Course = new Course();
+                        firebase.database().ref("courses/categories/"+category+"/"+courseInCategory).once("value").then(snapshot=>{
+                            eachCategory.setCourseId(snapshot.val().courseid);
+                            eachCategory.setCourseName(snapshot.val().coursename);
+                            eachCategory.setCourseDescription(snapshot.val().coursedescription);
+                            this.courseList.push(eachCategory);
+                            if(this.courseList.length==5){
+                                _callback();
+                            }
+                        })
+                    })
                 })
-            });
+            })
         })
-    }
+        
+}
 
     public getCourses():Array<Course>{
         return this.courseList;
