@@ -21,8 +21,6 @@ import "./api/DatabaseHandler";
 import { DatabaseHandler } from './api/DatabaseHandler';
 
 const SubjectScreen = ({navigation}) => {
-
-  
   const [data] = useState({
     time: '15',
     subjects: ['Global', 'English', 'Physics', 'Turkish', 'German'],
@@ -89,7 +87,7 @@ const SubjectScreen = ({navigation}) => {
           renderItem={({item}) => (
             <TouchableRipple
               style={{marginBottom: 20}}
-              onPress={() => console.log('Hello ' + item.name)}
+              onPress={() => navigation.navigate('Course')}
               rippleColor="black">
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
