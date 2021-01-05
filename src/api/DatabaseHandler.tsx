@@ -1,6 +1,7 @@
 import auth, { firebase } from '@react-native-firebase/auth';
 import database, { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { Alert } from 'react-native';
+import { Category } from './Category';
 import { Course } from './Course';
 import { Student } from './Student';
 import { Teacher } from './Teacher';
@@ -12,6 +13,7 @@ export class DatabaseHandler{
     private loggedUser :User;
     private isValid:boolean;
     private courseList = new Array<Course>();
+    private categoryList = new Array<Category>();
 
     public validityCheck(isValid:boolean):void{
         this.isValid = isValid;
@@ -78,7 +80,7 @@ export class DatabaseHandler{
                         this.loggedUser= new Student();
                     }
                     else{
-                        this.loggedUser=new Teacher()
+                        this.loggedUser=new Teacher();
                     };
                     this.loggedUser.setEmail(snapshot.val().email),
                     this.loggedUser.setPassword(snapshot.val().password),
@@ -134,7 +136,6 @@ export class DatabaseHandler{
     }
     
 
-
 	public getCourseExams(): Array<Course> {
 		return this.courseExams;
 	}
@@ -143,8 +144,8 @@ export class DatabaseHandler{
 		this.courseExams.push(value);
     }
     
-    public addTeacherToCourse(teacher:Teacher,course:Course){
-        firebase.database().ref("courses/"+course.getCourseId()+"/"+"/teachers/"+user.getUserID()).set({
+    /*public addTeacherToCourse(teacher:Teacher,course:Course){
+        firebase.database().ref("courses/"+course.getCourseId()+"/"+"/teachers/"+teacher.getUserID()).set({
             userid: teacher.getUserID(),
             email: teacher.getEmail(),
             password: teacher.getPassword(),
@@ -165,6 +166,24 @@ export class DatabaseHandler{
             surname: student.getSurname(),
             usertype: student.getUserType()
         })
+    }*/
+
+    public setCategories(_callback){
+        firebase.database().ref("courses/categories").once("value").then((snapshot)=>{
+            const categoryCount: number= Object.keys(snapshot.val()).length;
+            Object.keys(snapshot.val()).forEach(category=>{
+                const eachCategory: Category = new Category();
+                eachCategory.setCategoryName(category);
+                this.categoryList.push(eachCategory);
+                if(this.categoryList.length == categoryCount){
+                    _callback();
+                }
+            })
+        })
+    }
+
+    public getCategories():Array<Category>{
+        return this.categoryList;
     }
 
 }

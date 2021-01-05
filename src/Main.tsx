@@ -11,7 +11,7 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-
+import  { useState, useEffect } from 'react';
 import Categories from './components/Categories';
 import {Card1} from './styles/cards';
 import {HPCardsyText} from './styles/text';
@@ -24,8 +24,18 @@ const MainScreen = ({ navigation }) => {
   const onChangeSearch = (query) => setSearchQuery(query);
 
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
-  console.log(userData.userdata.getCourses());
 
+  const [categories, setCategories] = React.useState([]);
+
+  useEffect(()=>{
+    userData.userdata.setCategories(function(){
+      userData.userdata.getCategories().forEach(category=>{
+        setCategories(categories=>[...categories,category.getCategoryName()]);
+      })
+    })
+  })
+  
+  
   const HeadofCategory = {
     exampleData: [
       //TODO: Specify the colors from the theme as DarkMode
@@ -42,21 +52,21 @@ const MainScreen = ({ navigation }) => {
     <SafeAreaView style={{flex: 1}}>
       <ScrollView style={styles.scrollView}>
         <View>
-          <Title style={{fontWeight: 'bold'}}>Home page</Title>
+          <Title style={{fontWeight: 'bold'}}>Home Page</Title>
           <SubTitle>Choose the course you want</SubTitle>
           <Searchbar
-            placeholder="Search..."
+            placeholder={"Search"}
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
           <FlatList
             horizontal
-            data={HeadofCategory.exampleData}
+            data={categories}
             renderItem={({item, index}) => (
               <View>
                 <View
                   style={{
-                    backgroundColor: item.color,
+                    backgroundColor: '#2D9CDB',
                     marginLeft: 10,
                     alignItems: 'center',
                     marginTop: 10,
@@ -65,7 +75,7 @@ const MainScreen = ({ navigation }) => {
                     borderRadius: 90 / 2,
                   }}
                 />
-                <HPCardsyText>{item.name}</HPCardsyText>
+                <HPCardsyText>{item}</HPCardsyText>
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}

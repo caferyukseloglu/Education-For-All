@@ -45,13 +45,9 @@ const LoginScreen = ({navigation}) => {
       userEmail,
       userPassword,
       function () {
-        console.log('I am in login page ' + myDatabase.getUser().getUserID());
         if (myDatabase.getUser().getUserID() != undefined) {
-          myDatabase.setCourses(function () {
-            console.log('Login size: ' + myDatabase.getCourses().length);
-            userData.setData(myDatabase);
-            navigation.navigate('Main');
-          });
+          userData.setData(myDatabase);
+          navigation.navigate("Main");
         }
       },
     );

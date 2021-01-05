@@ -37,27 +37,27 @@ const CourseScreen = ({navigation}) => {
         </PopView>
         <PopView>
           <Avatar2 />
-          <Lessonview>
+          <LessonView>
             <Lesson> Lesson1 </Lesson>
             <Teacher> T. Cafer </Teacher>
             <Duration>Duration: 5 Min </Duration>
-          </Lessonview>
+          </LessonView>
         </PopView>
         <PopView>
           <Avatar2 />
-          <Lessonview>
+          <LessonView>
             <Lesson> Lesson1 </Lesson>
             <Teacher> T. Cafer </Teacher>
             <Duration>Duration: 5 Min </Duration>
-          </Lessonview>
+          </LessonView>
         </PopView>
         <PopView>
           <Avatar2 />
-          <Lessonview>
+          <LessonView>
             <Lesson> Lesson1 </Lesson>
             <Teacher> T. Cafer </Teacher>
             <Duration>Duration: 5 Min </Duration>
-          </Lessonview>
+          </LessonView>
         </PopView>
       </View>
     </Body>
