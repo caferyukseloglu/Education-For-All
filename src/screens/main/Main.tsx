@@ -1,8 +1,8 @@
 //Main React import
 import React from 'react';
 //Our Styles for Project
-import {Body, PopView, Avatar1} from './styles/wrapper';
-import {SubTitle, Title, HeadText} from './styles/text';
+import {Body, PopView, Avatar1} from '../../styles/wrapper';
+import {SubTitle, Title, HeadText} from '../../styles/text';
 import {Text, Searchbar} from 'react-native-paper';
 import {
   View,
@@ -10,14 +10,14 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
+  TouchableHighlight,
 } from 'react-native';
 
-import Categories from './components/Categories';
-import {Card1} from './styles/cards';
-import {HPCardsyText} from './styles/text';
-import "./api/DatabaseHandler";
-import { DatabaseHandler } from './api/DatabaseHandler';
-import { useUserData } from './states/useData';
+import Categories from '../../components/Categories';
+import {HPCardsyText} from '../../styles/text';
+import "../../api/DatabaseHandler";
+import { DatabaseHandler } from '../../api/DatabaseHandler';
+import { useUserData } from '../../states/useData';
 
 const MainScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -53,20 +53,25 @@ const MainScreen = ({ navigation }) => {
             horizontal
             data={HeadofCategory.exampleData}
             renderItem={({item, index}) => (
-              <View>
-                <View
-                  style={{
-                    backgroundColor: item.color,
-                    marginLeft: 10,
-                    alignItems: 'center',
-                    marginTop: 10,
-                    height: 90,
-                    width: 90,
-                    borderRadius: 90 / 2,
-                  }}
-                />
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Course')}
+                underlayColor="white">
+                <View>
+                  <View
+                    // eslint-disable-next-line react-native/no-inline-styles
+                    style={{
+                      backgroundColor: item.color,
+                      marginLeft: 10,
+                      alignItems: 'center',
+                      marginTop: 10,
+                      height: 90,
+                      width: 90,
+                      borderRadius: 90 / 2,
+                    }}
+                  />
                 <HPCardsyText>{item.name}</HPCardsyText>
               </View>
+              </TouchableHighlight>
             )}
             keyExtractor={(item, index) => index.toString()}
           />

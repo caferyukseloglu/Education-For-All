@@ -4,7 +4,7 @@ import {I18nManager} from 'react-native';
 import {useColorScheme} from 'react-native-appearance';
 import {darkColors, defaultColors} from './themes/Theme';
 //Navigation
-import {RootNavigator} from './rootNavigator';
+import {RootNavigator} from './navigations/rootNavigator';
 import {PreferencesContext} from './context/preferencesContext';
 
 export const Index = () => {

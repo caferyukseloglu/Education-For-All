@@ -1,8 +1,8 @@
 import React from 'react';
 import {BottomNavigation} from 'react-native-paper';
-import MainScreen from './Main';
-import ProfileScreen from './Profile';
-import SubjectScreen from './Subject';
+import {categoryStackNavigator} from '../navigations/categoryStackNavigator';
+import ProfileScreen from '../screens/main/Profile';
+import SubjectScreen from '../screens/main/Subject';
 
 export const BottomTabs = () => {
   const [index, setIndex] = React.useState(0);
@@ -12,7 +12,7 @@ export const BottomTabs = () => {
     {key: 'profile', title: 'Profile', icon: 'account'},
   ]);
   const renderScene = BottomNavigation.SceneMap({
-    main: MainScreen,
+    main: categoryStackNavigator,
     subjects: SubjectScreen,
     profile: ProfileScreen,
   });

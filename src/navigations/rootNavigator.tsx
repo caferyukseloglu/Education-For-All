@@ -1,13 +1,11 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createStackNavigator} from '@react-navigation/stack';
 import {DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {useTheme} from 'react-native-paper';
-
 import {StackNavigator} from './stackContent';
-import {DrawerContent} from './drawerContent';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export const RootNavigator = () => {
   const theme = useTheme();
@@ -15,15 +13,13 @@ export const RootNavigator = () => {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <Drawer.Navigator
-        drawerContent={(props) => <DrawerContent {...props} />}
-        drawerStyle={{backgroundColor: theme.colors.background}}>
-        <Drawer.Screen
+      <Stack.Navigator>
+        <Stack.Screen
           name="Home"
           component={StackNavigator}
           options={{headerShown: false}}
         />
-      </Drawer.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

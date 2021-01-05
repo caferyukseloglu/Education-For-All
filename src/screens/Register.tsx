@@ -13,19 +13,17 @@ import {
   HelperText,
 } from 'react-native-paper';
 //Our Styles for Project
-import {Form, Body, Line, Bottom} from './styles/wrapper';
-import {BigButton} from './styles/buttons';
-import {SubTitle, Title, CheckText} from './styles/text';
-import {NewInput} from './styles/input';
-import "./api/DatabaseHandler";
-import { DatabaseHandler } from './api/DatabaseHandler';
-import "./api/User";
-import {User} from "./api/User";
+import {Form, Body, Line, Bottom} from '../styles/wrapper';
+import {BigButton} from '../styles/buttons';
+import {SubTitle, Title, CheckText} from '../styles/text';
+import {NewInput} from '../styles/input';
+import {DatabaseHandler} from '../api/DatabaseHandler';
+import {User} from '../api/User';
 
-const RegisterScreen = ({ route ,navigation }) => {
-  const { colors } = useTheme();
+const RegisterScreen = ({route, navigation}) => {
+  const {colors} = useTheme();
   var myDatabase = new DatabaseHandler();
-  
+
   const {userType} = route.params;
 
   const [data, setData] = useState({
@@ -40,41 +38,44 @@ const RegisterScreen = ({ route ,navigation }) => {
     isChecked: false,
   });
 
-  const createUserObject=(userEmail,userPassword)=>{
+  const createUserObject = (userEmail, userPassword) => {
     const newUser = new User();
     newUser.setEmail(userEmail);
     newUser.setPassword(userPassword);
-    newUser.setName("");
-    newUser.setSurname("");
+    newUser.setName('');
+    newUser.setSurname('');
     newUser.setUserType(userType);
-    newUser.setUsername("");
+    newUser.setUsername('');
     return newUser;
-  }
+  };
 
-
-  const registerUser=(userEmail,userPassword)=>{
-    if(data.password == data.rePassword){
-      console.log("Hello");
-      const createdUser=createUserObject(userEmail,userPassword);
-      myDatabase.registerUser(data.isValidEmail,data.isValidPassword,data.isChecked,createdUser,function(){
-        if(myDatabase.getValidity()){
-          console.log("Account created.");
-          console.log(myDatabase.getUser().getUserID());
-          console.log("Start of get courses.");
-          console.log("End of get courses.");
-          navigation.navigate('Main');
-        }
-        else{
-          console.log("Account couldn't create, please check your crediantials.");
-        }
-      }); 
-
+  const registerUser = (userEmail, userPassword) => {
+    if (data.password == data.rePassword) {
+      console.log('Hello');
+      const createdUser = createUserObject(userEmail, userPassword);
+      myDatabase.registerUser(
+        data.isValidEmail,
+        data.isValidPassword,
+        data.isChecked,
+        createdUser,
+        function () {
+          if (myDatabase.getValidity()) {
+            console.log('Account created.');
+            console.log(myDatabase.getUser().getUserID());
+            console.log('Start of get courses.');
+            console.log('End of get courses.');
+            navigation.navigate('Main');
+          } else {
+            console.log(
+              "Account couldn't create, please check your crediantials.",
+            );
+          }
+        },
+      );
+    } else {
+      console.log('Please check your password.');
     }
-    else{
-      console.log("Please check your password.")
-    }
-  }
-
+  };
 
   //Controls the Email Input if short than 8 character or white space or not includes @ and . gives error else success, empty = none
   const emailControl = (val: string) => {
@@ -213,7 +214,7 @@ const RegisterScreen = ({ route ,navigation }) => {
                   ) : (
                     <NewInput.Icon name="alert-circle" color={colors.error} />
                   )),
-              }
+                }
               : ''),
           }}
         />
@@ -320,7 +321,7 @@ const RegisterScreen = ({ route ,navigation }) => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress={() => registerUser(data.email,data.password)}
+            onPress={() => registerUser(data.email, data.password)}
           />
           <BigButton
             margins={[0, 0, 0, 0]}

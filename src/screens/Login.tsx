@@ -13,16 +13,12 @@ import {
   HelperText,
 } from 'react-native-paper';
 //Our Styles for Project
-import {Form, Body, Line, Bottom} from './styles/wrapper';
-import {BigButton} from './styles/buttons';
-import {SubTitle, Title, CheckText} from './styles/text';
-import {NewInput} from './styles/input';
-import auth, {firebase} from '@react-native-firebase/auth';
-import './api/DatabaseHandler';
-import {DatabaseHandler} from './api/DatabaseHandler';
-import './api/User';
-import {User} from './api/User';
-import {useUserData} from './states/useData';
+import {Form, Body, Line, Bottom} from '../styles/wrapper';
+import {BigButton} from '../styles/buttons';
+import {SubTitle, Title, CheckText} from '../styles/text';
+import {NewInput} from '../styles/input';
+import {DatabaseHandler} from '../api/DatabaseHandler';
+import {useUserData} from '../states/useData';
 
 const LoginScreen = ({navigation}) => {
   const {colors} = useTheme();

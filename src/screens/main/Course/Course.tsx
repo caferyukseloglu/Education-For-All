@@ -1,8 +1,8 @@
 //Main React import
-import React, {useState} from 'react';
+import React from 'react';
 import {useTheme} from 'react-native-paper';
 //Our Styles for Project
-import {Body, PopView, Avatar2, LessonView} from './styles/wrapper';
+import {Body, PopView, Avatar2, LessonView} from '../../../styles/wrapper';
 import {
   SubTitle,
   Title,
@@ -10,9 +10,8 @@ import {
   Lesson,
   Teacher,
   Duration,
-} from './styles/text';
-import {View, ScrollView, StyleSheet, SafeAreaView} from 'react-native';
-import {Card2} from './styles/cards';
+} from '../../../styles/text';
+import {View} from 'react-native';
 
 const CourseScreen = ({navigation}) => {
   const {colors} = useTheme();

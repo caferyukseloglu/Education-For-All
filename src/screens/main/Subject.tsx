@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {TouchableRipple, IconButton, Badge} from 'react-native-paper';
 //Our Styles for Project
-import {Body} from './styles/wrapper';
+import {Body} from '../../styles/wrapper';
 import {
   SubTitle,
   Title,
@@ -14,11 +14,11 @@ import {
   CourseSubtitle,
   RecomTitle,
   RecomInfo,
-} from './styles/text';
+} from '../../styles/text';
 import {View, FlatList} from 'react-native';
-import {SubjectCard} from './styles/cards';
-import "./api/DatabaseHandler";
-import { DatabaseHandler } from './api/DatabaseHandler';
+import {SubjectCard} from '../../styles/cards';
+import "../../api/DatabaseHandler";
+import { DatabaseHandler } from '../../api/DatabaseHandler';
 
 const SubjectScreen = ({navigation}) => {
   const [data] = useState({

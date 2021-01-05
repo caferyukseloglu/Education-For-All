@@ -5,18 +5,12 @@
  */
 
 //Main React import
-import React, {useState} from 'react';
-import {
-  useTheme,
-  TouchableRipple,
-  Checkbox,
-  HelperText,
-} from 'react-native-paper';
+import React from 'react';
+import {useTheme} from 'react-native-paper';
 //Our Styles for Project
-import {Form, Body, Line, Bottom} from './styles/wrapper';
-import {BigButton} from './styles/buttons';
-import {SubTitle, Title, CheckText} from './styles/text';
-import {NewInput} from './styles/input';
+import {Form, Body} from '../styles/wrapper';
+import {BigButton} from '../styles/buttons';
+import {SubTitle, Title} from '../styles/text';
 
 const RegisterTypeScreen = ({navigation}) => {
   const {colors} = useTheme();

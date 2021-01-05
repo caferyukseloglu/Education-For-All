@@ -19,7 +19,7 @@ import {
 } from 'react-native-paper';
 
 import Animated from 'react-native-reanimated';
-import {PreferencesContext} from './context/preferencesContext';
+import {PreferencesContext} from '../context/preferencesContext';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = DrawerContentComponentProps<DrawerNavigationProp>;

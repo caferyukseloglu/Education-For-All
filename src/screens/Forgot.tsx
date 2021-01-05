@@ -6,13 +6,12 @@
  */
 
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, Platform} from 'react-native';
 import {useTheme, HelperText} from 'react-native-paper';
 //Our Styles for Project
-import {Body, Form, Bottom} from './styles/wrapper';
-import {BigButton} from './styles/buttons';
-import {SubTitle, Title} from './styles/text';
-import {NewInput} from './styles/input';
+import {Body, Form, Bottom} from '../styles/wrapper';
+import {BigButton} from '../styles/buttons';
+import {SubTitle, Title} from '../styles/text';
+import {NewInput} from '../styles/input';
 
 const ForgotScreen = ({navigation}) => {
   //using the theme colors

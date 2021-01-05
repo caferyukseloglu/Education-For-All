@@ -9,12 +9,12 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {useTheme} from 'react-native-paper';
 import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from './Home';
-import LoginScreen from './Login';
-import RegisterScreen from './Register';
-import RegisterTypeScreen from './RegisterType';
-import ForgotScreen from './Forgot';
-import {BottomTabs} from './bottomNavigation';
+import HomeScreen from '../screens/Home';
+import LoginScreen from '../screens/Login';
+import RegisterScreen from '../screens/Register';
+import RegisterTypeScreen from '../screens/RegisterType';
+import ForgotScreen from '../screens/Forgot';
+import {DrawerNavigator} from './drawerNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
 const Stack = createStackNavigator();
 
@@ -23,6 +23,7 @@ export const StackNavigator = () => {
   return (
     <SafeAreaView
       mode="padding"
+      // eslint-disable-next-line react-native/no-inline-styles
       style={{flex: 1, backgroundColor: theme.colors.background}}>
       <Stack.Navigator
         initialRouteName="Home"
@@ -56,7 +57,7 @@ export const StackNavigator = () => {
         />
         <Stack.Screen
           name="Main"
-          component={BottomTabs}
+          component={DrawerNavigator}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

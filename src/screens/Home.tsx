@@ -8,10 +8,10 @@
 import React from 'react';
 //Our Styles for Project
 import {useTheme} from 'react-native-paper';
-import {Form, Body, Bottom} from './styles/wrapper';
-import {GirlLogo} from './styles/image';
-import {BigButton} from './styles/buttons';
-import {Title, SubTitle} from './styles/text';
+import {Form, Body, Bottom} from '../styles/wrapper';
+import {GirlLogo} from '../styles/image';
+import {BigButton} from '../styles/buttons';
+import {Title, SubTitle} from '../styles/text';
 
 const HomeScreen = ({navigation}) => {
   const {colors} = useTheme();

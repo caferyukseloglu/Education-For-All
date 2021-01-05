@@ -5,14 +5,11 @@
  * @Taha Kızmaz - Taha Sharheed
  */
 
-import React, {useState} from 'react';
-import {KeyboardAvoidingView, Platform} from 'react-native';
-import {useTheme, HelperText} from 'react-native-paper';
+import React from 'react';
+import {useTheme} from 'react-native-paper';
 //Our Styles for Project
-import {Body, Form, Bottom, Line} from './styles/wrapper';
-import {BigButton} from './styles/buttons';
-import {CourseTitle, SubTitle, Title} from './styles/text';
-import {NewInput} from './styles/input';
+import {Body, Line} from '../../styles/wrapper';
+import {CourseTitle} from '../../styles/text';
 
 const ProfileScreen = ({navigation}) => {
   //using the theme colors
