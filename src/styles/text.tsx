@@ -40,7 +40,7 @@ export const SubTitle = styled.Text`
 `;
 
 export const CourseTitle = styled.Text`
-  margin-top:27px;
+  margin-top: 27px;
   margin-left: 27px;
   width: auto;
   font-family: Poppins-Regular;
@@ -63,7 +63,6 @@ export const CourseSubtitle = styled.Text`
   color: rgba(51, 51, 51, 0.56);
 `;
 
-
 export const CheckText = styled.Text`
   font-family: Oxygen;
   font-style: normal;
@@ -79,7 +78,7 @@ export const CheckText = styled.Text`
 
 export const CardTitle = styled.Text`
   margin-top: 25px;
-  margin-left:15px;
+  margin-left: 15px;
   width: auto;
   height: 36px;
   font-family: Poppins-Regular;
@@ -88,11 +87,11 @@ export const CardTitle = styled.Text`
   font-size: 13px;
   line-height: 19.5px;
   display: flex;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 export const CardSubtitle = styled.Text`
-  margin-left:15px;
+  margin-left: 15px;
   width: auto;
   height: 36px;
   font-family: Poppins-Regular;
@@ -101,7 +100,7 @@ export const CardSubtitle = styled.Text`
   font-size: 8px;
   line-height: 12px;
   display: flex;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 export const CategoryText = styled.Text`
@@ -112,8 +111,8 @@ export const HPCardsyText = styled.Text`
   text-align: ${(props) => props.textAlign || 'center'};
 `;
 export const LessonTitle = styled.Text`
-  margin-top:27px;
-  margin-left:15px;
+  margin-top: 27px;
+  margin-left: 15px;
   width: auto;
   font-family: Poppins-Regular;
   font-style: normal;
@@ -126,7 +125,7 @@ export const LessonTitle = styled.Text`
 `;
 
 export const LessonSubtitle = styled.Text`
-  margin-left:15px;
+  margin-left: 15px;
   width: auto;
   font-family: Poppins-Regular;
   font-style: normal;
@@ -149,7 +148,7 @@ export const RecomTitle = styled.Text`
 `;
 
 export const RecomInfo = styled.Text`
-  margin-bottom:15px;
+  margin-bottom: 15px;
   width: auto;
   font-family: Poppins-Regular;
   font-style: normal;
@@ -158,4 +157,22 @@ export const RecomInfo = styled.Text`
   line-height: 15px;
   display: flex;
   color: rgba(51, 51, 51, 0.56);
+`;
+
+export const Lesson = styled.Text`
+  font-size: 14px;
+  line-height: 15px;
+  color: #000000;
+`;
+
+export const Teacher = styled.Text`
+  font-size: 14px;
+  line-height: 15px;
+  color: #2d9cdb;
+`;
+
+export const Duration = styled.Text`
+  font-size: 14px;
+  line-height: 15px;
+  color: #219653;
 `;

@@ -18,40 +18,6 @@ const ProfileScreen = ({navigation}) => {
   //using the theme colors
   const {colors} = useTheme();
 
-  //hook function to set data, we check if given input is valid and storing e-mail
-  const [data, setData] = useState({
-    email: '',
-    isValidEmail: null,
-  });
-
-  //Controls the Email Input if short than 8 character or white space or not includes @ and . gives error else success, empty = none
-  const emailControl = (val: string) => {
-    var trimmedInput = val.trim();
-    if (
-      trimmedInput.length >= 8 &&
-      trimmedInput.includes('@') &&
-      trimmedInput.split('@')[1].includes('.')
-    ) {
-      setData({
-        ...data,
-        email: trimmedInput.replace(/ /g, ''),
-        isValidEmail: true,
-      });
-    } else if (trimmedInput.length >= 1) {
-      setData({
-        ...data,
-        email: trimmedInput.replace(/ /g, ''),
-        isValidEmail: false,
-      });
-    } else {
-      setData({
-        ...data,
-        email: '',
-        isValidEmail: null,
-      });
-    }
-  };
-
   return (
     <Body paddings="0 27px">
       <Line>

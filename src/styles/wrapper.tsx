@@ -32,7 +32,7 @@ export const Bottom = styled.View`
 `;
 
 export const PopView = styled.View`
-  padding:20px;
+  padding: 20px;
   border-bottom-width: 1px;
   border-bottom-color:#ccc;
   flex-direction: row;
@@ -55,3 +55,21 @@ export const Avatar1 = styled.View`
   borderTopLeftRadius: 20px;
   borderTopRightRadius: 20px;
 `;
+
+export const Avatar2 = styled.View`
+  width:64px;
+  height:64px;
+  background:#F2C94C ;
+  border-radius:30px;
+  margin-right: 12px;
+  padding top:12px;
+  padding:20px;
+  align-items: flex-end;
+  justify-content: center;
+  borderBottomLeftRadius: 20;
+  borderBottomRightRadius: 20;
+  borderTopLeftRadius: 20;
+  borderTopRightRadius: 20;
+`;
+
+export const LessonView = styled.View``;
