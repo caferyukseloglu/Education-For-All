@@ -3,11 +3,13 @@ import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import {Alert} from 'react-native';
 import {Category} from './Category';
 import {Course} from './Course';
+import {Student} from './Student';
+import {Teacher} from './Teacher';
 import './User';
 import {User} from './User';
 export class DatabaseHandler {
   reference = database().ref('/users');
-  private loggedUser = new User();
+  private loggedUser: User;
   private isValid: boolean;
   private courseList = new Array<Course>();
   private categoryList = new Array<Category>();
@@ -32,6 +34,11 @@ export class DatabaseHandler {
       auth()
         .createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
         .then(() => {
+          if (user.getUserType() == 1) {
+            this.loggedUser = new Student();
+          } else {
+            this.loggedUser = new Teacher();
+          }
           console.log(auth().currentUser.uid);
           user.setUserID(auth().currentUser.uid);
           this.addUserToDB(user);
@@ -45,11 +52,15 @@ export class DatabaseHandler {
             this.validityCheck(false);
             _callback();
           }
+        })
+        .then(() => _callback())
+        .catch((error) => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+            this.validityCheck(false);
+            _callback();
+          }
         });
-    } else {
-      console.log('Please check your credientials!');
-      this.validityCheck(false);
-      _callback();
     }
   }
 
@@ -90,6 +101,11 @@ export class DatabaseHandler {
             .ref('/users/' + firebase.auth().currentUser?.uid)
             .once('value')
             .then((snapshot) => {
+              if (snapshot.val().usertype == 1) {
+                this.loggedUser = new Student();
+              } else {
+                this.loggedUser = new Teacher();
+              }
               this.loggedUser.setEmail(snapshot.val().email),
                 this.loggedUser.setPassword(snapshot.val().password),
                 this.loggedUser.setName(snapshot.val().name),
@@ -112,28 +128,37 @@ export class DatabaseHandler {
   }
 
   public setCourses(_callback): void {
-    var courseCount: number;
     firebase
       .database()
-      .ref('courses')
+      .ref('courses/categories')
       .once('value')
       .then((snapshot) => {
-        courseCount = Object.keys(snapshot.val()).length;
-        console.log('COURSE COUNT IS: ' + courseCount);
-        Object.keys(snapshot.val()).forEach((courseTitle) => {
-          const eachCourse: Course = new Course();
+        Object.keys(snapshot.val()).forEach((category) => {
           firebase
             .database()
-            .ref('/courses/' + courseTitle)
+            .ref('courses/categories/' + category)
             .once('value')
             .then((snapshot) => {
-              eachCourse.setCourseId(snapshot.val().courseid);
-              eachCourse.setCourseName(snapshot.val().coursename);
-              eachCourse.setCourseDescription(snapshot.val().coursedescription);
-              this.courseList.push(eachCourse);
-              if (this.courseList.length == courseCount) {
-                _callback();
-              }
+              Object.keys(snapshot.val()).forEach((courseInCategory) => {
+                const eachCategory: Course = new Course();
+                firebase
+                  .database()
+                  .ref(
+                    'courses/categories/' + category + '/' + courseInCategory,
+                  )
+                  .once('value')
+                  .then((snapshot) => {
+                    eachCategory.setCourseId(snapshot.val().courseid);
+                    eachCategory.setCourseName(snapshot.val().coursename);
+                    eachCategory.setCourseDescription(
+                      snapshot.val().coursedescription,
+                    );
+                    this.courseList.push(eachCategory);
+                    if (this.courseList.length == 5) {
+                      _callback();
+                    }
+                  });
+              });
             });
         });
       });
@@ -142,8 +167,6 @@ export class DatabaseHandler {
   public getCourses(): Array<Course> {
     return this.courseList;
   }
-
-  private setUser(): void {}
 
   public getUser(): User {
     return this.loggedUser;
@@ -156,6 +179,31 @@ export class DatabaseHandler {
   public setCourseExams(value: Course) {
     this.courseExams.push(value);
   }
+
+  /*public addTeacherToCourse(teacher:Teacher,course:Course){
+        firebase.database().ref("courses/"+course.getCourseId()+"/"+"/teachers/"+teacher.getUserID()).set({
+            userid: teacher.getUserID(),
+            email: teacher.getEmail(),
+            password: teacher.getPassword(),
+            username:teacher.getUsername(),
+            name: teacher.getName(),
+            surname: teacher.getSurname(),
+            usertype: teacher.getUserType()
+        })
+    }
+
+    public enrollCourse(student:Student,course:Course,teacher:Teacher){
+        firebase.database().ref("courses/"+course.getCourseId()+"/"+"/teachers/"+teacher.getUserID()+"students/"+student.getUserID()).set({
+            userid: student.getUserID(),
+            email: student.getEmail(),
+            password: student.getPassword(),
+            username:student.getUsername(),
+            name: student.getName(),
+            surname: student.getSurname(),
+            usertype: student.getUserType()
+        })
+    }*/
+
   public setCategories(_callback) {
     firebase
       .database()

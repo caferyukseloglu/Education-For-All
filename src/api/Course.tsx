@@ -1,23 +1,25 @@
 import { Lesson } from "./Lesson";
 import { Subject } from "./Subject";
 import {Exam} from "./Exam";
+import { Teacher } from "./Teacher";
 
 export class Course{
 
-    private courseId: number;
+    private courseId: string;
     private courseName: string;
     private courseDescription: string;
     private courseLessons: Array<Lesson>;
     private numberOfLessons: number;
     private courseSubjects: Array<Subject>;
-    private courseExams: Array<Exam>;
-    
+	private courseExams: Array<Exam>;
+	private teachers: Array<Teacher>;
 
-	public getCourseId(): number {
+
+	public getCourseId(): string {
 		return this.courseId;
 	}
 
-	public setCourseId(value: number) {
+	public setCourseId(value: string) {
 		this.courseId = value;
 
 
@@ -78,6 +80,15 @@ export class Course{
 		this.courseExams = value;
 	}
 
+
+	public getTeachers(): Array<Teacher> {
+		return this.teachers;
+	}
+
+
+	public setTeachers(value: Teacher) {
+		this.teachers.push(value);
+	}
     
     
 }

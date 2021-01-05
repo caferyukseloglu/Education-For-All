@@ -1,5 +1,5 @@
 //Main React import
-import React from 'react';
+import React, {useEffect} from 'react';
 //Our Styles for Project
 import {Body, PopView, Avatar1} from '../../styles/wrapper';
 import {SubTitle, Title, HeadText} from '../../styles/text';
@@ -15,43 +15,43 @@ import {
 
 import Categories from '../../components/Categories';
 import {HPCardsyText} from '../../styles/text';
-import "../../api/DatabaseHandler";
-import { DatabaseHandler } from '../../api/DatabaseHandler';
-import { useUserData } from '../../states/useData';
+import '../../api/DatabaseHandler';
+import {useUserData} from '../../states/useData';
+import { useState } from 'react';
 
-const MainScreen = ({ navigation }) => {
+const MainScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
 
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
-  console.log(userData.userdata.courseList); //Global state instance gets from https://github.com/pmndrs/zustand
 
-  const HeadofCategory = {
-    exampleData: [
-      //TODO: Specify the colors from the theme as DarkMode
-      {name: 'Main', color: '#FFCE31'},
-      {name: 'Video lessons', color: '#2D9CDB'},
-      {name: 'Free lessons', color: '#EB5757'},
-      {name: 'Bookshelf', color: '#BB6BD9'},
-      {name: 'Live lessons', color: '#F2C94C'},
-      {name: 'Leader Board', color: '#6FCF97'},
-    ],
-  };
+  const [categories, setCategories] = React.useState([]);
+
+  useEffect(() => {
+    userData.userdata.setCategories(function () {
+      userData.userdata.getCategories().forEach((category) => {
+        setCategories((categories) => [
+          ...categories,
+          category.getCategoryName(),
+        ]);
+      });
+    });
+  });
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView style={styles.scrollView}>
         <View>
-          <Title style={{fontWeight: 'bold'}}>Home page</Title>
+          <Title style={{fontWeight: 'bold'}}>Home Page</Title>
           <SubTitle>Choose the course you want</SubTitle>
           <Searchbar
-            placeholder="Search..."
+            placeholder={'Search'}
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
           <FlatList
             horizontal
-            data={HeadofCategory.exampleData}
+            data={categories}
             renderItem={({item, index}) => (
               <TouchableHighlight
                 onPress={() => navigation.navigate('Course')}
@@ -60,7 +60,7 @@ const MainScreen = ({ navigation }) => {
                   <View
                     // eslint-disable-next-line react-native/no-inline-styles
                     style={{
-                      backgroundColor: item.color,
+                      backgroundColor: '#2D9CDB',
                       marginLeft: 10,
                       alignItems: 'center',
                       marginTop: 10,
@@ -69,8 +69,8 @@ const MainScreen = ({ navigation }) => {
                       borderRadius: 90 / 2,
                     }}
                   />
-                <HPCardsyText>{item.name}</HPCardsyText>
-              </View>
+                  <HPCardsyText>{item}</HPCardsyText>
+                </View>
               </TouchableHighlight>
             )}
             keyExtractor={(item, index) => index.toString()}
