@@ -66,10 +66,10 @@ export const Avatar2 = styled.View`
   padding:20px;
   align-items: flex-end;
   justify-content: center;
-  borderBottomLeftRadius: 20;
-  borderBottomRightRadius: 20;
-  borderTopLeftRadius: 20;
-  borderTopRightRadius: 20;
+  borderBottomLeftRadius: 20px;
+  borderBottomRightRadius: 20px;
+  borderTopLeftRadius: 20px;
+  borderTopRightRadius: 20px;
 `;
 
 export const LessonView = styled.View``;
