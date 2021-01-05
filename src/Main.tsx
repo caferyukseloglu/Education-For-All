@@ -24,7 +24,7 @@ const MainScreen = ({ navigation }) => {
   const onChangeSearch = (query) => setSearchQuery(query);
 
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
-  console.log(userData.userdata.courseList); //Global state instance gets from https://github.com/pmndrs/zustand
+  console.log(userData.userdata.getCourses());
 
   const HeadofCategory = {
     exampleData: [
