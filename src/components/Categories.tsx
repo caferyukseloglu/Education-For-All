@@ -22,7 +22,6 @@ const Categories = () => {
     })
   })
 
-  console.log(courses);
   return (
     <View>
       <ScrollView horizontal>

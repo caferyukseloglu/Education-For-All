@@ -1,25 +1,28 @@
 //Main React import
 import React, {useEffect} from 'react';
 //Our Styles for Project
-import {Body, PopView, Avatar1} from '../../styles/wrapper';
+import {Body, PopView, Avatar1, Scroll, Line} from '../../styles/wrapper';
 import {SubTitle, Title, HeadText} from '../../styles/text';
-import {Text, Searchbar} from 'react-native-paper';
+import {Text, Searchbar, Badge, Button, ToggleButton} from 'react-native-paper';
 import {
   View,
-  ScrollView,
-  StyleSheet,
+  useWindowDimensions,
   SafeAreaView,
   FlatList,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 
 import Categories from '../../components/Categories';
 import {HPCardsyText} from '../../styles/text';
 import '../../api/DatabaseHandler';
 import {useUserData} from '../../states/useData';
-import { useState } from 'react';
+import {useState} from 'react';
 
 const MainScreen = ({navigation}) => {
+  const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
+
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
 
@@ -39,13 +42,20 @@ const MainScreen = ({navigation}) => {
   });
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <ScrollView style={styles.scrollView}>
+    <SafeAreaView style={{flex: 1,padding: 10}}>
+      <Scroll showsHorizontalScrollIndicator={false}>
         <View>
-          <Title style={{fontWeight: 'bold'}}>Home Page</Title>
-          <SubTitle>Choose the course you want</SubTitle>
+          <Line alignItems="center">
+            <Title textAlign='left' style={{fontWeight: 'bold'}}>Home Page</Title>
+            <ToggleButton
+              icon="bell"
+              value="Messages"
+              onPress={console.log('Clicked')}
+            />
+          </Line>
+          <SubTitle left='0' marginTop='0' textAlign='left'>Choose the course you want</SubTitle>
           <Searchbar
-            placeholder={'Search'}
+            placeholder={'Search for lesson,subject or teacher...'}
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
@@ -56,17 +66,18 @@ const MainScreen = ({navigation}) => {
               <TouchableHighlight
                 onPress={() => navigation.navigate('Course')}
                 underlayColor="white">
-                <View>
+                <View style={{alignContent: 'center',alignItems: 'center'}}>
                   <View
                     // eslint-disable-next-line react-native/no-inline-styles
                     style={{
                       backgroundColor: '#2D9CDB',
-                      marginLeft: 10,
+                      marginLeft: 20,
+                      marginRight: 20,
                       alignItems: 'center',
                       marginTop: 10,
-                      height: 90,
-                      width: 90,
-                      borderRadius: 90 / 2,
+                      height: 60,
+                      width: 60,
+                      borderRadius: 60 / 2,
                     }}
                   />
                   <HPCardsyText>{item}</HPCardsyText>
@@ -103,37 +114,41 @@ const MainScreen = ({navigation}) => {
             )}
             keyExtractor={(item, index) => index.toString()}
           />
-          <HeadText style={{fontWeight: 'bold'}}>Populer</HeadText>
-          <PopView>
-            <Avatar1 />
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>
-              what should we pay attention to while studying?{' '}
-            </Text>
-          </PopView>
-          <PopView>
-            <Avatar1 />
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>
-              what should we pay attention to while studying?{' '}
-            </Text>
-          </PopView>
-          <PopView>
-            <Avatar1 />
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>
-              what should we pay attention to while studying?{' '}
-            </Text>
-          </PopView>
-          <HeadText style={{fontWeight: 'bold'}}>Threads</HeadText>
+          <Body>
+            <HeadText style={{fontWeight: 'bold'}}>Populer</HeadText>
+            <PopView>
+              <Avatar1 />
+              <Text
+                numberOfLines={3}
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                }}>
+                What should we pay attention to while studying ?{' '}
+              </Text>
+            </PopView>
+            <PopView>
+              <Avatar1 />
+              <Text
+                numberOfLines={3}
+                style={{fontWeight: 'bold', fontSize: 18}}>
+                What should we pay attention to while studying ?{' '}
+              </Text>
+            </PopView>
+            <PopView>
+              <Avatar1 />
+              <Text
+                numberOfLines={3}
+                style={{fontWeight: 'bold', fontSize: 18}}>
+                What should we pay attention to while studying ?{' '}
+              </Text>
+            </PopView>
+          </Body>
         </View>
-      </ScrollView>
+      </Scroll>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: '#F4F4F4',
-    marginHorizontal: 5,
-  },
-});
 
 export default MainScreen;
