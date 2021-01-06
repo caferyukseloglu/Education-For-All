@@ -1,7 +1,8 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Image, Text} from 'react-native';
 import {Card, Avatar} from 'react-native-paper';
 import {CategoryText} from '../styles/text';
+import { Line } from '../styles/wrapper';
 
 interface CategoryProps {
   category: {
@@ -19,46 +20,42 @@ export const Category = ({
       <Card
         style={{
           width: 200,
-          height: 150,
-          borderRadius: 110 / 2,
+          height: 100,
+          borderRadius: 10,
           backgroundColor:"#C4C4C4"
         }}>
-        <Card.Content>
-          <Avatar.Image
-            style={{marginLeft: 30, alignItems: 'center', marginTop: 12}}
-            source={require('../assets/ava11.png')}
-            size={110}
-          />
+        <Card.Content style={{justifyContent: 'center',alignItems:'center'}}>
+          <Image source={require('../assets/ava11.png')} style={{width: 60,height: 80,resizeMode:'stretch'}}/>
         </Card.Content>
       </Card>
       <CategoryText textAlign="center">{courseName}</CategoryText>
-      <CategoryText textAlign="center">
-        8.5{' '}
+      <Line justify="space-between">
+        <Text style={{fontSize: 12, marginRight: 15}}>8.5</Text>
         <Avatar.Icon
-          size={24}
+          size={18}
           icon="star"
           style={{backgroundColor: 'rgba(0,0,0,0)'}}
           color="#FFCE31"
         />
         <Avatar.Icon
-          size={24}
+          size={18}
           icon="star"
           style={{backgroundColor: 'rgba(0,0,0,0)'}}
           color="#FFCE31"
         />
         <Avatar.Icon
-          size={24}
+          size={18}
           icon="star"
           style={{backgroundColor: 'rgba(0,0,0,0)'}}
           color="#FFCE31"
         />
         <Avatar.Icon
-          size={24}
+          size={18}
           icon="star"
           style={{backgroundColor: 'rgba(0,0,0,0)'}}
           color="#FFCE31"
         />
-      </CategoryText>
+      </Line>
     </View>
   );
 };

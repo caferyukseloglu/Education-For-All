@@ -16,7 +16,7 @@ export const Title = styled.Text`
   line-height: 36px;
   display: flex;
   align-items: center;
-  text-align: center;
+  text-align: ${(props) => props.textAlign || 'center'};
 `;
 
 export const HeadText = styled.Text`
@@ -26,9 +26,9 @@ export const HeadText = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  margin-top: 10px;
+  margin-top: ${(props) => props.marginTop || '10'}px;
   width: 330px;
-  left: 42px;
+  left: ${(props) => props.left || '42'}px;
   font-family: Poppins-ExtraLight;
   font-style: normal;
   font-weight: 200;
