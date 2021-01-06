@@ -57,11 +57,7 @@ const MainScreen = ({navigation}) => {
           </Line>
           <SubTitle left='0' marginTop='0' textAlign='left'>Choose the course you want</SubTitle>
           <Searchbar
-<<<<<<< HEAD
-            placeholder={'Search...'}
-=======
             placeholder={'Search for lesson,subject or teacher...'}
->>>>>>> 0f472b16b71ff049d931f65babc482f96ca7334f
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
