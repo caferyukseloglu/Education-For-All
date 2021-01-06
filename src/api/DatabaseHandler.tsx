@@ -128,40 +128,23 @@ export class DatabaseHandler {
   }
 
   public setCourses(_callback): void {
-    firebase
-      .database()
-      .ref('courses/categories')
-      .once('value')
-      .then((snapshot) => {
-        Object.keys(snapshot.val()).forEach((category) => {
-          firebase
-            .database()
-            .ref('courses/categories/' + category)
-            .once('value')
-            .then((snapshot) => {
-              Object.keys(snapshot.val()).forEach((courseInCategory) => {
-                const eachCategory: Course = new Course();
-                firebase
-                  .database()
-                  .ref(
-                    'courses/categories/' + category + '/' + courseInCategory,
-                  )
-                  .once('value')
-                  .then((snapshot) => {
-                    eachCategory.setCourseId(snapshot.val().courseid);
-                    eachCategory.setCourseName(snapshot.val().coursename);
-                    eachCategory.setCourseDescription(
-                      snapshot.val().coursedescription,
-                    );
-                    this.courseList.push(eachCategory);
-                    if (this.courseList.length == 5) {
-                      _callback();
-                    }
-                  });
-              });
-            });
-        });
-      });
+
+    firebase.database().ref("courses2").once("value").then(snapshot=>{
+      snapshot.forEach(x=>{
+        const eachCourse: Course = new Course();
+        eachCourse.setCourseName(x.val().coursename);
+        eachCourse.setCourseDescription(x.val().coursedescription);
+        eachCourse.setCourseCategory(x.val().coursecategory);
+        eachCourse.setCourseId(x.val().courseid);
+        if(!this.courseList.includes(eachCourse)){
+          console.log("Added.");
+          this.courseList.push(eachCourse);
+          if (this.courseList.length == 2) {
+            _callback();
+          }
+        }
+      })
+    })
   }
 
   public getCourses(): Array<Course> {
@@ -205,24 +188,54 @@ export class DatabaseHandler {
     }*/
 
   public setCategories(_callback) {
-    firebase
-      .database()
-      .ref('courses/categories')
-      .once('value')
-      .then((snapshot) => {
-        const categoryCount: number = Object.keys(snapshot.val()).length;
-        Object.keys(snapshot.val()).forEach((category) => {
-          const eachCategory: Category = new Category();
-          eachCategory.setCategoryName(category);
-          this.categoryList.push(eachCategory);
-          if (this.categoryList.length == categoryCount) {
+    firebase.database().ref("/categories/").once("value").then(snapshot=>{
+      const categoryCount: number = Object.keys(snapshot.val()).length;
+      snapshot.forEach(x=>{
+        const eachCourse: Category = new Category();
+        eachCourse.setCategoryId(x.val().categoryid);
+        eachCourse.setCategoryDescription(x.val().categorydescription);
+        eachCourse.setCategoryName(x.val().categoryname)
+        if(!this.categoryList.includes(eachCourse)){
+          this.categoryList.push(eachCourse);
+          if(this.categoryList.length==categoryCount){
             _callback();
           }
-        });
-      });
+        }
+      })
+    })
   }
 
   public getCategories(): Array<Category> {
     return this.categoryList;
   }
+
+  public getSingleCategoryCourses(category:Category,_callback){
+    var courseCount: number=0;
+    firebase.database().ref("courses2").once("value").then(snapshot=>{
+      snapshot.forEach(eachCategory=>{
+        if(eachCategory.val().coursecategory==category.getCategoryId()){
+          courseCount++;
+          const eachCourse: Course = new Course();
+          eachCourse.setCourseName(eachCategory.val().coursename);
+          eachCourse.setCourseDescription(eachCategory.val().coursedescription);
+          eachCourse.setCourseCategory(eachCategory.val().coursecategory);
+          eachCourse.setCourseId(eachCategory.val().courseid);
+          category.addCourse(eachCourse);
+          if(category.getCourses().length==courseCount){
+            console.log("EKLENDIIIIIIIIIIIIIIIIII");
+            _callback();
+          }
+        
+        }
+      })
+    })
+
+    
+  }
+
+    public test():void{
+      firebase.database().onSnapshot(snapshot => {
+        console.log(snapshot.docs());
+      })
+    }
 }

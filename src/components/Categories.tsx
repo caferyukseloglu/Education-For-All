@@ -17,12 +17,12 @@ const Categories = () => {
   useEffect(()=>{
     userData.userdata.setCourses(function(){
       userData.userdata.getCourses().forEach(course=>{
+        console.log(course);
         setCourseObjects(courses=>[...courses,course]);
       })
     })
   })
 
-  console.log(courses);
   return (
     <View>
       <ScrollView horizontal>

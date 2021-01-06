@@ -32,11 +32,13 @@ const MainScreen = ({navigation}) => {
       userData.userdata.getCategories().forEach((category) => {
         setCategories((categories) => [
           ...categories,
-          category.getCategoryName(),
+          category,
         ]);
       });
     });
   });
+
+  console.log(categories);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -45,7 +47,7 @@ const MainScreen = ({navigation}) => {
           <Title style={{fontWeight: 'bold'}}>Home Page</Title>
           <SubTitle>Choose the course you want</SubTitle>
           <Searchbar
-            placeholder={'Search'}
+            placeholder={'Search...'}
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
@@ -54,7 +56,7 @@ const MainScreen = ({navigation}) => {
             data={categories}
             renderItem={({item, index}) => (
               <TouchableHighlight
-                onPress={() => navigation.navigate('Course')}
+                onPress={() => navigation.navigate('Course',{courseObj:item})}
                 underlayColor="white">
                 <View>
                   <View
@@ -69,7 +71,7 @@ const MainScreen = ({navigation}) => {
                       borderRadius: 90 / 2,
                     }}
                   />
-                  <HPCardsyText>{item}</HPCardsyText>
+                  <HPCardsyText>{item.getCategoryName()}</HPCardsyText>
                 </View>
               </TouchableHighlight>
             )}

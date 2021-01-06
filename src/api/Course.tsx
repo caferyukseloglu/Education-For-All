@@ -13,7 +13,7 @@ export class Course{
     private courseSubjects: Array<Subject>;
 	private courseExams: Array<Exam>;
 	private teachers: Array<Teacher>;
-
+	private courseCategory: string;
 
 	public getCourseId(): string {
 		return this.courseId;
@@ -89,6 +89,16 @@ export class Course{
 	public setTeachers(value: Teacher) {
 		this.teachers.push(value);
 	}
+
+
+	public getCourseCategory(): string {
+		return this.courseCategory;
+	}
+
+	public setCourseCategory(value: string) {
+		this.courseCategory = value;
+	}
+
     
     
 }
