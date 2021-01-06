@@ -1,6 +1,6 @@
 //Main React import
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {useTheme, Appbar} from 'react-native-paper';
 //Our Styles for Project
 import {Body, PopView, Avatar2, LessonView} from '../../../styles/wrapper';
 import {
@@ -11,7 +11,7 @@ import {
   Teacher,
   Duration,
 } from '../../../styles/text';
-import {View} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 
 const CourseScreen = ({navigation}) => {
   const {colors} = useTheme();
@@ -19,7 +19,12 @@ const CourseScreen = ({navigation}) => {
   return (
     <Body>
       <View>
-        <Title>Mathmatics</Title>
+        <Appbar>
+          <Appbar.Header style={{flexDirection: 'row', display: 'flex'}}>
+            <Appbar.BackAction onPress={() => navigation.goBack()} />
+            <Appbar.Content title="Mathmatics" style={{flex: 0}} />
+          </Appbar.Header>
+        </Appbar>
         <SubTitle>
           Mathematics helps children make sense of the world around them and
           find meaning in the physical world.
