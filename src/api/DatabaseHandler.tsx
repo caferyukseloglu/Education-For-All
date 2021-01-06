@@ -13,6 +13,7 @@ export class DatabaseHandler {
   private isValid: boolean;
   private courseList = new Array<Course>();
   private categoryList = new Array<Category>();
+  private toCheck = new Array<String>();
 
   public validityCheck(isValid: boolean): void {
     this.isValid = isValid;
@@ -65,6 +66,9 @@ export class DatabaseHandler {
   }
 
   public addUserToDB(user: User): void {
+    
+
+
     firebase
       .database()
       .ref('users/' + '/' + user.getUserID())
@@ -128,7 +132,6 @@ export class DatabaseHandler {
   }
 
   public setCourses(_callback): void {
-
     firebase.database().ref("courses2").once("value").then(snapshot=>{
       snapshot.forEach(x=>{
         const eachCourse: Course = new Course();
@@ -136,12 +139,16 @@ export class DatabaseHandler {
         eachCourse.setCourseDescription(x.val().coursedescription);
         eachCourse.setCourseCategory(x.val().coursecategory);
         eachCourse.setCourseId(x.val().courseid);
-        if(!this.courseList.includes(eachCourse)){
+        if(this.toCheck.includes(x.val().coursename)==false){
           console.log("Added.");
+          this.toCheck.push(x.val().coursename);
           this.courseList.push(eachCourse);
-          if (this.courseList.length == 2) {
+          if (this.courseList.length == 3) {
             _callback();
           }
+        }
+        else{
+          console.log("ZATEN VAR");
         }
       })
     })
@@ -209,26 +216,9 @@ export class DatabaseHandler {
     return this.categoryList;
   }
 
-  public getSingleCategoryCourses(category:Category,_callback){
-    var courseCount: number=0;
-    firebase.database().ref("courses2").once("value").then(snapshot=>{
-      snapshot.forEach(eachCategory=>{
-        if(eachCategory.val().coursecategory==category.getCategoryId()){
-          courseCount++;
-          const eachCourse: Course = new Course();
-          eachCourse.setCourseName(eachCategory.val().coursename);
-          eachCourse.setCourseDescription(eachCategory.val().coursedescription);
-          eachCourse.setCourseCategory(eachCategory.val().coursecategory);
-          eachCourse.setCourseId(eachCategory.val().courseid);
-          category.addCourse(eachCourse);
-          if(category.getCourses().length==courseCount){
-            console.log("EKLENDIIIIIIIIIIIIIIIIII");
-            _callback();
-          }
-        
-        }
-      })
-    })
+  public getTeachersForCategory(_callback):void{
+    
+    firebase.database().ref("users")
 
     
   }

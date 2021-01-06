@@ -1,5 +1,5 @@
 //Main React import
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTheme, Appbar, Button} from 'react-native-paper';
 //Our Styles for Project
 import {
@@ -25,10 +25,10 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-/*import { useUserData } from '../../../states/useData';
+import { useUserData } from '../../../states/useData';
 
-const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
-const [teachers, setTeachers] = React.useState([]);
+/*const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand*/
+/*const [teachers, setTeachers] = React.useState([]);
 
 useEffect(() => {
   userData.userdata.setTeachers(function () {
@@ -38,6 +38,8 @@ useEffect(() => {
   });
 });
 */
+
+
 const HeadofCategory = {
   exampleData: [
     {name: 'Ayhan R.', color: '#FFCE31'},
@@ -48,23 +50,40 @@ const HeadofCategory = {
     {name: 'Igor Y.', color: '#6FCF97'},
   ],
 };
-const CourseScreen = ({navigation}) => {
+const CourseScreen = ({route,navigation}) => {
   const {colors} = useTheme();
+  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+  const {courseObj} = route.params;
+
+  const [courses, setCourseObjects] = React.useState([]);
+
+  /*useEffect(()=>{
+    userData.userdata.getSingleCategoryCourses(courseObj,function(){
+      courseObj.getCourses().forEach((uniqueCourse)=>{
+          console.log("callback called");
+          setCourseObjects((courses) => [
+            ...courses,
+            uniqueCourse,
+          ]);
+      })
+    })
+  })*/
+
+  
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <Appbar>
         <Appbar.Header>
           <Appbar.BackAction onPress={() => navigation.goBack()} />
-          <Appbar.Content title={<Title>Mathmatics</Title>} style={{flex: 0}} />
+          <Appbar.Content title={<Title>{courseObj.getCategoryName()}</Title>} style={{flex: 0}} />
         </Appbar.Header>
       </Appbar>
       <Scroll>
         <Body>
           <View>
             <SubTitle>
-              Mathematics helps children make sense of the world around them and
-              find meaning in the physical world.
+              {courseObj.getCategoryDescription()}
             </SubTitle>
             <HeadText style={{fontWeight: 'bold'}}>Teachers</HeadText>
             <FlatList
