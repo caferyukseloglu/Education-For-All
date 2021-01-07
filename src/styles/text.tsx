@@ -20,7 +20,7 @@ export const Title = styled.Text`
 `;
 
 export const HeadText = styled.Text`
-  margin: 30px;
+  margin: ${(props) => props.margins || '30px'};
   font-size: 15px;
   color: #000000;
 `;
@@ -40,8 +40,7 @@ export const SubTitle = styled.Text`
 `;
 
 export const CourseTitle = styled.Text`
-  margin-top: 27px;
-  margin-left: 27px;
+  margin: ${(props) => props.margins || '27px 0px 0px 27px'};
   width: auto;
   font-family: Poppins-Regular;
   font-style: normal;
@@ -52,7 +51,7 @@ export const CourseTitle = styled.Text`
 `;
 
 export const CourseSubtitle = styled.Text`
-  margin-left: 27px;
+  margin: ${(props) => props.margins || '0px 0px 0px 27px'};
   width: auto;
   font-family: Poppins-Regular;
   font-style: normal;

@@ -13,6 +13,7 @@ import CourseScreen from '../screens/main/Course/Course';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MainScreen from '../screens/main/Main';
 import ExamScreen from '../screens/main/Course/Exam';
+import CourseDetailScreen from '../screens/main/Course/CourseDetails';
 const Stack = createStackNavigator();
 
 export const categoryStackNavigator = () => {
@@ -35,6 +36,11 @@ export const categoryStackNavigator = () => {
         <Stack.Screen
           name="Course"
           component={CourseScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CourseDetails"
+          component={CourseDetailScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
