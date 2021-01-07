@@ -19,13 +19,12 @@ import {SubTitle, Title, CheckText} from '../styles/text';
 import {NewInput} from '../styles/input';
 import {DatabaseHandler} from '../api/DatabaseHandler';
 import {User} from '../api/User';
-
+import {useUserData} from '../states/useData';
 const RegisterScreen = ({route, navigation}) => {
   const {colors} = useTheme();
   var myDatabase = new DatabaseHandler();
-
   const {userType} = route.params;
-
+  const userData = useUserData();
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -64,6 +63,7 @@ const RegisterScreen = ({route, navigation}) => {
             console.log(myDatabase.getUser().getUserID());
             console.log('Start of get courses.');
             console.log('End of get courses.');
+            userData.setData(myDatabase);
             navigation.navigate('Main');
           } else {
             console.log(

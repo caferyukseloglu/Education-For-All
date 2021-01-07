@@ -9,8 +9,6 @@ export class Exam{
     private examQuestions: Array<Question>;
     private examQuestionCount: number;
 
-
-
 	public getExamId(): number {
 		return this.examId;
 	}
@@ -56,8 +54,8 @@ export class Exam{
 	}
 
 
-	public setExamQuestions(value: Array<Question>) {
-		this.examQuestions = value;
+	public setExamQuestions(value: Question) {
+		this.examQuestions.push(value);
     }
     
 

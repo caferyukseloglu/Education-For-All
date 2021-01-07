@@ -10,10 +10,9 @@ export class Course{
     private courseDescription: string;
     private courseLessons: Array<Lesson>;
     private numberOfLessons: number;
-    private courseSubjects: Array<Subject>;
 	private courseExams: Array<Exam>;
-	private teachers: Array<Teacher>;
 	private courseCategory: string;
+	private teacher: Teacher;
 
 	public getCourseId(): string {
 		return this.courseId;
@@ -49,8 +48,8 @@ export class Course{
 	}
 
 
-	public setCourseLessons(value: Array<Lesson>) {
-		this.courseLessons = value;
+	public setCourseLessons(value: Lesson) {
+		this.courseLessons.push(value);
 	}
     
 
@@ -76,20 +75,9 @@ export class Course{
 		return this.courseExams;
 	}
 
-	public setCourseExams(value: Array<Exam>) {
-		this.courseExams = value;
+	public setAddCourseExams(value: Exam) {
+		this.courseExams.push(value);
 	}
-
-
-	public getTeachers(): Array<Teacher> {
-		return this.teachers;
-	}
-
-
-	public setTeachers(value: Teacher) {
-		this.teachers.push(value);
-	}
-
 
 	public getCourseCategory(): string {
 		return this.courseCategory;
@@ -97,6 +85,14 @@ export class Course{
 
 	public setCourseCategory(value: string) {
 		this.courseCategory = value;
+	}
+
+	public getTeacher(): Teacher {
+		return this.teacher;
+	}
+
+	public setTeacher(value: Teacher) {
+		this.teacher = value;
 	}
 
     

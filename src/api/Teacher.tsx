@@ -7,7 +7,7 @@ export class Teacher extends User{
     private coursesGiven = new Array<Course>();
 
     public teachCourse(Database: DatabaseHandler,course:Course){
-        Database.addTeacherToCourse(this,course);
+        Database.teachCourse(this,course);
     }
 
     public getCoursesGiven(): Array<Course>{
@@ -17,5 +17,6 @@ export class Teacher extends User{
     public addCoursesGiven(course:Course):void{
         this.coursesGiven.push(course);
     }
+
 
 }

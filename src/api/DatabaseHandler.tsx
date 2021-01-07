@@ -66,9 +66,6 @@ export class DatabaseHandler {
   }
 
   public addUserToDB(user: User): void {
-    
-
-
     firebase
       .database()
       .ref('users/' + '/' + user.getUserID())
@@ -82,7 +79,31 @@ export class DatabaseHandler {
         usertype: user.getUserType(),
       });
     console.log('User created with user id: ' + user.getUserID());
+
+
+
+    var typeofuser: string;
+    if(user.getUserType()==1){
+      typeofuser= "students";
+    }
+    else{
+      typeofuser="teachers";
+    }
+    firebase
+      .database()
+      .ref(typeofuser +"/"+ user.getUserID())
+      .set({
+        userid: user.getUserID(),
+        email: user.getEmail(),
+        password: user.getPassword(),
+        username: user.getUsername(),
+        name: user.getName(),
+        surname: user.getSurname(),
+        usertype: user.getUserType(),
+      });
+      console.log("CREATED TEACHER OR USER ");
   }
+    
 
   public loginUser(
     emailValidity: boolean,
@@ -216,16 +237,13 @@ export class DatabaseHandler {
     return this.categoryList;
   }
 
-  public getTeachersForCategory(_callback):void{
-    
-    firebase.database().ref("users")
 
-    
+  public teachCourse(teacher:Teacher,course:Course):void{
+    firebase.database().ref("courses"+"/"+teacher.getUserID()).set({
+      coursecategory:course.getCourseCategory(),
+      coursedescription:course.getCourseDescription(),
+      courseid:course.getCourseId(),
+      coursename:course.getCourseName()
+    })
   }
-
-    public test():void{
-      firebase.database().onSnapshot(snapshot => {
-        console.log(snapshot.docs());
-      })
-    }
 }
