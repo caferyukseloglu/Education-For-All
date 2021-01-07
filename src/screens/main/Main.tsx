@@ -18,6 +18,7 @@ import {HPCardsyText} from '../../styles/text';
 import '../../api/DatabaseHandler';
 import {useUserData} from '../../states/useData';
 import {useState} from 'react';
+import { Category } from '../../api/Category';
 
 const MainScreen = ({navigation}) => {
   const windowWidth = useWindowDimensions().width;
@@ -43,6 +44,15 @@ const MainScreen = ({navigation}) => {
 
   console.log(categories);
 
+
+  const toCourse = (category:Category) => {
+    userData.userdata.getTeachersByCategory(category,function(){
+      navigation.navigate("Course",{courseObj:category,teachers:category.getTeachers()})
+    })
+  }
+
+
+
   return (
     <SafeAreaView style={{flex: 1,padding: 10}}>
       <Scroll showsHorizontalScrollIndicator={false}>
@@ -66,7 +76,7 @@ const MainScreen = ({navigation}) => {
             data={categories}
             renderItem={({item, index}) => (
               <TouchableHighlight
-                onPress={() => navigation.navigate('Course',{courseObj:item})}
+                onPress={() => toCourse(item)}
                 underlayColor="white">
                 <View style={{alignContent: 'center',alignItems: 'center'}}>
                   <View

@@ -245,5 +245,72 @@ export class DatabaseHandler {
       courseid:course.getCourseId(),
       coursename:course.getCourseName()
     })
+
+    firebase.database().ref("categories/"+course.getCourseCategory()+"/teachers/"+teacher.getUserID()).set({
+        userid: teacher.getUserID(),
+        email: teacher.getEmail(),
+        password: teacher.getPassword(),
+        username: teacher.getUsername(),
+        name: teacher.getName(),
+        surname: teacher.getSurname(),
+        usertype: teacher.getUserType(),
+    })
+
   }
+
+  public getTeachersByCategory(category:Category,_callback):void{
+    category.resetTeachers();
+    firebase.database().ref("categories/"+category.getCategoryName()+"/teachers").once("value").then(snapshot=>{
+      const teacherCount=snapshot.numChildren();
+      console.log(snapshot);
+      snapshot.forEach(teacher=>{
+        const eachTeacher: Teacher = new Teacher();
+        eachTeacher.setName(teacher.val().name);
+        eachTeacher.setEmail(teacher.val().email);
+        eachTeacher.setUserID(teacher.val().userid);
+        eachTeacher.setUserType(teacher.val().usertype);
+        eachTeacher.setPassword(teacher.val().password);
+        eachTeacher.setSurname(teacher.val().surname);
+        category.addTeacher(eachTeacher);
+        console.log(category.getTeachers().length);
+        console.log("teacher count: "+teacherCount);
+        if(category.getTeachers().length==teacherCount){
+          console.log("calling back");
+          _callback();
+        }
+      })
+    })
+  }
+
+  public getCoursesOfTeacher(teacher:Teacher, category:Category,_callback):void{
+    teacher.resetCoursesGiven();
+    var count=0;
+    firebase.database().ref("courses2/"+teacher.getUserID()).once("value").then(snapshot=>{
+      snapshot.forEach(course=>{
+        if(course.val().coursecategory==category.getCategoryName()){
+          count++
+        }
+      })
+      console.log("COUNT IS: "+count)
+      snapshot.forEach(course=>{
+        const eachCourse: Course = new Course();
+        if(course.val().coursecategory==category.getCategoryName()){
+          console.log(course);
+          eachCourse.setCourseId(course.val().courseid);
+          eachCourse.setCourseName(course.val().coursename);
+          eachCourse.setCourseDescription(course.val().coursedescription);
+          eachCourse.setCourseCategory(course.val().coursecategory);
+          teacher.addCoursesGiven(eachCourse);
+          if(teacher.getCoursesGiven().length==count){
+            console.log("calling back on get hcourses");
+            _callback();
+          }
+        }
+      })
+    })
+
+    
+  }
+
+
 }

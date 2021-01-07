@@ -16,6 +16,10 @@ export class Teacher extends User{
 
     public addCoursesGiven(course:Course):void{
         this.coursesGiven.push(course);
+    } 
+
+    public resetCoursesGiven():void{
+        this.coursesGiven=[];
     }
 
 

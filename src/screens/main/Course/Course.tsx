@@ -26,47 +26,21 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useUserData} from '../../../states/useData';
+import { Course } from '../../../api/Course';
 
-/*const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand*/
-/*const [teachers, setTeachers] = React.useState([]);
 
-useEffect(() => {
-  userData.userdata.setTeachers(function () {
-    userData.userdata.getTeachers().forEach((teacher) => {
-      setCategories((teachers) => [...teachers, teacher.getCategoryName()]);
-    });
-  });
-});
-*/
-
-const HeadofCategory = {
-  exampleData: [
-    {name: 'Ayhan R.', color: '#FFCE31'},
-    {name: 'Ahmet Y.', color: '#2D9CDB'},
-    {name: 'Mehmet Ö.', color: '#EB5757'},
-    {name: 'Salim B.', color: '#BB6BD9'},
-    {name: 'Kerim U.', color: '#F2C94C'},
-    {name: 'Igor Y.', color: '#6FCF97'},
-  ],
-};
 const CourseScreen = ({route, navigation}) => {
   const {colors} = useTheme();
+  const {courseObj,teachers} = route.params;
+
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
-  const {courseObj} = route.params;
-
-  const [courses, setCourseObjects] = React.useState([]);
-
-  /*useEffect(()=>{
-    userData.userdata.getSingleCategoryCourses(courseObj,function(){
-      courseObj.getCourses().forEach((uniqueCourse)=>{
-          console.log("callback called");
-          setCourseObjects((courses) => [
-            ...courses,
-            uniqueCourse,
-          ]);
-      })
+  const changeByUser = (teacher,course:Course) =>{
+    console.log("Hello");
+    userData.userdata.getCoursesOfTeacher(teacher,course,function(){
+      console.log("done");
     })
-  })*/
+  }
+  
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -86,12 +60,10 @@ const CourseScreen = ({route, navigation}) => {
             <HeadText style={{fontWeight: 'bold'}}>Teachers</HeadText>
             <FlatList
               horizontal
-              data={HeadofCategory.exampleData}
+              data={teachers}
               renderItem={({item, index}) => (
                 <TouchableHighlight
-                  onPress={console.log(
-                    "() => navigation.navigate('Teacher Data')",
-                  )}
+                  onPress={()=> changeByUser(item,courseObj)}
                   underlayColor="white">
                   <View>
                     <View
@@ -106,7 +78,7 @@ const CourseScreen = ({route, navigation}) => {
                         borderRadius: 60 / 2,
                       }}
                     />
-                    <HPCardsyText>{item.name}</HPCardsyText>
+                    <HPCardsyText>{item.name+" "+item.surname[0]+"."}</HPCardsyText>
                   </View>
                 </TouchableHighlight>
               )}

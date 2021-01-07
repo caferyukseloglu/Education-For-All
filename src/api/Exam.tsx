@@ -2,21 +2,10 @@ import { Question } from "./Question";
 
 export class Exam{
     
-    private examId: number;
     private examName: string;
     private examDescription: string;
     private examDuration: number;
     private examQuestions: Array<Question>;
-    private examQuestionCount: number;
-
-	public getExamId(): number {
-		return this.examId;
-	}
-
-
-	public setExamId(value: number) {
-		this.examId = value;
-	}
 
 
 	public getExamName(): string {
@@ -57,15 +46,6 @@ export class Exam{
 	public setExamQuestions(value: Question) {
 		this.examQuestions.push(value);
     }
-    
-
-	public getExamQuestionCount(): number {
-		return this.examQuestionCount;
-	}
-
-	public setExamQuestionCount(value: number) {
-		this.examQuestionCount = value;
-	}
     
 
 

@@ -1,4 +1,5 @@
 import { Course } from "./Course";
+import { Teacher } from "./Teacher";
 
 
 export class Category{
@@ -7,6 +8,7 @@ export class Category{
     private courseListOfCategory = new Array<Course>();
     private categoryDescription: string;
     private categoryId: string;
+    private teacherList = new Array<Teacher>();
 
 	public getCategoryName(): string {
 		return this.categoryName;
@@ -41,5 +43,16 @@ export class Category{
 		this.categoryId = value;
 	}
 
+    public addTeacher(teacher:Teacher):void{
+        this.teacherList.push(teacher);
+    }
+
+    public getTeachers():Array<Teacher>{
+        return this.teacherList;
+    }
+
+    public resetTeachers():void{
+        this.teacherList=[];
+    }
 
 }
