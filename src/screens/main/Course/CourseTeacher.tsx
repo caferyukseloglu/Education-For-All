@@ -40,24 +40,6 @@ const CourseScreen = ({route, navigation}) => {
 
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
 
-  const changeByUser = (teacher, course: Course) => {
-    setCourses([]);
-    setTeacher('');
-    setTeacher(teacher);
-    userData.userdata.getCoursesOfTeacher(teacher, course, function () {
-      teacher.getCoursesGiven().forEach((course) => {
-        setCourses((courses) => [...courses, course]);
-      });
-    });
-  };
-
-  useEffect(() => {
-    console.log('USEEFFECTCALLED');
-    console.log(teacher);
-  });
-
-  console.log('printing courses ' + courses);
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <Appbar>
@@ -80,43 +62,13 @@ const CourseScreen = ({route, navigation}) => {
             <HeadText
               margins="10px 0px"
               style={{fontWeight: 'bold', color: colors.title1}}>
-              Teachers
-            </HeadText>
-            <FlatList
-              horizontal
-              data={teachers}
-              renderItem={({item, index}) => (
-                <TouchableHighlight
-                  onPress={() => changeByUser(item, courseObj)}
-                  underlayColor="white">
-                  <View>
-                    <View
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      style={{
-                        backgroundColor: '#2D9CDB',
-                        marginRight: 10,
-                        alignItems: 'center',
-                        marginTop: 10,
-                        height: 60,
-                        width: 60,
-                        borderRadius: 60 / 2,
-                      }}
-                    />
-                    <HPCardsyText style={{color: colors.title1}}>
-                      {item.name + ' ' + item.surname[0] + '.'}
-                    </HPCardsyText>
-                  </View>
-                </TouchableHighlight>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-            />
-            <HeadText
-              margins="10px 0px"
-              style={{fontWeight: 'bold', color: colors.title1}}>
               Courses
             </HeadText>
             <FlatList
-              data={courses}
+              data={userData.userdata.getCoursesOfTeacher(userData.userdata.getUser(), courseObj, function(){
+                  userData.userdata.getUser().getCoursesGiven();
+                },
+              )}
               renderItem={({item, index}) => (
                 <PopView
                   style={{

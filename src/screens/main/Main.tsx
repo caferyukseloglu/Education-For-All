@@ -18,7 +18,7 @@ import {HPCardsyText} from '../../styles/text';
 import '../../api/DatabaseHandler';
 import {useUserData} from '../../states/useData';
 import {useState} from 'react';
-import { Category } from '../../api/Category';
+import {Category} from '../../api/Category';
 
 const MainScreen = ({navigation}) => {
   const windowWidth = useWindowDimensions().width;
@@ -34,35 +34,42 @@ const MainScreen = ({navigation}) => {
   useEffect(() => {
     userData.userdata.setCategories(function () {
       userData.userdata.getCategories().forEach((category) => {
-        setCategories((categories) => [
-          ...categories,
-          category,
-        ]);
+        setCategories((categories) => [...categories, category]);
       });
     });
   });
 
-  const toCourse = (category:Category) => {
-    userData.userdata.getTeachersByCategory(category,function(){
-      navigation.navigate("Course",{courseObj:category,teachers:category.getTeachers()})
-    })
-  }
-
-
+  const toCourse = (category: Category) => {
+    userData.userdata.getTeachersByCategory(category, function () {
+      navigation.navigate(
+        userData.userdata.getUser().getUserType() === 1
+          ? 'Course'
+          : 'CourseTeacher',
+        {
+          courseObj: category,
+          teachers: category.getTeachers(),
+        },
+      );
+    });
+  };
 
   return (
-    <SafeAreaView style={{flex: 1,padding: 10}}>
+    <SafeAreaView style={{flex: 1, padding: 10}}>
       <Scroll showsHorizontalScrollIndicator={false}>
         <View>
           <Line alignItems="center">
-            <Title textAlign='left' style={{fontWeight: 'bold'}}>Home Page</Title>
+            <Title textAlign="left" style={{fontWeight: 'bold'}}>
+              Home Page
+            </Title>
             <ToggleButton
               icon="bell"
               value="Messages"
               onPress={console.log('Clicked')}
             />
           </Line>
-          <SubTitle left='0' marginTop='0' textAlign='left'>Choose the course you want</SubTitle>
+          <SubTitle left="0" marginTop="0" textAlign="left">
+            Choose the course you want
+          </SubTitle>
           <Searchbar
             placeholder={'Search for lesson,subject or teacher...'}
             onChangeText={onChangeSearch}
@@ -75,7 +82,7 @@ const MainScreen = ({navigation}) => {
               <TouchableHighlight
                 onPress={() => toCourse(item)}
                 underlayColor="white">
-                <View style={{alignContent: 'center',alignItems: 'center'}}>
+                <View style={{alignContent: 'center', alignItems: 'center'}}>
                   <View
                     // eslint-disable-next-line react-native/no-inline-styles
                     style={{
