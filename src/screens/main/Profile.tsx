@@ -12,7 +12,8 @@ import {TabView, SceneMap} from 'react-native-tab-view';
 import { BigButton } from '../../styles/buttons';
 import {NewInput} from '../../styles/input';
 import {Body, Bottom, Form} from '../../styles/wrapper';
-
+import {useUserData} from '../../states/useData';
+import { User } from '../../api/User';
 const FirstRoute = () => (
   <View style={[styles.scene, {backgroundColor: '#ff4081'}]} />
 );
@@ -26,6 +27,12 @@ const SecondRoute = () => {
     secureTextEntry: true,
     isValidPassword: null,
   });
+  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+
+  const changePassword = (user:User,newname:string,newsurname:string,passwordNew:string,validity:boolean) =>{
+    userData.userdata.updateUser(user,newname,newsurname,passwordNew,validity);
+  } 
+
 
   const passwordControl = (val: string) => {
     var trimmedInput = val.trim();
@@ -167,7 +174,7 @@ const SecondRoute = () => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress=""
+            onPress={() => changePassword(userData.userdata.getUser(),name,surName,data.password,data.isValidPassword)}
           />
         </Form>
       </Bottom>
@@ -178,8 +185,9 @@ const SecondRoute = () => {
 const initialLayout = {width: Dimensions.get('window').width};
 
 const ProfileScreen = ({navigation}) => {
+  
   const {colors} = useTheme();
-
+  const p = 5;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'Performances'},
