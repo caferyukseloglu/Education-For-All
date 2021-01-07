@@ -1,5 +1,5 @@
 //Main React import
-import React from 'react';
+import React,{useState} from 'react';
 import {
   useTheme,
   ProgressBar,
@@ -16,6 +16,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import { BigButton } from '../../../styles/buttons';
 
 const ExamScreen = ({navigation}) => {
+  const [checked, setChecked] = useState(0);
+
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
   const {colors} = useTheme();
@@ -46,7 +48,8 @@ const ExamScreen = ({navigation}) => {
           flexDirection: 'column',
           justifyContent: 'space-around',
         }}>
-        <TouchableRipple onPress={() => console.log('Test Clicked')}>
+        <TouchableRipple
+          onPress={() => (checked != 1 ? setChecked(1) : setChecked(0))}>
           <View
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
@@ -60,11 +63,11 @@ const ExamScreen = ({navigation}) => {
             }}>
             <Paragraph>Normal</Paragraph>
             <View pointerEvents="none">
-              <Checkbox status={'checked'} />
+              <Checkbox status={checked === 1 ? 'checked' : 'unchecked'} />
             </View>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => console.log('Test Clicked')}>
+        <TouchableRipple onPress={() => (checked != 2 ? setChecked(2) : setChecked(0))}>
           <View
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
@@ -78,11 +81,11 @@ const ExamScreen = ({navigation}) => {
             }}>
             <Paragraph>Normal</Paragraph>
             <View pointerEvents="none">
-              <Checkbox status={'unchecked'} />
+              <Checkbox status={checked === 2 ? 'checked' : 'unchecked'} />
             </View>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => console.log('Test Clicked')}>
+        <TouchableRipple onPress={() => (checked != 3 ? setChecked(3) : setChecked(0))}>
           <View
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
@@ -96,11 +99,11 @@ const ExamScreen = ({navigation}) => {
             }}>
             <Paragraph>Normal</Paragraph>
             <View pointerEvents="none">
-              <Checkbox status={'unchecked'} />
+              <Checkbox status={checked === 3 ? 'checked' : 'unchecked'} />
             </View>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => console.log('Test Clicked')}>
+        <TouchableRipple onPress={() => (checked != 4 ? setChecked(4) : setChecked(0))}>
           <View
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
@@ -114,7 +117,7 @@ const ExamScreen = ({navigation}) => {
             }}>
             <Paragraph>Normal</Paragraph>
             <View pointerEvents="none">
-              <Checkbox status={'unchecked'} />
+              <Checkbox status={checked === 4 ? 'checked' : 'unchecked'} />
             </View>
           </View>
         </TouchableRipple>
@@ -128,7 +131,7 @@ const ExamScreen = ({navigation}) => {
         }}>
         <BigButton
           margins={[10, 10, 20, 20]}
-          text="Send"
+          text="Next"
           mode="contained"
           bgColor="success"
           textColor="buttonText1"
