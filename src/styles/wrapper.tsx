@@ -15,7 +15,6 @@ export const Form = styled.View`
 `;
 
 export const Line = styled.View`
-  flex: 1;
   flex-direction: row;
   justify-content: ${(props) => props.justify || 'space-around'};
   alignItems: ${(props) => props.alignItems || 'center'};

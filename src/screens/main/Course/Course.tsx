@@ -25,7 +25,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { useUserData } from '../../../states/useData';
+import {useUserData} from '../../../states/useData';
 
 /*const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand*/
 /*const [teachers, setTeachers] = React.useState([]);
@@ -39,7 +39,6 @@ useEffect(() => {
 });
 */
 
-
 const HeadofCategory = {
   exampleData: [
     {name: 'Ayhan R.', color: '#FFCE31'},
@@ -50,7 +49,7 @@ const HeadofCategory = {
     {name: 'Igor Y.', color: '#6FCF97'},
   ],
 };
-const CourseScreen = ({route,navigation}) => {
+const CourseScreen = ({route, navigation}) => {
   const {colors} = useTheme();
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
   const {courseObj} = route.params;
@@ -69,22 +68,21 @@ const CourseScreen = ({route,navigation}) => {
     })
   })*/
 
-  
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <Appbar>
         <Appbar.Header>
           <Appbar.BackAction onPress={() => navigation.goBack()} />
-          <Appbar.Content title={<Title>{courseObj.getCategoryName()}</Title>} style={{flex: 0}} />
+          <Appbar.Content
+            title={<Title>{courseObj.getCategoryName()}</Title>}
+            style={{flex: 0}}
+          />
         </Appbar.Header>
       </Appbar>
       <Scroll>
         <Body>
           <View>
-            <SubTitle>
-              {courseObj.getCategoryDescription()}
-            </SubTitle>
+            <SubTitle>{courseObj.getCategoryDescription()}</SubTitle>
             <HeadText style={{fontWeight: 'bold'}}>Teachers</HeadText>
             <FlatList
               horizontal
@@ -121,7 +119,9 @@ const CourseScreen = ({route,navigation}) => {
                 <Lesson>Math 101</Lesson>
                 <Teacher>T. Cafer</Teacher>
                 <Duration>Duration: 5 Min</Duration>
-                <Button onPress={() => navigation.navigate('Exam')}>Take Exam</Button>
+                <Button onPress={() => navigation.navigate('Exam')}>
+                  Take Exam
+                </Button>
               </LessonView>
             </PopView>
             <PopView>
