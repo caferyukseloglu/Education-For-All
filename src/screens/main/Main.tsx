@@ -42,9 +42,6 @@ const MainScreen = ({navigation}) => {
     });
   });
 
-  console.log(categories);
-
-
   const toCourse = (category:Category) => {
     userData.userdata.getTeachersByCategory(category,function(){
       navigation.navigate("Course",{courseObj:category,teachers:category.getTeachers()})

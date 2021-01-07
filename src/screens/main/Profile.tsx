@@ -8,10 +8,13 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {HelperText, TextInput, useTheme} from 'react-native-paper';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import { color } from 'react-native-reanimated';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { BigButton } from '../../styles/buttons';
 import {NewInput} from '../../styles/input';
 import {Body, Bottom, Form} from '../../styles/wrapper';
+import {Title} from '../../styles/text';
 
 const FirstRoute = () => (
   <View style={[styles.scene, {backgroundColor: '#ff4081'}]} />
@@ -64,7 +67,7 @@ const SecondRoute = () => {
   };
 
   return (
-    <View style={[styles.scene]}>
+    <View style={[styles.scene] }>
       <Form>
         <NewInput
           label="Name"
@@ -79,7 +82,7 @@ const SecondRoute = () => {
               error: colors.error,
               primary: colors.accent,
               placeholder: colors.placeholder,
-              background: colors.input1,
+              background: colors.input2,
             },
           }}
           left={
@@ -175,11 +178,19 @@ const SecondRoute = () => {
   );
 };
 
+const renderTabBar = props => (
+  <TabBar
+    {...props}
+    indicatorStyle={{ backgroundColor: 'black' }}
+    activeColor="black"
+    inactiveColor="black"
+    style={{backgroundColor: 'white'}}
+  />
+);
+
 const initialLayout = {width: Dimensions.get('window').width};
 
 const ProfileScreen = ({navigation}) => {
-  const {colors} = useTheme();
-
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'Performances'},
@@ -193,7 +204,10 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     <Body paddings="10px">
+      <Title>Profile</Title>
       <TabView
+        style={{marginTop:10}}
+        renderTabBar={renderTabBar}
         navigationState={{index, routes}}
         renderScene={renderScene}
         onIndexChange={setIndex}
@@ -208,5 +222,6 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   scene: {
     flex: 1,
+    paddingTop: 20,
   },
 });
