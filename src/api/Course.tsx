@@ -5,7 +5,6 @@ import { Teacher } from "./Teacher";
 
 export class Course{
 
-    private courseId: string;
     private courseName: string;
     private courseDescription: string;
     private courseLessons: Array<Lesson>;
@@ -14,15 +13,6 @@ export class Course{
 	private courseCategory: string;
 	private teacher: Teacher;
 
-	public getCourseId(): string {
-		return this.courseId;
-	}
-
-	public setCourseId(value: string) {
-		this.courseId = value;
-
-
-    }
 	public getCourseName(): string {
 		return this.courseName;
 	}

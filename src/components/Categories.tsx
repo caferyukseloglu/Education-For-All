@@ -27,7 +27,7 @@ const Categories = () => {
     <View>
       <ScrollView horizontal>
         {courses.map((course) => (
-          <Category key={course.courseId} category={course} />
+          <Category key={course.categoryName} category={course} />
         ))}
       </ScrollView>
     </View>

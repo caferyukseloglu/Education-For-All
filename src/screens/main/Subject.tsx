@@ -28,6 +28,8 @@ import {View, FlatList, useWindowDimensions, StyleSheet} from 'react-native';
 import {SubjectCard} from '../../styles/cards';
 import {useUserData} from '../../states/useData';
 import {TouchableHighlight} from 'react-native';
+import { Course } from '../../api/Course';
+
 
 const SubjectScreen = ({navigation}) => {
   const [visible, setVisible] = React.useState(false);
@@ -277,13 +279,23 @@ const SubjectScreen = ({navigation}) => {
   }
 };
 
-const ModalCourse = () => {
+const ModalCourse = ({navigation}) => {
   const [text, setText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [value, onChangeText] = React.useState('');
+  const [description, onChangeDescription] = React.useState('');
+  const [courseName, onChangeCourseName] = React.useState('');
   const [selectedValue, setSelectedValue] = useState('Category...');
-
   const [checked, setChecked] = React.useState('first');
+  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+
+  const saveCourseandNavigate=()=>{
+    const createdCourse: Course = new Course();
+    createdCourse.setCourseName(courseName);
+    createdCourse.setCourseCategory(selectedValue.label);
+    createdCourse.setCourseDescription(description);
+    userData.userdata.teachCourse(userData.userdata.getUser(),createdCourse);
+    navigation.navigate('CourseDetails',{courseDetails:createdCourse,courseTeacher:userData.userdata.getUser()});
+  } 
 
   return (
     <View>
@@ -299,31 +311,19 @@ const ModalCourse = () => {
               borderColor: 'gray',
               borderWidth: 1,
             }}
+            onChangeText={(text) => onChangeCourseName(text)}
+            value={courseName}
             placeholder="  enter course name..."
             placeholderTextColor="lightgrey"
           />
         </View>
         <View>
-          <Text>Course ID:</Text>
-          <TextInput
-            style={{
-              height: 30,
-              width: 300,
-              borderColor: 'gray',
-              borderWidth: 1,
-            }}
-            placeholder="  enter course ID..."
-            placeholderTextColor="lightgrey"
-          />
-        </View>
-
-        <View>
-          <Text>Course Describtion:</Text>
+          <Text>Course Description:</Text>
           <UselessTextInput
             multiline
             numberOfLines={2}
-            onChangeText={(text) => onChangeText(text)}
-            value={value}
+            onChangeText={(text) => onChangeDescription(text)}
+            value={description}
           />
         </View>
 
@@ -331,15 +331,16 @@ const ModalCourse = () => {
           <DropDownPicker
             placeholder="Select a category..."
             items={[
-              {label: 'Mathmatics', value: 'math'},
+              {label: 'Mathematics', value: 'math'},
               {label: 'Chemistry', value: 'chem'},
               {label: 'Biology', value: 'bio'},
-              {label: 'physics', value: 'phys'},
-              {label: 'Coading', value: 'code'},
+              {label: 'Physics', value: 'phys'},
+              {label: 'Programming', value: 'code'},
               {label: 'English', value: 'EN'},
             ]}
             dropDownMaxHeight={70}
             containerStyle={{height: 70, width: 300}}
+            onChangeItem={item=>setSelectedValue(item)}
           />
         </View>
         <View style={styles.row}>
@@ -353,7 +354,7 @@ const ModalCourse = () => {
           <TouchableHighlight
             style={{...styles.closeButton, backgroundColor: 'E5E5E5'}}
             onPress={() => {
-              setModalVisible(!modalVisible);
+              saveCourseandNavigate();
             }}>
             <Text style={styles.textStyle}>Save</Text>
           </TouchableHighlight>
@@ -369,7 +370,7 @@ const UselessTextInput = (props) => {
       style={{height: 100, width: 300, borderColor: 'gray', borderWidth: 1}}
       {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
       maxLength={140}
-      placeholder="  enter course describtion..."
+      placeholder="  enter course description..."
       placeholderTextColor="lightgrey"
     />
   );

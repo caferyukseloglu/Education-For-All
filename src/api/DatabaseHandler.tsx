@@ -159,7 +159,6 @@ export class DatabaseHandler {
         eachCourse.setCourseName(x.val().coursename);
         eachCourse.setCourseDescription(x.val().coursedescription);
         eachCourse.setCourseCategory(x.val().coursecategory);
-        eachCourse.setCourseId(x.val().courseid);
         if(this.toCheck.includes(x.val().coursename)==false){
           console.log("Added.");
           this.toCheck.push(x.val().coursename);
@@ -183,37 +182,6 @@ export class DatabaseHandler {
     return this.loggedUser;
   }
 
-  public getCourseExams(): Array<Course> {
-    return this.courseExams;
-  }
-
-  public setCourseExams(value: Course) {
-    this.courseExams.push(value);
-  }
-
-  /*public addTeacherToCourse(teacher:Teacher,course:Course){
-        firebase.database().ref("courses/"+course.getCourseId()+"/"+"/teachers/"+teacher.getUserID()).set({
-            userid: teacher.getUserID(),
-            email: teacher.getEmail(),
-            password: teacher.getPassword(),
-            username:teacher.getUsername(),
-            name: teacher.getName(),
-            surname: teacher.getSurname(),
-            usertype: teacher.getUserType()
-        })
-    }
-
-    public enrollCourse(student:Student,course:Course,teacher:Teacher){
-        firebase.database().ref("courses/"+course.getCourseId()+"/"+"/teachers/"+teacher.getUserID()+"students/"+student.getUserID()).set({
-            userid: student.getUserID(),
-            email: student.getEmail(),
-            password: student.getPassword(),
-            username:student.getUsername(),
-            name: student.getName(),
-            surname: student.getSurname(),
-            usertype: student.getUserType()
-        })
-    }*/
 
   public setCategories(_callback) {
     firebase.database().ref("/categories/").once("value").then(snapshot=>{
@@ -239,10 +207,9 @@ export class DatabaseHandler {
 
 
   public teachCourse(teacher:Teacher,course:Course):void{
-    firebase.database().ref("courses"+"/"+teacher.getUserID()+"/"+course.getCourseId()).set({
+    firebase.database().ref("courses"+"/"+teacher.getUserID()+"/"+course.getCourseName()).set({
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
-      courseid:course.getCourseId(),
       coursename:course.getCourseName()
     })
 
@@ -294,7 +261,6 @@ export class DatabaseHandler {
       snapshot.forEach(course=>{
         const eachCourse: Course = new Course();
         if(course.val().coursecategory==category.getCategoryName()){
-          eachCourse.setCourseId(course.val().courseid);
           eachCourse.setCourseName(course.val().coursename);
           eachCourse.setCourseDescription(course.val().coursedescription);
           eachCourse.setCourseCategory(course.val().coursecategory);
@@ -309,11 +275,10 @@ export class DatabaseHandler {
   }
 
   public studentCourseEnroll(student:Student,teacher:Teacher,course:Course,_callback):void{
-    firebase.database().ref("studentsenrolled/"+student.getUserID()+"/"+course.getCourseId()).set({
+    firebase.database().ref("studentsenrolled/"+student.getUserID()+"/"+course.getCourseName()).set({
       coursename:course.getCourseName(),
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
-      courseid:course.getCourseId(),
       courseteacher:teacher.getUserID(),
     }).then(()=>_callback())
 

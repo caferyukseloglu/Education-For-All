@@ -30,6 +30,8 @@ const MainScreen = ({navigation}) => {
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
 
   const [categories, setCategories] = React.useState([]);
+  console.log("CATEGORİES:");
+  console.log(categories);
 
   useEffect(() => {
     userData.userdata.setCategories(function () {
