@@ -8,19 +8,16 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {HelperText, TextInput, useTheme} from 'react-native-paper';
-import { color } from 'react-native-reanimated';
+import {color} from 'react-native-reanimated';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { BigButton } from '../../styles/buttons';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {BigButton} from '../../styles/buttons';
 import {NewInput} from '../../styles/input';
 import {Body, Bottom, Form} from '../../styles/wrapper';
-<<<<<<< HEAD
 import {Title} from '../../styles/text';
 
-=======
 import {useUserData} from '../../states/useData';
-import { User } from '../../api/User';
->>>>>>> 6183fccc3708fe79477095cd73e748c02c773faa
+import {User} from '../../api/User';
 const FirstRoute = () => (
   <View style={[styles.scene, {backgroundColor: '#ff4081'}]} />
 );
@@ -36,10 +33,21 @@ const SecondRoute = () => {
   });
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
 
-  const changePassword = (user:User,newname:string,newsurname:string,passwordNew:string,validity:boolean) =>{
-    userData.userdata.updateUser(user,newname,newsurname,passwordNew,validity);
-  } 
-
+  const changePassword = (
+    user: User,
+    newname: string,
+    newsurname: string,
+    passwordNew: string,
+    validity: boolean,
+  ) => {
+    userData.userdata.updateUser(
+      user,
+      newname,
+      newsurname,
+      passwordNew,
+      validity,
+    );
+  };
 
   const passwordControl = (val: string) => {
     var trimmedInput = val.trim();
@@ -78,7 +86,7 @@ const SecondRoute = () => {
   };
 
   return (
-    <View style={[styles.scene] }>
+    <View style={[styles.scene]}>
       <Form>
         <NewInput
           label="Name"
@@ -181,7 +189,15 @@ const SecondRoute = () => {
             mode="contained"
             bgColor="accent"
             textColor="buttonText1"
-            onPress={() => changePassword(userData.userdata.getUser(),name,surName,data.password,data.isValidPassword)}
+            onPress={() =>
+              changePassword(
+                userData.userdata.getUser(),
+                name,
+                surName,
+                data.password,
+                data.isValidPassword,
+              )
+            }
           />
         </Form>
       </Bottom>
@@ -189,10 +205,10 @@ const SecondRoute = () => {
   );
 };
 
-const renderTabBar = props => (
+const renderTabBar = (props) => (
   <TabBar
     {...props}
-    indicatorStyle={{ backgroundColor: 'black' }}
+    indicatorStyle={{backgroundColor: 'black'}}
     activeColor="black"
     inactiveColor="black"
     style={{backgroundColor: 'white'}}
@@ -202,12 +218,8 @@ const renderTabBar = props => (
 const initialLayout = {width: Dimensions.get('window').width};
 
 const ProfileScreen = ({navigation}) => {
-<<<<<<< HEAD
-=======
-  
   const {colors} = useTheme();
   const p = 5;
->>>>>>> 6183fccc3708fe79477095cd73e748c02c773faa
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'Performances'},
@@ -223,7 +235,7 @@ const ProfileScreen = ({navigation}) => {
     <Body paddings="10px">
       <Title>Profile</Title>
       <TabView
-        style={{marginTop:10}}
+        style={{marginTop: 10}}
         renderTabBar={renderTabBar}
         navigationState={{index, routes}}
         renderScene={renderScene}
