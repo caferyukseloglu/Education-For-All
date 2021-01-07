@@ -22,32 +22,45 @@ import {
 import {useWindowDimensions, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import { color } from 'react-native-reanimated';
+import {useUserData} from '../../../states/useData';
 
-const CourseDetailScreen = ({navigation}) => {
+const CourseDetailScreen = ({route,navigation}) => {
   const {colors} = useTheme();
   const windowWidth = useWindowDimensions().width;
+
+  const {courseDetails,courseTeacher} = route.params;
+  console.log(courseDetails);
+
+  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+
+  const enrollCourse= () =>{
+    userData.userdata.studentCourseEnroll(userData.userdata.getUser(),courseTeacher,courseDetails,function(){
+      console.log("Done");
+    })
+  }
+
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <Appbar style={{backgroundColor: colors.surface,justifyContent:'center'}}>
         <Appbar.Header style={{backgroundColor: colors.surface, justifyContent: 'space-between',width:windowWidth}}>
           <Appbar.BackAction onPress={() => navigation.goBack()} />
-          <Appbar.Action onPress={() => navigation.goBack()} icon="bookmark" />
+          <Appbar.Action onPress={() => enrollCourse()} icon="bookmark" />
         </Appbar.Header>
       </Appbar>
       <Scroll>
         <Body paddings="20px" style={{backgroundColor:colors.background}}>
           <View>
             <View style={{paddingBottom: 10}}>
-              <CourseTitle margins="0px" style={{color: colors.title1}}>Mathematics 101</CourseTitle>
-              <CourseSubtitle margins="0px" style={{color: colors.subtitle1}}>By Taha Kızmaz</CourseSubtitle>
+              <CourseTitle margins="0px" style={{color: colors.title1}}>{courseDetails.getCourseName()}</CourseTitle>
+              <CourseSubtitle margins="0px" style={{color: colors.subtitle1}}>{courseTeacher.getName()+" "+courseTeacher.getSurname()}</CourseSubtitle>
             </View>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <Card style={{width: windowWidth - 50}}>
                 <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
               </Card>
             </View>
-            <HeadText margins="10px 0px" style={{color: colors.text}}>Mathematics Course 101 is the begining lesson for Mathematics</HeadText>
+            <HeadText margins="10px 0px" style={{color: colors.text}}>{courseDetails.getCourseDescription()}</HeadText>
             <HeadText margins="10px 0px" style={{fontWeight: 'bold', color: colors.title1}}>Course Details</HeadText>
             <PopView style={{alignItems:'center',justifyContent:'space-between'}}>
               <View style={{alignItems: 'center',flexDirection: 'row'}}>

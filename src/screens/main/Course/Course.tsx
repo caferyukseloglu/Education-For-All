@@ -1,5 +1,5 @@
 //Main React import
-import React from 'react';
+import React,{useEffect} from 'react';
 import {useTheme, Appbar, Button, IconButton} from 'react-native-paper';
 //Our Styles for Project
 import {
@@ -30,13 +30,33 @@ const CourseScreen = ({route, navigation}) => {
   const {colors} = useTheme();
   const {courseObj, teachers} = route.params;
 
+  const [courses, setCourses] = React.useState([]);
+  const [teacher,setTeacher] = React.useState("");
+
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+
   const changeByUser = (teacher, course: Course) => {
-    console.log('Hello');
+    setCourses([]);
+    setTeacher("");
+    setTeacher(teacher);
     userData.userdata.getCoursesOfTeacher(teacher, course, function () {
-      console.log('done');
+      teacher.getCoursesGiven().forEach(course=>{
+        setCourses((courses) => [
+          ...courses,
+          course,
+        ]);
+      })
     });
   };
+  
+  useEffect(() => {
+    console.log("USEEFFECTCALLED");
+    console.log(teacher);
+  });
+
+
+
+  console.log("printing courses "+ courses);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -82,63 +102,27 @@ const CourseScreen = ({route, navigation}) => {
               keyExtractor={(item, index) => index.toString()}
             />
             <HeadText margins="10px 0px" style={{fontWeight: 'bold',color:colors.title1}}>Courses</HeadText>
-            <PopView style={{alignItems:'center',justifyContent:'space-between'}}>
+            <FlatList
+              data={courses}
+              renderItem={({item, index}) => (
+                <PopView style={{alignItems:'center',justifyContent:'space-between'}}>
               <View style={{alignItems: 'center',flexDirection: 'row'}}>
                 <Avatar2 />
                 <LessonView>
-                  <Lesson style={{color: colors.title1}}>Math 101</Lesson>
-                  <Teacher style={{color: colors.accent}}>T. Cafer </Teacher>
+                  <Lesson style={{color: colors.title1}}>{item.getCourseName()}</Lesson>
+                  <Teacher style={{color: colors.accent}}>{teacher.getName()+" "+teacher.getSurname()}</Teacher>
                 </LessonView>
               </View>
               <IconButton
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{justifyContent: 'center'}}
                 icon="play-circle-outline"
-                onPress={() => navigation.navigate('CourseDetails')}
+                onPress={() => navigation.navigate('CourseDetails',{courseDetails:item,courseTeacher:teacher})}
               />
             </PopView>
-            <PopView style={{alignItems:'center',justifyContent:'space-between'}}>
-              <View style={{alignItems: 'center',flexDirection: 'row'}}>
-                <Avatar2 />
-                <LessonView>
-                  <Lesson style={{color: colors.title1}}>Math 102</Lesson>
-                  <Teacher style={{color: colors.accent}}>T. Cafer </Teacher>
-                </LessonView>
-              </View>
-              <IconButton
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{justifyContent: 'center'}}
-                icon="play-circle-outline"
-              />
-            </PopView>
-            <PopView style={{alignItems:'center',justifyContent:'space-between'}}>
-              <View style={{alignItems: 'center',flexDirection: 'row'}}>
-                <Avatar2 />
-                <LessonView>
-                  <Lesson style={{color: colors.title1}}>Math 103</Lesson>
-                  <Teacher style={{color: colors.accent}}>T. Cafer </Teacher>
-                </LessonView>
-              </View>
-              <IconButton
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{justifyContent: 'center'}}
-                icon="play-circle-outline"
-              />
-            </PopView>
-            <PopView style={{alignItems:'center',justifyContent:'space-between'}}>
-              <View style={{alignItems: 'center',flexDirection: 'row'}}>
-                <Avatar2 />
-                <LessonView>
-                  <Lesson style={{color: colors.title1}}>Math 104</Lesson>
-                  <Teacher style={{color: colors.accent}}>T. Cafer </Teacher>
-                </LessonView>
-              </View>
-              <IconButton
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{justifyContent: 'center'}}
-                icon="play-circle-outline"
-              />
-            </PopView>
+              )}
+              keyExtractor={(item, index) => index.toString()}
+            />
           </View>
         </Body>
       </Scroll>

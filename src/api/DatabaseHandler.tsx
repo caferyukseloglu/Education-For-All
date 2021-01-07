@@ -239,7 +239,7 @@ export class DatabaseHandler {
 
 
   public teachCourse(teacher:Teacher,course:Course):void{
-    firebase.database().ref("courses"+"/"+teacher.getUserID()).set({
+    firebase.database().ref("courses"+"/"+teacher.getUserID()+"/"+course.getCourseId()).set({
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
       courseid:course.getCourseId(),
@@ -291,11 +291,9 @@ export class DatabaseHandler {
           count++
         }
       })
-      console.log("COUNT IS: "+count)
       snapshot.forEach(course=>{
         const eachCourse: Course = new Course();
         if(course.val().coursecategory==category.getCategoryName()){
-          console.log(course);
           eachCourse.setCourseId(course.val().courseid);
           eachCourse.setCourseName(course.val().coursename);
           eachCourse.setCourseDescription(course.val().coursedescription);
@@ -308,8 +306,17 @@ export class DatabaseHandler {
         }
       })
     })
+  }
 
-    
+  public studentCourseEnroll(student:Student,teacher:Teacher,course:Course,_callback):void{
+    firebase.database().ref("studentsenrolled/"+student.getUserID()+"/"+course.getCourseId()).set({
+      coursename:course.getCourseName(),
+      coursecategory:course.getCourseCategory(),
+      coursedescription:course.getCourseDescription(),
+      courseid:course.getCourseId(),
+      courseteacher:teacher.getUserID(),
+    }).then(()=>_callback())
+
   }
 
 
