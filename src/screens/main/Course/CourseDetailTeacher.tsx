@@ -31,7 +31,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {color} from 'react-native-reanimated';
 import {useUserData} from '../../../states/useData';
 
-const CourseDetailScreen = ({route, navigation}) => {
+const CourseDetailTeacherScreen = ({route, navigation}) => {
   const {colors} = useTheme();
   const windowWidth = useWindowDimensions().width;
 
@@ -148,4 +148,4 @@ const CourseDetailScreen = ({route, navigation}) => {
   );
 };
 
-export default CourseDetailScreen;
+export default CourseDetailTeacherScreen;
