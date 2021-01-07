@@ -319,5 +319,51 @@ export class DatabaseHandler {
 
   }
 
+  public updateUser(user:User,name:string,surname:string,password:string,passwordValidity:boolean){
+    var typeofuser;
+    if(user.getUserType()==1){
+      typeofuser="students";
+    }
+    else{
+      typeofuser="teachers";
+    }
+
+    if(name!=""){
+      firebase.database().ref(typeofuser+"/"+user.getUserID()).update({
+        name:name
+      })
+      firebase.database().ref("users/"+user.getUserID()).update({
+        name:name
+      })
+      this.loggedUser.setName(name);
+    }
+
+    if(surname!=""){
+      firebase.database().ref(typeofuser+"/"+user.getUserID()).update({
+        surname:surname
+      })
+
+      firebase.database().ref("users/"+user.getUserID()).update({
+        surname:surname
+      })
+      this.loggedUser.setSurname(surname);
+    }
+
+    if(passwordValidity){
+      firebase.database().ref(typeofuser+"/"+user.getUserID()).update({
+        password:password
+      })
+
+      firebase.database().ref("users/"+user.getUserID()).update({
+        password:password
+      })
+
+      firebase.auth().currentUser?.updatePassword(password).then(()=>console.log("Password changed succesfully."));
+
+      this.loggedUser.setPassword(password);
+    }
+
+
+  }
 
 }
