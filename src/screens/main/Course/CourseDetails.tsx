@@ -5,7 +5,6 @@ import {
   Appbar,
   Button,
   Card,
-  Text,
   IconButton,
   TextInput,
   Portal,
@@ -18,11 +17,8 @@ import {
   Avatar2,
   LessonView,
   Scroll,
-  Bottom,
 } from '../../../styles/wrapper';
 import {
-  SubTitle,
-  Title,
   HeadText,
   Lesson,
   Teacher,
@@ -30,11 +26,10 @@ import {
   CourseTitle,
   CourseSubtitle,
 } from '../../../styles/text';
-import {TouchableHighlight, useWindowDimensions, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {color} from 'react-native-reanimated';
 import {useUserData} from '../../../states/useData';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {useWindowDimensions, View} from 'react-native';
 
 const CourseDetailScreen = ({route, navigation}) => {
   const [visible, setVisible] = React.useState(false);
@@ -118,34 +113,37 @@ const CourseDetailScreen = ({route, navigation}) => {
 
   const [questions, setQuestions] = useState([]);
 
-  function addAnswer(index){
+  function addAnswer(index) {
     const copyQuestions = questions;
-    copyQuestions[index].answers = [...copyQuestions[index].answers, {title: '', correct: false}];
+    copyQuestions[index].answers = [
+      ...copyQuestions[index].answers,
+      {title: '', correct: false},
+    ];
     setQuestions([...copyQuestions]);
   }
 
-  function deleteQuestion(index){
-    questions.slice(index, 1);
+  function deleteQuestion(index) {
+    questions.splice(index, 1);
     setQuestions([...questions]);
     console.log(questions);
   }
 
-  function deleteAnswer(index, answerindex){
-    questions[index].answers.slice(answerindex, 1);
+  function deleteAnswer(index, answerindex) {
+    questions[index].answers.splice(answerindex, 1);
     setQuestions([...questions]);
   }
 
-  function changeQuestion(index, text){
+  function changeQuestion(index, text) {
     questions[index].name = text;
     setQuestions([...questions]);
   }
 
-  function changeAnswerText(index, answerindex, text){
+  function changeAnswerText(index, answerindex, text) {
     questions[index].answers[answerindex].title = text;
     setQuestions([...questions]);
   }
 
-  function changeTrueAnswer(index, answerindex){
+  function changeTrueAnswer(index, answerindex) {
     const currentTrue = questions[index].answers.findIndex((answer) => {
       return !!answer.correct;
     });
@@ -214,7 +212,7 @@ const CourseDetailScreen = ({route, navigation}) => {
           </View>
           <Portal>
             <Modal visible={visible} contentContainerStyle={containerStyle}>
-              <Scroll style={{backgroundColor:'white',height: windowHeight}}>
+              <Scroll style={{backgroundColor: 'white', height: windowHeight}}>
                 <Body>
                   <IconButton
                     style={{alignSelf: 'flex-end'}}
@@ -252,15 +250,17 @@ const CourseDetailScreen = ({route, navigation}) => {
                     />
                   </View>
                   {examVisible ? (
-                    <View style={{marginTop:30}}>
+                    <View style={{marginTop: 30}}>
                       <CourseTitle margins="10px 0px">Exam</CourseTitle>
                       <View>
                         {questions.map((question, index) => {
                           return (
                             <React.Fragment>
-                              <CourseTitle margins="10px 0px">Question</CourseTitle>
+                              <CourseTitle margins="10px 0px">
+                                Question
+                              </CourseTitle>
                               <TextInput
-                                style={{marginBottom:5}}
+                                style={{marginBottom: 5}}
                                 placeholder="Enter Question..."
                                 value={question.name}
                                 left={
@@ -275,11 +275,13 @@ const CourseDetailScreen = ({route, navigation}) => {
                                 }
                                 placeholderTextColor="lightgrey"
                               />
-                              <CourseTitle margins="10px 0px">Answers</CourseTitle>
+                              <CourseTitle margins="10px 0px">
+                                Answers
+                              </CourseTitle>
                               {question.answers.map((answer, answerindex) => {
                                 return (
                                   <TextInput
-                                    style={{marginBottom:5}}
+                                    style={{marginBottom: 5}}
                                     placeholder="Enter Answer..."
                                     placeholderTextColor="lightgrey"
                                     left={
@@ -293,9 +295,17 @@ const CourseDetailScreen = ({route, navigation}) => {
                                     }
                                     right={
                                       <TextInput.Icon
-                                        name={data.secureTextEntry ? 'checkbox-blank-circle-outline' : 'checkbox-marked-circle'}
+                                        name={
+                                          !questions[index]['answers'][
+                                            answerindex
+                                          ]['correct']
+                                            ? 'checkbox-blank-circle-outline'
+                                            : 'checkbox-marked-circle'
+                                        }
                                         color="black"
-                                        onPress={() => changeTrueAnswer(index,answerindex)}
+                                        onPress={() =>
+                                          changeTrueAnswer(index, answerindex)
+                                        }
                                       />
                                     }
                                     onChangeText={(event) =>
@@ -308,14 +318,34 @@ const CourseDetailScreen = ({route, navigation}) => {
                                   />
                                 );
                               })}
-                              <Button style={{color:'black',marginTop:8}} mode="contained" onPress={() => addAnswer(index)}>Add Answer</Button>
+                              <Button
+                                style={{color: 'black', marginTop: 8}}
+                                mode="contained"
+                                onPress={() => addAnswer(index)}>
+                                Add Answer
+                              </Button>
                             </React.Fragment>
                           );
                         })}
-                        <IconButton icon="plus-circle" color="black" style={{alignSelf:'center'}} onPress={() => addQuestion()} />
+                        <IconButton
+                          icon="plus-circle"
+                          color="black"
+                          style={{alignSelf: 'center'}}
+                          onPress={() => addQuestion()}
+                        />
                       </View>
                     </View>
-                  ) : undefined}
+                  ) : (
+                    <View style={{marginVertical:20}}>
+                      <CourseTitle margins="10px 0px">Lesson</CourseTitle>
+                      <TextInput
+                        multiline={true}
+                        style={{marginBottom: 5}}
+                        placeholder="Enter Lesson Text..."
+                        placeholderTextColor="lightgrey"
+                      />
+                    </View>
+                  )}
                   <View style={{marginVertical: 30}}>
                     <Button onPress={() => userData.userdata.addExam(teacher,courseDetails,questions,data.courseName,data.courseDescription)}>Submit</Button>
                   </View>
@@ -334,7 +364,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                   Duration: 5 Min{' '}
                 </Duration>
               </LessonView>
-              <Button onPress={() => navigation.navigate('ExamAddScreen')}>
+              <Button onPress={() => navigation.navigate('Exam')}>
                 Take Exam
               </Button>
             </View>
