@@ -47,26 +47,23 @@ const CourseDetailScreen = ({route, navigation}) => {
 
   const [lessons, setLessons] = React.useState([]);
   useEffect(() => {
-    console.log('Effect icinde');
     userData.userdata.getLessonsForCourse(teacher, courseDetails, function () {
-      console.log('calling back in getlessonsforcourse');
       courseDetails.getCourseLessons().forEach((lesson) => {
-        setLessons((lessons) => [...lessons, lesson]);
+        setLessons((lessons) => [...lessons, {Type: 'Lesson', lesson}]);
       });
     });
   });
 
   const [exams, setExams] = React.useState([]);
   useEffect(() => {
-    userData.userdata.getExamsForCourses(teacher,courseDetails,function () {
+    userData.userdata.getExamsForCourses(teacher, courseDetails, function () {
       courseDetails.getCourseExams().forEach((exam) => {
-        setExams((exams) => [...exams, exam]);
+        setLessons((lessons) => [...lessons, {Type: 'Exam', exam}]);
       });
     });
   });
 
-
-  console.log(exams);
+  console.log(lessons);
 
   const [data, setData] = React.useState({
     courseName: '',
@@ -419,22 +416,26 @@ const CourseDetailScreen = ({route, navigation}) => {
                   <LessonView>
                     <Lesson style={{color: colors.title1}}>
                       {item.lessonName}
+                      {item.Type === 'Lesson'
+                        ? item.lesson.lessonName
+                        : item.exam.examName}
                     </Lesson>
                   </LessonView>
                 </View>
+                {console.log()}
                 <IconButton
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{justifyContent: 'center'}}
                   icon="play-circle-outline"
                   onPress={() =>
-                    item.hasOwnProperty('lessonContent')
+                    item.Type === 'Lesson'
                       ? navigation.navigate('Exam', {
                           lessonType: 'lesson',
-                          lessonContent: item,
+                          lessonContent: item.lesson,
                         })
                       : navigation.navigate('Exam', {
                           lessonType: 'exam',
-                          lessonContent: item,
+                          lessonContent: item.exam,
                         })
                   }
                 />
