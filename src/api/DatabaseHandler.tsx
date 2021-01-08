@@ -274,13 +274,13 @@ export class DatabaseHandler {
     })
   }
 
-  public studentCourseEnroll(student:Student,teacher:Teacher,course:Course,_callback):void{
+  public studentCourseEnroll(student:Student,teacher:any,course:Course,_callback):void{
     console.log(course);
     firebase.database().ref("studentsenrolled/"+student.getUserID()+"/"+course.getCourseName()).set({
       coursename:course.getCourseName(),
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
-      courseteacher:teacher.getUserID(),
+      courseteacher:teacher,
     }).then(()=>_callback())
 
   }
