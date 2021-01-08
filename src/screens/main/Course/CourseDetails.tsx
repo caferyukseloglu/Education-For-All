@@ -29,7 +29,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useUserData} from '../../../states/useData';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {FlatList, useWindowDimensions, View} from 'react-native';
+import {FlatList, useWindowDimensions, View, Text} from 'react-native';
 
 const CourseDetailScreen = ({route, navigation}) => {
   const [visible, setVisible] = React.useState(false);
@@ -304,7 +304,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                       <View>
                         {questions.map((question, index) => {
                           return (
-                            <React.Fragment>
+                            <React.Fragment key={index}>
                               <CourseTitle margins="10px 0px">
                                 Question
                               </CourseTitle>
@@ -329,7 +329,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                               </CourseTitle>
                               {question.answers.map((answer, answerindex) => {
                                 return (
-                                  <TextInput
+                                  <TextInput key={answerindex.toString()}
                                     style={{marginBottom: 5}}
                                     placeholder="Enter Answer..."
                                     placeholderTextColor="lightgrey"
@@ -407,22 +407,30 @@ const CourseDetailScreen = ({route, navigation}) => {
           </Portal>
           <FlatList
             data={lessons}
-            keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => (
               <PopView
                 style={{alignItems: 'center', justifyContent: 'space-between'}}>
                 <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                  <Avatar2 />
+                  <Text
+                    style={{
+                    width: 50,
+                    height: 50,
+                    backgroundColor: '#F2C94C',
+                    borderRadius:10,
+                    marginRight: 12,
+                    fontSize:22,
+                    textAlign:'center',
+                    textAlignVertical:'center'
+                    }}
+                  > {item.Type === 'Lesson' ? 'L' : 'E'} </Text>
                   <LessonView>
                     <Lesson style={{color: colors.title1}}>
-                      {item.lessonName}
                       {item.Type === 'Lesson'
                         ? item.lesson.lessonName
                         : item.exam.examName}
                     </Lesson>
                   </LessonView>
                 </View>
-                {console.log()}
                 <IconButton
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{justifyContent: 'center'}}
@@ -441,6 +449,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                 />
               </PopView>
             )}
+            keyExtractor={(item, index) => index.toString()}
           />
         </Body>
       </Scroll>
