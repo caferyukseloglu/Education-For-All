@@ -169,9 +169,6 @@ export class DatabaseHandler {
             _callback();
           }
         }
-        else{
-          console.log("ZATEN VAR");
-        }
       })
     })
   }
@@ -370,20 +367,22 @@ export class DatabaseHandler {
   }
 
   public getAllCoursesForSpesificTeacher(teacher:Teacher,_callback){
-    console.log("GET ALL COURSES FOR");
     firebase.database().ref("courses/"+teacher.getUserID()).once("value").then(snapshot=>{
       const courseCount=snapshot.numChildren();
       console.log(courseCount);
+      console.log(teacher.getCoursesGiven().length);
       snapshot.forEach(course=>{
         const eachCourse: Course = new Course();
         eachCourse.setCourseName(course.val().coursename),
         eachCourse.setCourseDescription(course.val().coursedescription),
         eachCourse.setCourseCategory(course.val().coursecategory),
-        eachCourse.setTeacher(course.val().teacher),
-        teacher.addCoursesGiven(eachCourse);
-        if(teacher.getCoursesGiven().length==courseCount){
-          _callback();
-        }
+        eachCourse.setTeacher(course.val().teacher);
+        if(teacher.getCoursesGiven().findIndex((data)=>data.getCourseName()==course.val().coursename) === -1){
+          teacher.addCoursesGiven(eachCourse);
+          if(teacher.getCoursesGiven().length==courseCount){
+            _callback();
+          }
+        }    
       })
     })
   }

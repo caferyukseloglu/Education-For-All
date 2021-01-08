@@ -67,12 +67,16 @@ const SubjectScreen = ({navigation}) => {
 
   const [courseListForTeacher, setCourseListForTeacher] = React.useState([]);
   useEffect(() => {
+    console.log("calisti");
     userData.userdata.getAllCoursesForSpesificTeacher(userData.userdata.getUser(),function () {
       userData.userdata.getUser().getCoursesGiven().forEach((courseList) => {
+        console.log("callback calisti");
         setCourseListForTeacher((courseListForTeacher) => [...courseListForTeacher, courseList]);
       });
     });
   });
+  
+  console.log(courseListForTeacher);
 
   const [courses] = useState([
     {name: 'Programming 101', key: '1', description: 8},
