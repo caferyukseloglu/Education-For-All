@@ -1,16 +1,8 @@
 
 export class Answer{
 
-    private answerId: number;
-    private answerDescription: string;
-
-	public getAnswerId(): number {
-		return this.answerId;
-	}
-
-	public setAnswerId(value: number) {
-		this.answerId = value;
-	}
+	private answerDescription: string;
+	private isTrue:boolean;
 
 	public getAnswerDescription(): string {
 		return this.answerDescription;
@@ -19,6 +11,16 @@ export class Answer{
 	public setAnswerDescription(value: string) {
 		this.answerDescription = value;
 	}
+
+ 
+	public getIsTrue(): boolean {
+		return this.isTrue;
+	}
+	
+	public setIsTrue(value: boolean) {
+		this.isTrue = value;
+	}
+
 
 
 }

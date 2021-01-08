@@ -3,22 +3,10 @@ import { Teacher } from "./Teacher";
 
 export class Lesson{
 
-	private userId: Teacher;
-	private courseId: Course;
+	private course: string;
     private lessonId: number;
     private lessonName: string;
     private lessonDescription: string;
-    private lessonType: string;
-    private lessonDuration: number;
-
-
-	public getUserId(): string {
-		return this.userId;
-	}
-
-	public setUserId(value: string) {
-		this.userId = value;
-	}
 
 
 	public getLessonId(): number {
@@ -46,25 +34,15 @@ export class Lesson{
 	public setLessonDescription(value: string) {
 		this.lessonDescription = value;
 	}
+	
 
-
-	public getLessonType(): string {
-		return this.lessonType;
+	public getCourse(): Course {
+		return this.course;
 	}
 
-
-	public setLessonType(value: string) {
-		this.lessonType = value;
+	public setCourse(value: Course) {
+		this.course = value;
 	}
-
-
-	public getLessonDuration(): number {
-		return this.lessonDuration;
-	}
-
-	public setLessonDuration(value: number) {
-		this.lessonDuration = value;
-	}
-    
+	
 
 }

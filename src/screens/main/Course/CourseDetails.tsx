@@ -34,10 +34,10 @@ import {useUserData} from '../../../states/useData';
 const CourseDetailScreen = ({route, navigation}) => {
   const {colors} = useTheme();
   const windowWidth = useWindowDimensions().width;
-
-  const {courseDetails, courseTeacher} = route.params;
+  console.log("in coursedetailscreen");
+  const {courseDetails, courseTeacher,lessonList} = route.params;
   console.log(courseDetails);
-
+  console.log(lessonList);
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
 
   const enrollCourse = () => {
@@ -51,6 +51,7 @@ const CourseDetailScreen = ({route, navigation}) => {
     );
   };
 
+  
   return (
     <SafeAreaView style={{flex: 1}}>
       <Appbar

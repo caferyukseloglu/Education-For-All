@@ -30,16 +30,17 @@ const MainScreen = ({navigation}) => {
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
 
   const [categories, setCategories] = React.useState([]);
-  console.log("CATEGORİES:");
-  console.log(categories);
-
   useEffect(() => {
     userData.userdata.setCategories(function () {
       userData.userdata.getCategories().forEach((category) => {
-        setCategories((categories) => [...categories, category]);
+        setCategories((categories) => [
+          ...categories,
+          category,
+        ]);
       });
     });
   });
+
 
   const toCourse = (category: Category) => {
     userData.userdata.getTeachersByCategory(category, function () {
@@ -54,6 +55,12 @@ const MainScreen = ({navigation}) => {
       );
     });
   };
+
+  userData.userdata.getAllCoursesForSpesificTeacher(userData.userdata.getUser(),function(){
+    console.log("COURSESGIVEN");
+    console.log(userData.userdata.getUser().getCoursesGiven());
+  })
+
 
   return (
     <SafeAreaView style={{flex: 1, padding: 10}}>

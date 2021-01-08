@@ -41,6 +41,10 @@ export class Course{
 	public setCourseLessons(value: Lesson) {
 		this.courseLessons.push(value);
 	}
+
+	public resetCourseLessons():void{
+		this.courseLessons=[];
+	}
     
 
 	public getNumberOfLessons(): number {
@@ -51,15 +55,6 @@ export class Course{
 		this.numberOfLessons = value;
 	}
 
-
-	public getCourseSubjects(): Array<Subject> {
-		return this.courseSubjects;
-	}
-
-
-	public setCourseSubjects(value: Array<Subject>) {
-		this.courseSubjects = value;
-	}
 
 	public getCourseExams(): Array<Exam> {
 		return this.courseExams;

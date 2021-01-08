@@ -36,9 +36,17 @@ const CourseScreen = ({route, navigation}) => {
   const {courseObj, teachers} = route.params;
 
   const [courses, setCourses] = React.useState([]);
-  const [teacher, setTeacher] = React.useState('');
 
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+  
+  userData.userdata.getCoursesOfTeacher(userData.userdata.getUser(), courseObj, function () {
+    userData.userdata.getUser().getCoursesGiven().forEach((course) => {
+      setCourses((courses) => [...courses, course]);
+    });
+  });
+
+
+  console.log(courses);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -65,10 +73,7 @@ const CourseScreen = ({route, navigation}) => {
               Courses
             </HeadText>
             <FlatList
-              data={userData.userdata.getCoursesOfTeacher(userData.userdata.getUser(), courseObj, function(){
-                  userData.userdata.getUser().getCoursesGiven();
-                },
-              )}
+              data={courses}
               renderItem={({item, index}) => (
                 <PopView
                   style={{
@@ -82,7 +87,7 @@ const CourseScreen = ({route, navigation}) => {
                         {item.getCourseName()}
                       </Lesson>
                       <Teacher style={{color: colors.accent}}>
-                        {teacher.getName() + ' ' + teacher.getSurname()}
+                        {userData.userdata.getUser().getName() + ' ' + userData.userdata.getUser().getSurname()}
                       </Teacher>
                     </LessonView>
                   </View>

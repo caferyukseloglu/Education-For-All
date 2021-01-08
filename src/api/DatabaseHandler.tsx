@@ -3,6 +3,8 @@ import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import {Alert} from 'react-native';
 import {Category} from './Category';
 import {Course} from './Course';
+import { Exam } from './Exam';
+import { Lesson } from './Lesson';
 import {Student} from './Student';
 import {Teacher} from './Teacher';
 import './User';
@@ -185,7 +187,7 @@ export class DatabaseHandler {
 
   public setCategories(_callback) {
     firebase.database().ref("/categories/").once("value").then(snapshot=>{
-      const categoryCount: number = Object.keys(snapshot.val()).length;
+      const categoryCount= snapshot.numChildren();
       snapshot.forEach(x=>{
         const eachCourse: Category = new Category();
         eachCourse.setCategoryId(x.val().categoryid);
@@ -329,6 +331,60 @@ export class DatabaseHandler {
     }
 
 
+  }
+
+  public addLessonToCourse(teacher:Teacher,course:Course,lesson:Lesson){
+    firebase.database().ref("lessons/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+lesson.getLessonId()).set({
+      lessonname:lesson.getLessonName(),
+      lessonid:lesson.getLessonId(),
+      lessondescription:lesson.getLessonDescription(),
+      lessoncourse:course.getCourseName(),
+    })
+
+  }
+
+  public getLessonsForCourse(teacher:Teacher,course:Course,_callback){
+    course.resetCourseLessons();
+    firebase.database().ref("lessons/"+teacher.getUserID()+"/"+course.getCourseName()).once("value").then(snapshot=>{
+      const lessonCount=snapshot.numChildren();
+      snapshot.forEach(lesson=>{
+        const eachLesson: Lesson = new Lesson();
+        eachLesson.setCourse(lesson.val().lessoncourse);
+        eachLesson.setLessonDescription(lesson.val().lessondescription);
+        eachLesson.setLessonId(lesson.val().lessonid);
+        eachLesson.setLessonName(lesson.val().lessonname);
+        course.setCourseLessons(eachLesson);
+        if(course.getCourseLessons().length==lessonCount){
+          _callback();
+        }
+      })
+    })
+  }
+
+  public addExam(teacher:Teacher,course:Course,exam:Exam){
+    firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+exam.getExamName()).set({
+        examdescription:exam.getExamDescription(),
+        examduration:exam.getExamDuration(),
+        examname:exam.getExamName(),
+    })
+  }
+
+  public getAllCoursesForSpesificTeacher(teacher:Teacher,_callback){
+    console.log("GET ALL COURSES FOR");
+    firebase.database().ref("courses/"+teacher.getUserID()).once("value").then(snapshot=>{
+      const courseCount=snapshot.numChildren();
+      console.log(courseCount);
+      snapshot.forEach(course=>{
+        const eachCourse: Course = new Course();
+        eachCourse.setCourseName(course.val().coursename),
+        eachCourse.setCourseDescription(course.val().coursedescription),
+        eachCourse.setCourseCategory(course.val().coursecategory),
+        teacher.addCoursesGiven(eachCourse);
+        if(teacher.getCoursesGiven().length==courseCount){
+          _callback();
+        }
+      })
+    })
   }
 
 }
