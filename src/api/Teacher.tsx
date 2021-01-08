@@ -6,6 +6,7 @@ export class Teacher extends User{
 
     private coursesGiven = new Array<Course>();
 
+
     public getCoursesGiven(): Array<Course>{
         return this.coursesGiven;
     }

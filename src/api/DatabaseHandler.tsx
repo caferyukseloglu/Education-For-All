@@ -266,6 +266,7 @@ export class DatabaseHandler {
           eachCourse.setCourseName(course.val().coursename);
           eachCourse.setCourseDescription(course.val().coursedescription);
           eachCourse.setCourseCategory(course.val().coursecategory);
+          eachCourse.setTeacher(teacher);
           teacher.addCoursesGiven(eachCourse);
           if(teacher.getCoursesGiven().length==count){
             console.log("calling back on get hcourses");
@@ -281,7 +282,7 @@ export class DatabaseHandler {
       coursename:course.getCourseName(),
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
-      courseteacher:teacher.getUserID(),
+      courseteacher:teacher,
     }).then(()=>_callback())
 
   }
@@ -379,6 +380,7 @@ export class DatabaseHandler {
         eachCourse.setCourseName(course.val().coursename),
         eachCourse.setCourseDescription(course.val().coursedescription),
         eachCourse.setCourseCategory(course.val().coursecategory),
+        eachCourse.setTeacher(course.val().teacher),
         teacher.addCoursesGiven(eachCourse);
         if(teacher.getCoursesGiven().length==courseCount){
           _callback();
@@ -395,6 +397,7 @@ export class DatabaseHandler {
         eachCourse.setCourseName(course.val().coursename),
         eachCourse.setCourseDescription(course.val().coursedescription),
         eachCourse.setCourseCategory(course.val().coursecategory),
+        eachCourse.setTeacher(course.val().teacher),
         student.addCoursesTaken(eachCourse);
         if(student.getCoursesTaken().length==courseCount){
           _callback();
@@ -402,6 +405,18 @@ export class DatabaseHandler {
       })
 
     })
+  }
+
+  public async getTeacherById(teacherid:string): Promise<Teacher>{
+    const eTeacher: Teacher = new Teacher();
+    const snapshot = await firebase.database().ref("teachers/"+teacherid).once("value");
+    eTeacher.setName(snapshot.val().name);
+    eTeacher.setEmail(snapshot.val().email);
+    eTeacher.setUserID(snapshot.val().userid);
+    eTeacher.setUserType(snapshot.val().usertype);
+    eTeacher.setPassword(snapshot.val().password);
+    eTeacher.setSurname(snapshot.val().surname);
+    return eTeacher;
   }
 
 }

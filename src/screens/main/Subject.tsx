@@ -1,5 +1,5 @@
 //Main React import
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   TouchableRipple,
   IconButton,
@@ -44,15 +44,22 @@ const SubjectScreen = ({navigation}) => {
     height: windowHeight,
   };
 
-  const [data] = useState({
-    time: '15',
-    subjects: ['Global', 'English', 'Physics', 'Turkish', 'German'],
-    completedTopicCount: 1,
-    cards: {
-      Test: 'General subject information',
-      'Topic Summary': 'Study notes',
-    },
-    cardIcons: {Test: 'bookmark-plus', 'Topic Summary': 'grease-pencil'},
+  const [courseListForStudent, setCourseListForStudent] = React.useState([]);
+  useEffect(() => {
+    userData.userdata.getAllCoursesForSpesificStudent(userData.userdata.getUser(),function () {
+      userData.userdata.getUser().getCoursesTaken().forEach((courseList) => {
+        setCourseListForStudent((courseListForStudent) => [...courseListForStudent, courseList]);
+      });
+    });
+  });
+
+  const [courseListForTeacher, CourseListForTeacher] = React.useState([]);
+  useEffect(() => {
+    userData.userdata.getAllCoursesForSpesificStudent(userData.userdata.getUser(),function () {
+      userData.userdata.getUser().getCoursesTaken().forEach((courseList) => {
+        setCourseListForStudent((courseListForStudent) => [...courseListForStudent, courseList]);
+      });
+    });
   });
 
   const [courses] = useState([
@@ -79,7 +86,7 @@ const SubjectScreen = ({navigation}) => {
           }}>
           <View>
             <CourseSubtitle margins="0px">Hello,</CourseSubtitle>
-            <CourseTitle margins="0px">Cafer Y.</CourseTitle>
+            <CourseTitle margins="0px">{userData.userdata.getUser().getName()+" "+userData.userdata.getUser().getSurname()[0]+"."}</CourseTitle>
           </View>
           <Avatar.Image
             size={50}
@@ -125,11 +132,11 @@ const SubjectScreen = ({navigation}) => {
           </View>
           <FlatList
             style={{marginTop: 20}}
-            data={courses}
+            data={courseListForStudent}
             renderItem={({item}) => (
               <TouchableRipple
                 style={{marginBottom: 20}}
-                onPress={() => {}}
+                onPress={ async ()  => navigation.navigate("Main",{screen:"CourseDetails",params:{courseDetails:item,teacher:await userData.userdata.getTeacherById(item.teacher)}})}
                 rippleColor="white">
                 <View
                   style={{
@@ -155,10 +162,7 @@ const SubjectScreen = ({navigation}) => {
                     </View>
                   </View>
                   <View style={{flex: 5, height: 82, backgroundColor: 'white'}}>
-                    <LessonTitle>{item.name}</LessonTitle>
-                    <LessonSubtitle>
-                      {item.description} goals were achieved today.
-                    </LessonSubtitle>
+                    <LessonTitle>{item.courseName}</LessonTitle>
                   </View>
                   <View
                     style={{
@@ -182,9 +186,6 @@ const SubjectScreen = ({navigation}) => {
         <View style={{flexDirection: 'row'}}>
           <View style={{flex: 5}}>
             <CourseTitle>Subjects</CourseTitle>
-            <CourseSubtitle>
-              Today's lesson progress {data.time} min
-            </CourseSubtitle>
           </View>
           <View style={{flex: 1}}>
             <IconButton
@@ -249,11 +250,11 @@ const SubjectScreen = ({navigation}) => {
                     <DropDownPicker
                       placeholder="Select a category..."
                       items={[
-                        {label: 'Mathmatics', value: 'math'},
-                        {label: 'Chemistry', value: 'chem'},
-                        {label: 'Biology', value: 'bio'},
-                        {label: 'physics', value: 'phys'},
-                        {label: 'Coading', value: 'code'},
+                        {label: 'Mathematics', value: 'math'},
+                        {label: 'Programming', value: 'chem'},
+                        {label: 'Engineering', value: 'bio'},
+                        {label: 'Physics', value: 'phys'},
+                        {label: 'Biology', value: 'code'},
                         {label: 'English', value: 'EN'},
                       ]}
                       dropDownMaxHeight={70}

@@ -1,5 +1,5 @@
 //Main React import
-import React from 'react';
+import React, { useState } from 'react';
 import {
   useTheme,
   Appbar,
@@ -35,15 +35,12 @@ const CourseDetailScreen = ({route, navigation}) => {
   const {colors} = useTheme();
   const windowWidth = useWindowDimensions().width;
   console.log("in coursedetailscreen");
-  const {courseDetails, courseTeacher,lessonList} = route.params;
-  console.log(courseDetails);
-  console.log(lessonList);
+  const {courseDetails,teacher} = route.params;
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
 
   const enrollCourse = () => {
     userData.userdata.studentCourseEnroll(
       userData.userdata.getUser(),
-      courseTeacher,
       courseDetails,
       function () {
         console.log('Done');
@@ -74,7 +71,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                 {courseDetails.getCourseName()}
               </CourseTitle>
               <CourseSubtitle margins="0px" style={{color: colors.subtitle1}}>
-                {courseTeacher.getName() + ' ' + courseTeacher.getSurname()}
+                {teacher.name+" "+teacher.surname[0]+"."}
               </CourseSubtitle>
             </View>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>

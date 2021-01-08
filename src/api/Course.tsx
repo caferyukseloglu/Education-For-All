@@ -11,7 +11,7 @@ export class Course{
     private numberOfLessons: number;
 	private courseExams: Array<Exam>;
 	private courseCategory: string;
-	private teacher: Teacher;
+	private teacher: string;
 
 	public getCourseName(): string {
 		return this.courseName;
@@ -43,7 +43,7 @@ export class Course{
 	}
 
 	public resetCourseLessons():void{
-		this.courseLessons=[];
+		this.courseLessons=[]
 	}
     
 
@@ -72,13 +72,15 @@ export class Course{
 		this.courseCategory = value;
 	}
 
-	public getTeacher(): Teacher {
+
+	public getTeacher(): string {
 		return this.teacher;
 	}
 
-	public setTeacher(value: Teacher) {
+	public setTeacher(value: string) {
 		this.teacher = value;
 	}
+
 
     
     
