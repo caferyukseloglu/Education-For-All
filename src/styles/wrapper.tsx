@@ -30,7 +30,7 @@ export const Bottom = styled.View`
   flex: 1;
   width: 100%;
   position: absolute;
-  bottom: 20px;
+  bottom: ${(props) => props.bottom || '20px'};
   padding: ${(props) => props.paddings || '0 0 0 0'};
 `;
 

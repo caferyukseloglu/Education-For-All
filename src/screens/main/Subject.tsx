@@ -1,5 +1,5 @@
 //Main React import
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   TouchableRipple,
   IconButton,
@@ -21,7 +21,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import {View, FlatList, useWindowDimensions} from 'react-native';
 import {useUserData} from '../../states/useData';
-import { Course } from '../../api/Course';
+import {Course} from '../../api/Course';
 
 const SubjectScreen = ({navigation}) => {
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
@@ -58,20 +58,38 @@ const SubjectScreen = ({navigation}) => {
 
   const [courseListForStudent, setCourseListForStudent] = React.useState([]);
   useEffect(() => {
-    userData.userdata.getAllCoursesForSpesificStudent(userData.userdata.getUser(),function () {
-      userData.userdata.getUser().getCoursesTaken().forEach((courseList) => {
-        setCourseListForStudent((courseListForStudent) => [...courseListForStudent, courseList]);
-      });
-    });
+    userData.userdata.getAllCoursesForSpesificStudent(
+      userData.userdata.getUser(),
+      function () {
+        userData.userdata
+          .getUser()
+          .getCoursesTaken()
+          .forEach((courseList) => {
+            setCourseListForStudent((courseListForStudent) => [
+              ...courseListForStudent,
+              courseList,
+            ]);
+          });
+      },
+    );
   });
 
   const [courseListForTeacher, setCourseListForTeacher] = React.useState([]);
   useEffect(() => {
-    userData.userdata.getAllCoursesForSpesificTeacher(userData.userdata.getUser(),function () {
-      userData.userdata.getUser().getCoursesGiven().forEach((courseList) => {
-        setCourseListForTeacher((courseListForTeacher) => [...courseListForTeacher, courseList]);
-      });
-    });
+    userData.userdata.getAllCoursesForSpesificTeacher(
+      userData.userdata.getUser(),
+      function () {
+        userData.userdata
+          .getUser()
+          .getCoursesGiven()
+          .forEach((courseList) => {
+            setCourseListForTeacher((courseListForTeacher) => [
+              ...courseListForTeacher,
+              courseList,
+            ]);
+          });
+      },
+    );
   });
 
   const [courses] = useState([
@@ -85,14 +103,23 @@ const SubjectScreen = ({navigation}) => {
     {name: 'Database', key: '8', description: 5},
   ]);
 
-  const courseToGo = async () =>{
+  const courseToGo = async () => {
     const courseDestination: Course = new Course();
     courseDestination.setCourseName(data.courseName);
     courseDestination.setCourseCategory(data.courseCategory);
     courseDestination.setCourseDescription(data.courseDescription);
-    await userData.userdata.teachCourse(userData.userdata.getUser(),courseDestination);
-    navigation.navigate("Main",{screen:"CourseDetails",params:{courseDetails:courseDestination,teacher:userData.userdata.getUser()}});
-  }
+    await userData.userdata.teachCourse(
+      userData.userdata.getUser(),
+      courseDestination,
+    );
+    navigation.navigate('Main', {
+      screen: 'CourseDetails',
+      params: {
+        courseDetails: courseDestination,
+        teacher: userData.userdata.getUser(),
+      },
+    });
+  };
 
   if (userData.userdata.getUser().getUserType() === 1) {
     return (
@@ -106,7 +133,12 @@ const SubjectScreen = ({navigation}) => {
           }}>
           <View>
             <CourseSubtitle margins="0px">Hello,</CourseSubtitle>
-            <CourseTitle margins="0px">{userData.userdata.getUser().getName()+" "+userData.userdata.getUser().getSurname()[0]+"."}</CourseTitle>
+            <CourseTitle margins="0px">
+              {userData.userdata.getUser().getName() +
+                ' ' +
+                userData.userdata.getUser().getSurname()[0] +
+                '.'}
+            </CourseTitle>
           </View>
           <Avatar.Image
             size={50}
@@ -156,7 +188,17 @@ const SubjectScreen = ({navigation}) => {
             renderItem={({item}) => (
               <TouchableRipple
                 style={{marginBottom: 20}}
-                onPress={ async ()  => navigation.navigate("Main",{screen:"CourseDetails",params:{courseDetails:item,teacher:await userData.userdata.getTeacherById(item.teacher)}})}
+                onPress={async () =>
+                  navigation.navigate('Main', {
+                    screen: 'CourseDetails',
+                    params: {
+                      courseDetails: item,
+                      teacher: await userData.userdata.getTeacherById(
+                        item.teacher,
+                      ),
+                    },
+                  })
+                }
                 rippleColor="white">
                 <View
                   style={{
@@ -212,7 +254,12 @@ const SubjectScreen = ({navigation}) => {
           }}>
           <View>
             <CourseSubtitle margins="0px">Hello,</CourseSubtitle>
-            <CourseTitle margins="0px">{userData.userdata.getUser().getName()+" "+userData.userdata.getUser().getSurname()[0]+"."}</CourseTitle>
+            <CourseTitle margins="0px">
+              {userData.userdata.getUser().getName() +
+                ' ' +
+                userData.userdata.getUser().getSurname()[0] +
+                '.'}
+            </CourseTitle>
           </View>
           <Avatar.Image
             size={50}
@@ -299,7 +346,9 @@ const SubjectScreen = ({navigation}) => {
                     }
                   />
                 </View>
-                <Button style={{marginTop: 20}} onPress={()=> courseToGo()}  >Submit</Button>
+                <Button style={{marginTop: 20}} onPress={() => courseToGo()}>
+                  Submit
+                </Button>
               </Body>
             </Modal>
           </Portal>
@@ -309,7 +358,15 @@ const SubjectScreen = ({navigation}) => {
             renderItem={({item}) => (
               <TouchableRipple
                 style={{marginBottom: 20}}
-                onPress={() => navigation.navigate("Main",{screen:"CourseDetails",params:{courseDetails:item,teacher:userData.userdata.getUser()}})}
+                onPress={() =>
+                  navigation.navigate('Main', {
+                    screen: 'CourseDetails',
+                    params: {
+                      courseDetails: item,
+                      teacher: userData.userdata.getUser(),
+                    },
+                  })
+                }
                 rippleColor="white">
                 <View
                   style={{
