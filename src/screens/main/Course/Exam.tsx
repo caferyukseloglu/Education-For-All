@@ -10,7 +10,7 @@ import {
   Paragraph,
 } from 'react-native-paper';
 //Our Styles for Project
-import {Body, Bottom, Line} from '../../../styles/wrapper';
+import {Body, Bottom, Line, Scroll} from '../../../styles/wrapper';
 import {View, Text, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BigButton} from '../../../styles/buttons';
@@ -26,7 +26,7 @@ const ExamScreen = ({navigation}) => {
           alignItems="center"
           justify="center"
           style={{flexWrap: 'nowrap', alignContent: 'flex-start'}}>
-          <Button>X</Button>
+          <Button onPress={() => navigation.goBack()}>X</Button>
           <ProgressBar
             progress={0.52}
             color={colors.success}
@@ -35,34 +35,30 @@ const ExamScreen = ({navigation}) => {
           <IconButton icon="flag" color={colors.success} size={20} />
         </Line>
       </View>
-      <Exam />
-      <Exam />
-      <Body
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}>
-        <BigButton
-          margins={[10, 10, 20, 20]}
-          text="Next"
-          mode="contained"
-          bgColor="success"
-          textColor="buttonText1"
-          height={60}
-          radius="5"
-        />
-        <BigButton
-          margins={[10, 10, 20, 20]}
-          text="Exit"
-          mode="contained"
-          bgColor="error"
-          textColor="buttonText1"
-          height={60}
-          radius="5"
-        />
-      </Body>
+      <Scroll>
+        <Exam />
+        <Exam />
+        <Exam />
+
+        <Body
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{
+            marginVertical: 20,
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}>
+          <BigButton
+            margins={[10, 10, 20, 20]}
+            text="Next"
+            mode="contained"
+            bgColor="success"
+            textColor="buttonText1"
+            height={60}
+            radius="5"
+          />
+        </Body>
+      </Scroll>
     </SafeAreaView>
   );
 };
@@ -72,7 +68,13 @@ const Exam = () => {
   const [checked, setChecked] = useState(0);
   return (
     <>
-      <Text style={{paddingTop: 10, color: colors.title1, paddingHorizontal: 30, alignItems: 'center'}}>
+      <Text
+        style={{
+          paddingTop: 10,
+          color: colors.title1,
+          paddingHorizontal: 30,
+          alignItems: 'center',
+        }}>
         Please read the question and answer it by clicking bottom choices.
       </Text>
       <Body

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image, Text} from 'react-native';
 import {Card, Avatar} from 'react-native-paper';
 import {CategoryText} from '../styles/text';
-import { Line } from '../styles/wrapper';
+import {Line} from '../styles/wrapper';
 
 interface CategoryProps {
   category: {
@@ -12,9 +12,7 @@ interface CategoryProps {
   };
 }
 
-export const Category = ({
-  category: {courseName},
-}: CategoryProps) => {
+export const Category = ({category: {courseName}}: CategoryProps) => {
   return (
     <View style={{marginLeft: 20, alignItems: 'center', marginTop: 10}}>
       <Card

@@ -347,7 +347,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                     </View>
                   )}
                   <View style={{marginVertical: 30}}>
-                    <Button onPress={() => console.log()}>Submit</Button>
+                    <Button onPress={() => console.log(questions[0]['answers'])}>Submit</Button>
                   </View>
                 </Body>
               </Scroll>

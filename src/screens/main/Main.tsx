@@ -40,15 +40,10 @@ const MainScreen = ({navigation}) => {
 
   const toCourse = (category: Category) => {
     userData.userdata.getTeachersByCategory(category, function () {
-      navigation.navigate(
-        userData.userdata.getUser().getUserType() === 1
-          ? 'Course'
-          : 'CourseTeacher',
-        {
-          courseObj: category,
-          teachers: category.getTeachers(),
-        },
-      );
+      navigation.navigate('Course', {
+        courseObj: category,
+        teachers: category.getTeachers(),
+      });
     });
   };
 
@@ -77,6 +72,7 @@ const MainScreen = ({navigation}) => {
           <FlatList
             horizontal
             data={categories}
+            keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => (
               <TouchableHighlight
                 onPress={() => toCourse(item)}
@@ -99,7 +95,6 @@ const MainScreen = ({navigation}) => {
                 </View>
               </TouchableHighlight>
             )}
-            keyExtractor={(item, index) => index.toString()}
           />
           <HeadText style={{fontWeight: 'bold'}}>Recommended courses </HeadText>
           <Body>
