@@ -417,7 +417,12 @@ export class DatabaseHandler {
     })
   }
 
-  public async getTeacherById(teacherid:string): Promise<Teacher>{
+  public async getTeacherById(teacherid): Promise<Teacher>{
+    /*firebase.database().ref("courses/").once("value").then(teachers=>{
+      teachers.forEach(check=>{
+        console.log(check);
+      })
+    })*/
     const eTeacher: Teacher = new Teacher();
     const snapshot = await firebase.database().ref("teachers/"+teacherid).once("value");
     eTeacher.setName(snapshot.val().name);
@@ -447,7 +452,7 @@ export class DatabaseHandler {
       })
   }
 
-  public getExamAnswersByName(teacher:Teacher,course:Course,exam:Exam,_callback){
+  public async getExamAnswersByName(teacher:Teacher,course:Course,exam:Exam,_callback){
     firebase.database().ref("answers/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+exam.getExamName()).once("value").then(snapshot=>{
       const questionCount=snapshot.numChildren();
       snapshot.forEach(question=>{
@@ -457,8 +462,8 @@ export class DatabaseHandler {
           question.forEach(answer=>{
             answer.forEach(choice=>{
               const eAnswer: Answer = new Answer();
-              eAnswer.setAnswerDescription(choice.answertitle),
-              eAnswer.setIsTrue(choice.answercorrect),
+              eAnswer.setAnswerDescription(choice.val().answertitle),
+              eAnswer.setIsTrue(choice.val().answercorrect),
               eQuestion.setQuestionAnswers(eAnswer);
             })
           })
