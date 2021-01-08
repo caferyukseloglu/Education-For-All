@@ -6,7 +6,7 @@ export const Body = styled.View`
 `;
 export const Scroll = styled.ScrollView`
     backgroundColor: #F4F4F4;
-    marginHorizontal: 5px;
+    marginHorizontal: ${(props) => props.mHorizontal || '5px'};
 `;
 export const Form = styled.View`
   flex: 1;

@@ -41,18 +41,8 @@ export const categoryStackNavigator = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="CourseTeacher"
-          component={CourseTeacherScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
           name="CourseDetails"
           component={CourseDetailScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="CourseDetailsTeacher"
-          component={CourseDetailTeacherScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
