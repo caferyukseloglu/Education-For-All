@@ -4,7 +4,7 @@ export class Question{
 
 	private questionTitle: string;
 	private questionNumber: number;
-    private questionAnswers: Array<Answer>;
+    private questionAnswers= new Array<Answer>();
 
 
 	public getQuestionTitle(): string {
@@ -22,8 +22,8 @@ export class Question{
 	}
 
 
-	public setQuestionAnswers(value: Array<Answer>) {
-		this.questionAnswers = value;
+	public setQuestionAnswers(value: Answer) {
+		this.questionAnswers.push(value);
 	}
 
 

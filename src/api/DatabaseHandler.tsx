@@ -369,7 +369,7 @@ export class DatabaseHandler {
         firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein+"/"+x.name).set({
           questiontitle:x.name,
         }).then(()=> x["answers"].map(eachanswer=>{
-          firebase.database().ref("answers/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+examnamein+"/"+x.name).set({
+          firebase.database().ref("answers/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+examnamein+"/"+x.name+"/choices/"+eachanswer["title"]).set({
             answertitle:eachanswer["title"],
             answercorrect:eachanswer["correct"],
           })
@@ -447,9 +447,27 @@ export class DatabaseHandler {
       })
   }
 
-  public getExamAnswersByName(teacher:Teacher,course:Course,exam:Exam){
+  public getExamAnswersByName(teacher:Teacher,course:Course,exam:Exam,_callback){
     firebase.database().ref("answers/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+exam.getExamName()).once("value").then(snapshot=>{
-      console.log(snapshot);
+      const questionCount=snapshot.numChildren();
+      snapshot.forEach(question=>{
+        const eQuestion: Question = new Question();
+        eQuestion.setQuestionTitle(question.key);
+        if(exam.getExamQuestions().findIndex((data)=>data.getQuestionTitle()==question.key) === -1){
+          question.forEach(answer=>{
+            answer.forEach(choice=>{
+              const eAnswer: Answer = new Answer();
+              eAnswer.setAnswerDescription(choice.answertitle),
+              eAnswer.setIsTrue(choice.answercorrect),
+              eQuestion.setQuestionAnswers(eAnswer);
+            })
+          })
+          exam.setExamQuestions(eQuestion);
+          if(exam.getExamQuestions().length===questionCount){
+            _callback();
+          }
+        }
+      })
     })
   }
 

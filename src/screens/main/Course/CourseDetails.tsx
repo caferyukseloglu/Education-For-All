@@ -45,6 +45,17 @@ const CourseDetailScreen = ({route, navigation}) => {
 
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
 
+
+  const getExamObject = (exam) =>{
+    console.log(exam);
+    userData.userdata.getExamAnswersByName(teacher,courseDetails,exam,function(){
+      navigation.navigate('Exam', {
+        lessonType: 'exam',
+        lessonContent: exam,
+      })
+    });
+  }
+
   const [lessons, setLessons] = React.useState([]);
   useEffect(() => {
     userData.userdata.getLessonsForCourse(teacher, courseDetails, function () {
@@ -441,10 +452,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                           lessonType: 'lesson',
                           lessonContent: item.lesson,
                         })
-                      : navigation.navigate('Exam', {
-                          lessonType: 'exam',
-                          lessonContent: item.exam,
-                        })
+                      : getExamObject(item.exam)
                   }
                 />
               </PopView>
