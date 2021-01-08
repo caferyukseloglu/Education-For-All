@@ -14,6 +14,7 @@ import {Body, Bottom, Line, Scroll} from '../../../styles/wrapper';
 import {View, Text, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BigButton} from '../../../styles/buttons';
+import { Title } from '../../../styles/text';
 
 const ExamScreen = ({route, navigation}) => {
   const {lessonContent, lessonType} = route.params;
@@ -38,11 +39,14 @@ const ExamScreen = ({route, navigation}) => {
         </Line>
       </View>
       <Scroll>
-        {console.log(route.params)}
         {lessonType == 'lesson' ? (
           <Text>{lessonContent.lessonContent}</Text>
         ) : (
-          <Exam />
+          <View>
+          <Text>{lessonContent.examName}</Text>
+          <Text>{lessonContent.examDescription}</Text>
+          <Exam lesson={lessonContent.examQuestions} />
+          </View>
         )}
 
         <Body
@@ -68,7 +72,7 @@ const ExamScreen = ({route, navigation}) => {
   );
 };
 
-const Exam = () => {
+const Exam = (exam) => {
   const {colors} = useTheme();
   const [checked, setChecked] = useState(0);
   return (
@@ -80,7 +84,7 @@ const Exam = () => {
           paddingHorizontal: 30,
           alignItems: 'center',
         }}>
-        Please read the question and answer it by clicking bottom choices.
+        {console.log(exam,'Bura aşşağı')}
       </Text>
       <Body
         // eslint-disable-next-line react-native/no-inline-styles
@@ -89,82 +93,30 @@ const Exam = () => {
           flexDirection: 'column',
           justifyContent: 'space-around',
         }}>
-        <TouchableRipple
-          onPress={() => (checked != 1 ? setChecked(1) : setChecked(0))}>
-          <View
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingVertical: 8,
-              paddingHorizontal: 50,
-              marginHorizontal: 30,
-              backgroundColor: colors.surface,
-            }}>
-            <Paragraph>Normal</Paragraph>
-            <View pointerEvents="none">
-              <Checkbox status={checked === 1 ? 'checked' : 'unchecked'} />
-            </View>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple
-          onPress={() => (checked != 2 ? setChecked(2) : setChecked(0))}>
-          <View
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingVertical: 8,
-              paddingHorizontal: 50,
-              marginHorizontal: 30,
-              backgroundColor: colors.surface,
-            }}>
-            <Paragraph>Normal</Paragraph>
-            <View pointerEvents="none">
-              <Checkbox status={checked === 2 ? 'checked' : 'unchecked'} />
-            </View>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple
-          onPress={() => (checked != 3 ? setChecked(3) : setChecked(0))}>
-          <View
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingVertical: 8,
-              paddingHorizontal: 50,
-              marginHorizontal: 30,
-              backgroundColor: colors.surface,
-            }}>
-            <Paragraph>Normal</Paragraph>
-            <View pointerEvents="none">
-              <Checkbox status={checked === 3 ? 'checked' : 'unchecked'} />
-            </View>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple
-          onPress={() => (checked != 4 ? setChecked(4) : setChecked(0))}>
-          <View
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingVertical: 8,
-              paddingHorizontal: 50,
-              marginHorizontal: 30,
-              backgroundColor: colors.surface,
-            }}>
-            <Paragraph>Normal</Paragraph>
-            <View pointerEvents="none">
-              <Checkbox status={checked === 4 ? 'checked' : 'unchecked'} />
-            </View>
-          </View>
-        </TouchableRipple>
+        {exam.lesson.map((quest, index) => {
+          <View key={index}>
+            <Title>{console.log(quest.questionAnswers)}</Title>
+            <TouchableRipple
+              onPress={() => (checked != 1 ? setChecked(1) : setChecked(0))}>
+              <View
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingVertical: 8,
+                  paddingHorizontal: 50,
+                  marginHorizontal: 30,
+                  backgroundColor: colors.surface,
+                }}>
+                <Paragraph>Normal</Paragraph>
+                <View pointerEvents="none">
+                  <Checkbox status={checked === 1 ? 'checked' : 'unchecked'} />
+                </View>
+              </View>
+            </TouchableRipple>
+          </View>;
+        })}
       </Body>
     </>
   );
