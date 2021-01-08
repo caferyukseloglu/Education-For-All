@@ -55,9 +55,6 @@ const CourseDetailScreen = ({route, navigation}) => {
       });
     });
   });
-  console.log("lessonis"+lessons);
-
-
 
   const [data, setData] = React.useState({
     courseName: '',
@@ -123,8 +120,10 @@ const CourseDetailScreen = ({route, navigation}) => {
   
 
   const enrollCourse = () => {
+    console.log("ENROLL COURSE");
+    console.log(teacher);
     userData.userdata.studentCourseEnroll(
-      userData.userdata.getUser(),teacher,
+      userData.userdata.getUser(),teacher.userID,
       courseDetails,
       function () {
         console.log('Done');

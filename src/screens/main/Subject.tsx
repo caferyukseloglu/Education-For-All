@@ -74,7 +74,7 @@ const SubjectScreen = ({navigation}) => {
     );
   });
 
-  
+
 
   const [courseListForTeacher, setCourseListForTeacher] = React.useState([]);
   useEffect(() => {
@@ -191,7 +191,7 @@ const SubjectScreen = ({navigation}) => {
                     params: {
                       courseDetails: item,
                       teacher: await userData.userdata.getTeacherById(
-                        item.teacher,
+                        "Rg4gkC0PSGMrULjUtN1uoSqTYFG3"
                       ),
                     },
                   })
