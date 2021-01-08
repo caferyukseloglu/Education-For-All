@@ -7,7 +7,7 @@
 import styled from 'styled-components';
 
 export const Title = styled.Text`
-  margin-top: 30px;
+  margin-top: ${(props) => props.mTop || '30px'};
   width: auto;
   font-family: Poppins-Regular;
   font-style: normal;

@@ -1,5 +1,5 @@
 //Main React import
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   useTheme,
   Appbar,
@@ -29,7 +29,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useUserData} from '../../../states/useData';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {useWindowDimensions, View} from 'react-native';
+import {FlatList, useWindowDimensions, View} from 'react-native';
 
 const CourseDetailScreen = ({route, navigation}) => {
   const [visible, setVisible] = React.useState(false);
@@ -47,9 +47,9 @@ const CourseDetailScreen = ({route, navigation}) => {
 
   const [lessons, setLessons] = React.useState([]);
   useEffect(() => {
-    console.log("Effect icinde");
-    userData.userdata.getLessonsForCourse(teacher,courseDetails,function () {
-      console.log("calling back in getlessonsforcourse");
+    console.log('Effect icinde');
+    userData.userdata.getLessonsForCourse(teacher, courseDetails, function () {
+      console.log('calling back in getlessonsforcourse');
       courseDetails.getCourseLessons().forEach((lesson) => {
         setLessons((lessons) => [...lessons, lesson]);
       });
@@ -117,13 +117,13 @@ const CourseDetailScreen = ({route, navigation}) => {
   };
 
   const {colors} = useTheme();
-  
 
   const enrollCourse = () => {
-    console.log("ENROLL COURSE");
+    console.log('ENROLL COURSE');
     console.log(teacher);
     userData.userdata.studentCourseEnroll(
-      userData.userdata.getUser(),teacher.userID,
+      userData.userdata.getUser(),
+      teacher.userID,
       courseDetails,
       function () {
         console.log('Done');
@@ -142,14 +142,25 @@ const CourseDetailScreen = ({route, navigation}) => {
     setQuestions([...copyQuestions]);
   }
 
-  const differentiateType = () =>{
-    if(placeholder.value ==="lesson"){
-      userData.userdata.addLessonToCourse(teacher,courseDetails,data.courseName,data.courseDescription,data.courseText);
+  const differentiateType = () => {
+    if (placeholder.value === 'lesson') {
+      userData.userdata.addLessonToCourse(
+        teacher,
+        courseDetails,
+        data.courseName,
+        data.courseDescription,
+        data.courseText,
+      );
+    } else {
+      userData.userdata.addExam(
+        teacher,
+        courseDetails,
+        questions,
+        data.courseName,
+        data.courseDescription,
+      );
     }
-    else{
-      userData.userdata.addExam(teacher,courseDetails,questions,data.courseName,data.courseDescription);
-    }
-  }
+  };
 
   function deleteQuestion(index) {
     questions.splice(index, 1);
@@ -365,14 +376,16 @@ const CourseDetailScreen = ({route, navigation}) => {
                       </View>
                     </View>
                   ) : (
-                    <View style={{marginVertical:20}}>
+                    <View style={{marginVertical: 20}}>
                       <CourseTitle margins="10px 0px">Lesson</CourseTitle>
                       <TextInput
                         multiline={true}
                         style={{marginBottom: 5}}
                         placeholder="Enter Lesson Text..."
                         placeholderTextColor="lightgrey"
-                        onChangeText={(event) => {data.courseText = event}}
+                        onChangeText={(event) => {
+                          data.courseText = event;
+                        }}
                       />
                     </View>
                   )}
@@ -383,58 +396,39 @@ const CourseDetailScreen = ({route, navigation}) => {
               </Scroll>
             </Modal>
           </Portal>
-          <PopView
-            style={{alignItems: 'center', justifyContent: 'space-between'}}>
-            <View style={{alignItems: 'center', flexDirection: 'row'}}>
-              <Avatar2 />
-              <LessonView>
-                <Lesson style={{color: colors.title1}}>Lesson 1</Lesson>
-                <Teacher style={{color: colors.accent}}>T. Cafer </Teacher>
-                <Duration style={{color: colors.success}}>
-                  Duration: 5 Min{' '}
-                </Duration>
-              </LessonView>
-              <Button onPress={() => navigation.navigate('Exam')}>
-                Take Exam
-              </Button>
-            </View>
-            <IconButton
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{justifyContent: 'center'}}
-              icon="play-circle-outline"
-              onPress={() => navigation.navigate('CourseDetails')}
-            />
-          </PopView>
-          <PopView>
-            <Avatar2 />
-            <LessonView>
-              <Lesson style={{color: colors.title1}}>Lesson 1</Lesson>
-              <Teacher style={{color: colors.accent}}>T. Cafer </Teacher>
-              <Duration style={{color: colors.success}}>
-                Duration: 5 Min{' '}
-              </Duration>
-            </LessonView>
-          </PopView>
-          <PopView>
-            <Avatar2 />
-            <LessonView>
-              <Lesson style={{color: colors.title1}}>Lesson 1</Lesson>
-              <Teacher style={{color: colors.accent}}>T. Cafer </Teacher>
-              <Duration style={{color: colors.success}}>
-                Duration: 5 Min{' '}
-              </Duration>
-            </LessonView>
-          </PopView>
-          <PopView>
-            <Avatar2 />
-            <LessonView>
-              <Lesson style={{color: colors.title1}}>Lesson 1</Lesson>
-              <Teacher style={{color: colors.accent}}>T. Cafer </Teacher>
-              <Duration style={{color: colors.success}}>
-                Duration: 5 Min{' '}
-              </Duration>
-            </LessonView>
-          </PopView>
+          <FlatList
+            data={lessons}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item, index}) => (
+              <PopView
+                style={{alignItems: 'center', justifyContent: 'space-between'}}>
+                <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                  <Avatar2 />
+                  <LessonView>
+                    <Lesson style={{color: colors.title1}}>
+                      {item.lessonName}
+                    </Lesson>
+                  </LessonView>
+                </View>
+                <IconButton
+                  // eslint-disable-next-line react-native/no-inline-styles
+                  style={{justifyContent: 'center'}}
+                  icon="play-circle-outline"
+                  onPress={() =>
+                    item.hasOwnProperty('lessonContent')
+                      ? navigation.navigate('Exam', {
+                          lessonType: 'lesson',
+                          lessonContent: item,
+                        })
+                      : navigation.navigate('Exam', {
+                          lessonType: 'exam',
+                          lessonContent: item,
+                        })
+                  }
+                />
+              </PopView>
+            )}
+          />
         </Body>
       </Scroll>
     </SafeAreaView>

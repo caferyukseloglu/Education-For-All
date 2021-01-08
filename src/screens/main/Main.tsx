@@ -2,8 +2,16 @@
 import React, {useEffect} from 'react';
 //Our Styles for Project
 import {Body, PopView, Avatar1, Scroll, Line} from '../../styles/wrapper';
-import {SubTitle, Title, HeadText} from '../../styles/text';
-import {Text, Searchbar, Badge, Button, ToggleButton} from 'react-native-paper';
+import {SubTitle, Title, HeadText, CourseSubtitle} from '../../styles/text';
+import {
+  Text,
+  Searchbar,
+  Badge,
+  Button,
+  ToggleButton,
+  IconButton,
+  useTheme,
+} from 'react-native-paper';
 import {
   View,
   useWindowDimensions,
@@ -11,6 +19,7 @@ import {
   FlatList,
   TouchableHighlight,
   Platform,
+  Image,
 } from 'react-native';
 
 import Categories from '../../components/Categories';
@@ -19,8 +28,10 @@ import '../../api/DatabaseHandler';
 import {useUserData} from '../../states/useData';
 import {useState} from 'react';
 import {Category} from '../../api/Category';
+import {Icon} from 'react-native-paper/lib/typescript/src/components/Avatar/Avatar';
 
 const MainScreen = ({navigation}) => {
+  const {colors} = useTheme();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
@@ -48,70 +59,99 @@ const MainScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, padding: 10}}>
-      <Scroll showsHorizontalScrollIndicator={false}>
-        <View>
-          <Line alignItems="center">
-            <Title textAlign="left" style={{fontWeight: 'bold'}}>
-              Home Page
-            </Title>
-            <ToggleButton
-              icon="bell"
-              value="Messages"
-              onPress={console.log('Clicked')}
+    <SafeAreaView style={{flex: 1}}>
+      <Scroll
+        mHorizontal="0px"
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        style={{backgroundColor:colors.background}}>
+        <View style={{marginVertical:10,marginHorizontal:10}}>
+          <View style={{marginHorizontal:20}}>
+            <Line
+              style={{justifyContent: 'space-between', alignItems: 'center'}}>
+              <Title mTop="0px" style={{fontWeight: 'bold',color:colors.title1}}>
+                Home Page
+              </Title>
+              <IconButton
+                icon="bell-ring"
+                color={colors.success}
+                onPress={() => console.log('Clicked')}
+              />
+            </Line>
+            <SubTitle style={{color:colors.subtitle1}} left="0" marginTop="0" textAlign="left">
+              Choose the course you want
+            </SubTitle>
+            <Searchbar
+              style={{borderRadius:15,height:43,marginVertical:10}}
+              placeholder={'Search for lessons...'}
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+              inputStyle={{color:colors.title1}}
+              placeholderTextColor={colors.title1}
             />
-          </Line>
-          <SubTitle left="0" marginTop="0" textAlign="left">
-            Choose the course you want
-          </SubTitle>
-          <Searchbar
-            placeholder={'Search for lesson,subject or teacher...'}
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
-          <FlatList
-            horizontal
-            data={categories}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item, index}) => (
-              <TouchableHighlight
-                onPress={() => toCourse(item)}
-                underlayColor="white">
-                <View style={{alignContent: 'center', alignItems: 'center'}}>
-                  <View
-                    // eslint-disable-next-line react-native/no-inline-styles
-                    style={{
-                      backgroundColor: '#2D9CDB',
-                      marginLeft: 20,
-                      marginRight: 20,
-                      alignItems: 'center',
-                      marginTop: 10,
-                      height: 60,
-                      width: 60,
-                      borderRadius: 60 / 2,
-                    }}
-                  />
-                  <HPCardsyText>{item.getCategoryName()}</HPCardsyText>
-                </View>
-              </TouchableHighlight>
-            )}
-          />
-          <HeadText style={{fontWeight: 'bold'}}>Recommended courses </HeadText>
+          </View>
+          <Scroll
+            style={{backgroundColor:colors.background}}
+            mHorizontal="0px"
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}>
+            {categories.map((category) => {
+              return (
+                <TouchableHighlight
+                  onPress={() => toCourse(category)}
+                  underlayColor="white">
+                  <View style={{alignContent: 'center', alignItems: 'center'}}>
+                    <View
+                      // eslint-disable-next-line react-native/no-inline-styles
+                      style={{
+                        backgroundColor: '#2D9CDB',
+                        marginLeft: 20,
+                        marginRight: 20,
+                        alignItems: 'center',
+                        marginTop: 10,
+                        height: 60,
+                        width: 60,
+                        borderRadius: 60 / 2,
+                      }}
+                    />
+                    <HPCardsyText style={{color:colors.title1}}>{category.categoryName}</HPCardsyText>
+                  </View>
+                </TouchableHighlight>
+              );
+            })}
+          </Scroll>
+          <View
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              margin: 20,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <HeadText margins="0px" style={{fontWeight: 'bold',color:colors.title1}}>
+              Recommended courses
+            </HeadText>
+          <Button onPress={() => console.log("More")}><CourseSubtitle style={{color:colors.subtitle1}}>More</CourseSubtitle></Button>
+          </View>
           <Body>
             <Categories />
           </Body>
-          <HeadText style={{fontWeight: 'bold'}}>Today's Events</HeadText>
+          <HeadText style={{fontWeight: 'bold',color:colors.title1}}>Today's Events</HeadText>
           <FlatList
             horizontal
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             data={[
-              {name: 'Event1'},
-              {name: 'Event2'},
-              {name: 'Event 3'},
-              {name: 'Event 4'},
+              {name: 'Event1', image: '../../assets/1.jpg'},
+              {name: 'Event2', image: '../../assets/1.jpg'},
+              {name: 'Event3', image: '../../assets/1.jpg'},
+              {name: 'Event4', image: '../../assets/1.jpg'},
             ]}
-            renderItem={(item, index) => (
+            renderItem={(item) => (
               <View style={{padding: 10}}>
                 <View
+                  // eslint-disable-next-line react-native/no-inline-styles
                   style={{
                     backgroundColor: '#C4C4C4',
                     borderWidth: 1,
@@ -122,10 +162,10 @@ const MainScreen = ({navigation}) => {
                 />
               </View>
             )}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={item => item.name}
           />
           <Body>
-            <HeadText style={{fontWeight: 'bold'}}>Populer</HeadText>
+            <HeadText style={{fontWeight: 'bold',color:colors.title1}}>Populer</HeadText>
             <PopView>
               <Avatar1 />
               <Text

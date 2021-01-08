@@ -15,7 +15,7 @@ const Categories = () => {
         setCourseObjects((courses) => [...courses, course]);
       });
     });
-  });
+  }, []);
 
   return (
     <View>

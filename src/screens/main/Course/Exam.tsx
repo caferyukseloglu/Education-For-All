@@ -15,9 +15,11 @@ import {View, Text, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BigButton} from '../../../styles/buttons';
 
-const ExamScreen = ({navigation}) => {
+const ExamScreen = ({route, navigation}) => {
+  const {lessonContent, lessonType} = route.params;
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
   const {colors} = useTheme();
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -36,9 +38,12 @@ const ExamScreen = ({navigation}) => {
         </Line>
       </View>
       <Scroll>
-        <Exam />
-        <Exam />
-        <Exam />
+        {console.log(route.params)}
+        {lessonType == 'lesson' ? (
+          <Text>{lessonContent.lessonContent}</Text>
+        ) : (
+          <Exam />
+        )}
 
         <Body
           // eslint-disable-next-line react-native/no-inline-styles
