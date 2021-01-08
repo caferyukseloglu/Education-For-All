@@ -237,7 +237,7 @@ const SubjectScreen = ({navigation}) => {
                   icon="close"
                   onPress={hideModal}
                 />
-                <CourseTitle>Create A Course</CourseTitle>
+                <CourseTitle margins="10px 0px">Create A Course</CourseTitle>
                 <TextInput
                   style={{marginTop: 20}}
                   label="Course Name"
@@ -262,11 +262,13 @@ const SubjectScreen = ({navigation}) => {
                       {label: 'Biology', value: 'code'},
                       {label: 'English', value: 'EN'},
                     ]}
+                    placeholderStyle={{color: 'black'}}
+                    labelStyle={{color: 'black'}}
                     dropDownMaxHeight={windowHeight / 6}
                     containerStyle={{height: 70,marginTop:20}}
                   />
                 </View>
-                <Button>Submit</Button>
+                <Button style={{marginTop:20}}>Submit</Button>
               </Body>
             </Modal>
           </Portal>
