@@ -76,6 +76,7 @@ const SubjectScreen = ({navigation}) => {
 
   const [courseListForTeacher, setCourseListForTeacher] = React.useState([]);
   useEffect(() => {
+    console.log("calisti");
     userData.userdata.getAllCoursesForSpesificTeacher(userData.userdata.getUser(),function () {
       userData.userdata.getUser().getCoursesGiven().forEach((courseList) => {
         setCourseListForTeacher((courseListForTeacher) => [...courseListForTeacher, courseList]);
@@ -97,6 +98,7 @@ const SubjectScreen = ({navigation}) => {
   ]);
 
   const courseToGo = async () => {
+    console.log(data.courseName);
     const courseDestination: Course = new Course();
     courseDestination.setCourseName(data.courseName);
     courseDestination.setCourseCategory(data.courseCategory);

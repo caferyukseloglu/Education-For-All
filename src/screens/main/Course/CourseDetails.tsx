@@ -317,7 +317,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                     </View>
                   ) : undefined}
                   <View style={{marginVertical: 30}}>
-                    <Button onPress={() => console.log()}>Submit</Button>
+                    <Button onPress={() => userData.userdata.addExam(teacher,courseDetails,questions,data.courseName,data.courseDescription)}>Submit</Button>
                   </View>
                 </Body>
               </Scroll>

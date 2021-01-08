@@ -358,20 +358,25 @@ export class DatabaseHandler {
     })
   }
 
-  public addExam(teacher:Teacher,course:Course,exam:Exam){
-    firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+exam.getExamName()).set({
-        examdescription:exam.getExamDescription(),
-        examduration:exam.getExamDuration(),
-        examname:exam.getExamName(),
-    })
+  public addExam(teacher:Teacher,course:Course,exam:any,examnamein:any,examdescription){
+    console.log(exam);
+      firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein).set({
+        examname:examnamein,
+        examdescription:examdescription,
+      }).then(()=>exam.map(x=>{
+        firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein+"/"+x.name).set({
+          questiontitle:x.name,
+        })
+      }))
+
   }
 
   public getAllCoursesForSpesificTeacher(teacher:Teacher,_callback){
     firebase.database().ref("courses/"+teacher.getUserID()).once("value").then(snapshot=>{
       const courseCount=snapshot.numChildren();
-      console.log(courseCount);
-      console.log(teacher.getCoursesGiven().length);
+      console.log("corusecount"+courseCount);
       snapshot.forEach(course=>{
+        console.log(teacher.getCoursesGiven().length);
         const eachCourse: Course = new Course();
         eachCourse.setCourseName(course.val().coursename),
         eachCourse.setCourseDescription(course.val().coursedescription),
