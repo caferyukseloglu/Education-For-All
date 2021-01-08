@@ -2,7 +2,8 @@ import { Answer } from "./Answer";
 
 export class Question{
 
-    private questionTitle: string;
+	private questionTitle: string;
+	private questionNumber: number;
     private questionAnswers: Array<Answer>;
 
 
@@ -24,6 +25,16 @@ export class Question{
 	public setQuestionAnswers(value: Array<Answer>) {
 		this.questionAnswers = value;
 	}
+
+
+	public getQuestionNumber(): number {
+		return this.questionNumber;
+	}
+
+	public setQuestionNumber(value: number) {
+		this.questionNumber = value;
+	}
+
 
 
 }

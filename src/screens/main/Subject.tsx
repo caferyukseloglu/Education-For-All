@@ -76,21 +76,15 @@ const SubjectScreen = ({navigation}) => {
 
   const [courseListForTeacher, setCourseListForTeacher] = React.useState([]);
   useEffect(() => {
-    userData.userdata.getAllCoursesForSpesificTeacher(
-      userData.userdata.getUser(),
-      function () {
-        userData.userdata
-          .getUser()
-          .getCoursesGiven()
-          .forEach((courseList) => {
-            setCourseListForTeacher((courseListForTeacher) => [
-              ...courseListForTeacher,
-              courseList,
-            ]);
-          });
-      },
-    );
+    console.log("calisti");
+    userData.userdata.getAllCoursesForSpesificTeacher(userData.userdata.getUser(),function () {
+      userData.userdata.getUser().getCoursesGiven().forEach((courseList) => {
+        setCourseListForTeacher((courseListForTeacher) => [...courseListForTeacher, courseList]);
+      });
+    });
   });
+  
+  console.log(courseListForTeacher);
 
   const [courses] = useState([
     {name: 'Programming 101', key: '1', description: 8},
@@ -104,6 +98,7 @@ const SubjectScreen = ({navigation}) => {
   ]);
 
   const courseToGo = async () => {
+    console.log(data.courseName);
     const courseDestination: Course = new Course();
     courseDestination.setCourseName(data.courseName);
     courseDestination.setCourseCategory(data.courseCategory);

@@ -6,7 +6,8 @@ export class Lesson{
 	private course: string;
     private lessonId: number;
     private lessonName: string;
-    private lessonDescription: string;
+	private lessonDescription: string;
+	private lessonContent:string;
 
 
 	public getLessonId(): number {
@@ -36,13 +37,14 @@ export class Lesson{
 	}
 	
 
-	public getCourse(): Course {
-		return this.course;
+	public getLessonContent(): string {
+		return this.lessonContent;
 	}
 
-	public setCourse(value: Course) {
-		this.course = value;
+	public setLessonContent(value: string) {
+		this.lessonContent = value;
 	}
+
 	
 
 }

@@ -169,9 +169,6 @@ export class DatabaseHandler {
             _callback();
           }
         }
-        else{
-          console.log("ZATEN VAR");
-        }
       })
     })
   }
@@ -278,11 +275,12 @@ export class DatabaseHandler {
   }
 
   public studentCourseEnroll(student:Student,teacher:Teacher,course:Course,_callback):void{
+    console.log(course);
     firebase.database().ref("studentsenrolled/"+student.getUserID()+"/"+course.getCourseName()).set({
       coursename:course.getCourseName(),
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
-      courseteacher:teacher,
+      courseteacher:teacher.getUserID(),
     }).then(()=>_callback())
 
   }
@@ -334,56 +332,67 @@ export class DatabaseHandler {
 
   }
 
-  public addLessonToCourse(teacher:Teacher,course:Course,lesson:Lesson){
-    firebase.database().ref("lessons/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+lesson.getLessonId()).set({
-      lessonname:lesson.getLessonName(),
-      lessonid:lesson.getLessonId(),
-      lessondescription:lesson.getLessonDescription(),
-      lessoncourse:course.getCourseName(),
+  public addLessonToCourse(teacher:Teacher,course:Course,lessonname:any,lessondescription:any,lessoncontent:any){
+    firebase.database().ref("lessons/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+lessonname).set({
+      lessonname:lessonname,
+      lessondescription:lessondescription,
+      lessoncourse:lessoncontent,
     })
   }
 
   public getLessonsForCourse(teacher:Teacher,course:Course,_callback){
-    course.resetCourseLessons();
     firebase.database().ref("lessons/"+teacher.getUserID()+"/"+course.getCourseName()).once("value").then(snapshot=>{
       const lessonCount=snapshot.numChildren();
       snapshot.forEach(lesson=>{
         const eachLesson: Lesson = new Lesson();
-        eachLesson.setCourse(lesson.val().lessoncourse);
         eachLesson.setLessonDescription(lesson.val().lessondescription);
-        eachLesson.setLessonId(lesson.val().lessonid);
+        eachLesson.setLessonContent(lesson.val().lessoncourse)
         eachLesson.setLessonName(lesson.val().lessonname);
-        course.setCourseLessons(eachLesson);
-        if(course.getCourseLessons().length==lessonCount){
-          _callback();
-        }
+        console.log(eachLesson);
+        if(course.getCourseLessons().findIndex((data)=>data.getLessonName()==lesson.val().lessonname) === -1){
+          course.setCourseLessons(eachLesson);
+          if(course.getCourseLessons().length==lessonCount){
+            _callback();
+          }
+        }    
       })
     })
   }
 
-  public addExam(teacher:Teacher,course:Course,exam:Exam){
-    firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+exam.getExamName()).set({
-        examdescription:exam.getExamDescription(),
-        examduration:exam.getExamDuration(),
-        examname:exam.getExamName(),
-    })
+  public addExam(teacher:Teacher,course:Course,exam:any,examnamein:any,examdescription){
+      firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+examnamein).set({
+        examname:examnamein,
+        examdescription:examdescription,
+      }).then(()=>exam.map(x=>{
+        firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein+"/"+x.name).set({
+          questiontitle:x.name,
+        }).then(()=> x["answers"].map(eachanswer=>{
+          firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein+"/"+x.name+"/"+eachanswer["title"]).set({
+            answertitle:eachanswer["title"],
+            answercorrect:eachanswer["correct"],
+          })
+        }))
+      }))
+
   }
 
   public getAllCoursesForSpesificTeacher(teacher:Teacher,_callback){
-    console.log("GET ALL COURSES FOR");
     firebase.database().ref("courses/"+teacher.getUserID()).once("value").then(snapshot=>{
       const courseCount=snapshot.numChildren();
-      console.log(courseCount);
+      console.log("corusecount"+courseCount);
       snapshot.forEach(course=>{
+        console.log(teacher.getCoursesGiven().length);
         const eachCourse: Course = new Course();
         eachCourse.setCourseName(course.val().coursename),
         eachCourse.setCourseDescription(course.val().coursedescription),
         eachCourse.setCourseCategory(course.val().coursecategory),
-        eachCourse.setTeacher(course.val().teacher),
-        teacher.addCoursesGiven(eachCourse);
-        if(teacher.getCoursesGiven().length==courseCount){
-          _callback();
-        }
+        eachCourse.setTeacher(course.val().teacher);
+        if(teacher.getCoursesGiven().findIndex((data)=>data.getCourseName()==course.val().coursename) === -1){
+          teacher.addCoursesGiven(eachCourse);
+          if(teacher.getCoursesGiven().length==courseCount){
+            _callback();
+          }
+        }    
       })
     })
   }
@@ -417,5 +426,16 @@ export class DatabaseHandler {
     eTeacher.setSurname(snapshot.val().surname);
     return eTeacher;
   }
+
+  public getExamsForCourse(teacher:Teacher,course:Course,_callback){
+    firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()).once("value").then(snapshot=>{
+      snapshot.forEach(examname=>{
+        const eachExam: Exam = new Exam();
+        eachExam.setExamName(examname.val().examname),
+        eachExam.setExamDescription(examname.val().examdescription),
+        console.log(examname.val().examname);
+      })
+  })}
+
 
 }
