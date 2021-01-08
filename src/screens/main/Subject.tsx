@@ -21,6 +21,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import {View, FlatList, useWindowDimensions} from 'react-native';
 import {useUserData} from '../../states/useData';
+import { Course } from '../../api/Course';
 
 const SubjectScreen = ({navigation}) => {
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
@@ -73,7 +74,6 @@ const SubjectScreen = ({navigation}) => {
     });
   });
 
-  console.log(courseListForTeacher);
   const [courses] = useState([
     {name: 'Programming 101', key: '1', description: 8},
     {name: 'Fun Mathematic', key: '2', description: 9},
@@ -84,6 +84,15 @@ const SubjectScreen = ({navigation}) => {
     {name: 'Physics', key: '7', description: 7},
     {name: 'Database', key: '8', description: 5},
   ]);
+
+  const courseToGo = async () =>{
+    const courseDestination: Course = new Course();
+    courseDestination.setCourseName(data.courseName);
+    courseDestination.setCourseCategory(data.courseCategory);
+    courseDestination.setCourseDescription(data.courseDescription);
+    await userData.userdata.teachCourse(userData.userdata.getUser(),courseDestination);
+    navigation.navigate("Main",{screen:"CourseDetails",params:{courseDetails:courseDestination,teacher:userData.userdata.getUser()}});
+  }
 
   if (userData.userdata.getUser().getUserType() === 1) {
     return (
@@ -271,12 +280,12 @@ const SubjectScreen = ({navigation}) => {
                     placeholder="Select a category..."
                     // eslint-disable-next-line react-native/no-inline-styles
                     items={[
-                      {label: 'Mathematics', value: 'math'},
-                      {label: 'Programming', value: 'chem'},
-                      {label: 'Engineering', value: 'bio'},
-                      {label: 'Physics', value: 'phys'},
-                      {label: 'Biology', value: 'code'},
-                      {label: 'English', value: 'EN'},
+                      {label: 'Mathematics', value: 'Mathematics'},
+                      {label: 'Programming', value: 'Programming'},
+                      {label: 'Engineering', value: 'Engineering'},
+                      {label: 'Physics', value: 'Physics'},
+                      {label: 'Biology', value: 'Biology'},
+                      {label: 'English', value: 'English'},
                     ]}
                     placeholderStyle={{color: 'black'}}
                     labelStyle={{color: 'black'}}
@@ -290,7 +299,7 @@ const SubjectScreen = ({navigation}) => {
                     }
                   />
                 </View>
-                <Button style={{marginTop: 20}}>Submit</Button>
+                <Button style={{marginTop: 20}} onPress={()=> courseToGo()}  >Submit</Button>
               </Body>
             </Modal>
           </Portal>

@@ -208,8 +208,8 @@ export class DatabaseHandler {
   }
 
 
-  public teachCourse(teacher:Teacher,course:Course):void{
-    firebase.database().ref("courses"+"/"+teacher.getUserID()+"/"+course.getCourseName()).set({
+  public async teachCourse(teacher:Teacher,course:Course):Promise<void>{
+    await firebase.database().ref("courses"+"/"+teacher.getUserID()+"/"+course.getCourseName()).set({
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
       coursename:course.getCourseName()
@@ -341,7 +341,6 @@ export class DatabaseHandler {
       lessondescription:lesson.getLessonDescription(),
       lessoncourse:course.getCourseName(),
     })
-
   }
 
   public getLessonsForCourse(teacher:Teacher,course:Course,_callback){
