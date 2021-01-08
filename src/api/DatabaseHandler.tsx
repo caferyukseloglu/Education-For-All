@@ -275,11 +275,12 @@ export class DatabaseHandler {
   }
 
   public studentCourseEnroll(student:Student,teacher:Teacher,course:Course,_callback):void{
+    console.log(course);
     firebase.database().ref("studentsenrolled/"+student.getUserID()+"/"+course.getCourseName()).set({
       coursename:course.getCourseName(),
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
-      courseteacher:teacher,
+      courseteacher:teacher.getUserID(),
     }).then(()=>_callback())
 
   }
@@ -331,42 +332,46 @@ export class DatabaseHandler {
 
   }
 
-  public addLessonToCourse(teacher:Teacher,course:Course,lesson:Lesson){
-    firebase.database().ref("lessons/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+lesson.getLessonId()).set({
-      lessonname:lesson.getLessonName(),
-      lessonid:lesson.getLessonId(),
-      lessondescription:lesson.getLessonDescription(),
-      lessoncourse:course.getCourseName(),
+  public addLessonToCourse(teacher:Teacher,course:Course,lessonname:any,lessondescription:any,lessoncontent:any){
+    firebase.database().ref("lessons/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+lessonname).set({
+      lessonname:lessonname,
+      lessondescription:lessondescription,
+      lessoncourse:lessoncontent,
     })
   }
 
   public getLessonsForCourse(teacher:Teacher,course:Course,_callback){
-    course.resetCourseLessons();
     firebase.database().ref("lessons/"+teacher.getUserID()+"/"+course.getCourseName()).once("value").then(snapshot=>{
       const lessonCount=snapshot.numChildren();
       snapshot.forEach(lesson=>{
         const eachLesson: Lesson = new Lesson();
-        eachLesson.setCourse(lesson.val().lessoncourse);
         eachLesson.setLessonDescription(lesson.val().lessondescription);
-        eachLesson.setLessonId(lesson.val().lessonid);
+        eachLesson.setLessonContent(lesson.val().lessoncourse)
         eachLesson.setLessonName(lesson.val().lessonname);
-        course.setCourseLessons(eachLesson);
-        if(course.getCourseLessons().length==lessonCount){
-          _callback();
-        }
+        console.log(eachLesson);
+        if(course.getCourseLessons().findIndex((data)=>data.getLessonName()==lesson.val().lessonname) === -1){
+          course.setCourseLessons(eachLesson);
+          if(course.getCourseLessons().length==lessonCount){
+            _callback();
+          }
+        }    
       })
     })
   }
 
   public addExam(teacher:Teacher,course:Course,exam:any,examnamein:any,examdescription){
-    console.log(exam);
-      firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein).set({
+      firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+examnamein).set({
         examname:examnamein,
         examdescription:examdescription,
       }).then(()=>exam.map(x=>{
         firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein+"/"+x.name).set({
           questiontitle:x.name,
-        })
+        }).then(()=> x["answers"].map(eachanswer=>{
+          firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein+"/"+x.name+"/"+eachanswer["title"]).set({
+            answertitle:eachanswer["title"],
+            answercorrect:eachanswer["correct"],
+          })
+        }))
       }))
 
   }
@@ -421,5 +426,16 @@ export class DatabaseHandler {
     eTeacher.setSurname(snapshot.val().surname);
     return eTeacher;
   }
+
+  public getExamsForCourse(teacher:Teacher,course:Course,_callback){
+    firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()).once("value").then(snapshot=>{
+      snapshot.forEach(examname=>{
+        const eachExam: Exam = new Exam();
+        eachExam.setExamName(examname.val().examname),
+        eachExam.setExamDescription(examname.val().examdescription),
+        console.log(examname.val().examname);
+      })
+  })}
+
 
 }

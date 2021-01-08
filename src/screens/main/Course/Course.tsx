@@ -51,12 +51,13 @@ const CourseScreen = ({route, navigation}) => {
     });
   };
 
+  console.log(teacher);
   useEffect(() => {
     console.log('USEEFFECTCALLED');
     console.log(teacher);
   });
 
-  console.log('printing courses ' + courses);
+  console.log('TEACHER IS ' + teacher);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -141,7 +142,7 @@ const CourseScreen = ({route, navigation}) => {
                     onPress={() =>
                       navigation.navigate('CourseDetails', {
                         courseDetails: item,
-                        courseTeacher: teacher,
+                        teacher: teacher,
                       })
                     }
                   />

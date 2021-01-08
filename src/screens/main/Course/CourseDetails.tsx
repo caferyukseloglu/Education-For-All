@@ -1,5 +1,5 @@
 //Main React import
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   useTheme,
   Appbar,
@@ -41,15 +41,37 @@ const CourseDetailScreen = ({route, navigation}) => {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
+  const {courseDetails, teacher} = route.params;
+
+  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+
+  const [lessons, setLessons] = React.useState([]);
+  useEffect(() => {
+    console.log("Effect icinde");
+    userData.userdata.getLessonsForCourse(teacher,courseDetails,function () {
+      console.log("calling back in getlessonsforcourse");
+      courseDetails.getCourseLessons().forEach((lesson) => {
+        setLessons((lessons) => [...lessons, lesson]);
+      });
+    });
+  });
+  console.log("lessonis"+lessons);
+
+
+  userData.userdata.getExamsForCourse(teacher,courseDetails);
+
+
   const [data, setData] = React.useState({
     courseName: '',
     courseDescription: '',
     courseCategory: '',
+    courseText: '',
   });
   const [placeholder, setPlaceholder] = React.useState({
     title: 'Create A Exam',
     input1: 'Exam Name',
     input2: 'Exam Description',
+    value: '',
   });
   const onPickerChange = (name) => {
     if (name === 'exam') {
@@ -58,6 +80,7 @@ const CourseDetailScreen = ({route, navigation}) => {
         title: 'Create A Exam',
         input1: 'Exam Name',
         input2: 'Exam Description',
+        value: 'exam',
       });
       setExamVisible(true);
     } else {
@@ -66,6 +89,7 @@ const CourseDetailScreen = ({route, navigation}) => {
         title: 'Create A Lesson',
         input1: 'Lesson Name',
         input2: 'Lesson Description',
+        value: 'lesson',
       });
       setExamVisible(false);
     }
@@ -98,12 +122,11 @@ const CourseDetailScreen = ({route, navigation}) => {
   };
 
   const {colors} = useTheme();
-  const {courseDetails, teacher} = route.params;
-  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+  
 
   const enrollCourse = () => {
     userData.userdata.studentCourseEnroll(
-      userData.userdata.getUser(),
+      userData.userdata.getUser(),teacher,
       courseDetails,
       function () {
         console.log('Done');
@@ -120,6 +143,15 @@ const CourseDetailScreen = ({route, navigation}) => {
       {title: '', correct: false},
     ];
     setQuestions([...copyQuestions]);
+  }
+
+  const differentiateType = () =>{
+    if(placeholder.value ==="lesson"){
+      userData.userdata.addLessonToCourse(teacher,courseDetails,data.courseName,data.courseDescription,data.courseText);
+    }
+    else{
+      userData.userdata.addExam(teacher,courseDetails,questions,data.courseName,data.courseDescription);
+    }
   }
 
   function deleteQuestion(index) {
@@ -343,11 +375,12 @@ const CourseDetailScreen = ({route, navigation}) => {
                         style={{marginBottom: 5}}
                         placeholder="Enter Lesson Text..."
                         placeholderTextColor="lightgrey"
+                        onChangeText={(event) => {data.courseText = event}}
                       />
                     </View>
                   )}
                   <View style={{marginVertical: 30}}>
-                    <Button onPress={() => userData.userdata.addExam(teacher,courseDetails,questions,data.courseName,data.courseDescription)}>Submit</Button>
+                    <Button onPress={() => differentiateType()}>Submit</Button>
                   </View>
                 </Body>
               </Scroll>

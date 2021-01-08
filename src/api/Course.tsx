@@ -7,7 +7,7 @@ export class Course{
 
     private courseName: string;
     private courseDescription: string;
-    private courseLessons: Array<Lesson>;
+    private courseLessons: Array<Lesson> = new Array<Lesson>();
     private numberOfLessons: number;
 	private courseExams: Array<Exam>;
 	private courseCategory: string;
