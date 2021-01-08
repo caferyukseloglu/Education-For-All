@@ -1,10 +1,12 @@
 import auth, {firebase} from '@react-native-firebase/auth';
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import {Alert} from 'react-native';
+import { Answer } from './Answer';
 import {Category} from './Category';
 import {Course} from './Course';
 import { Exam } from './Exam';
 import { Lesson } from './Lesson';
+import { Question } from './Question';
 import {Student} from './Student';
 import {Teacher} from './Teacher';
 import './User';
@@ -367,7 +369,7 @@ export class DatabaseHandler {
         firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein+"/"+x.name).set({
           questiontitle:x.name,
         }).then(()=> x["answers"].map(eachanswer=>{
-          firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()+examnamein+"/"+x.name+"/"+eachanswer["title"]).set({
+          firebase.database().ref("answers/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+examnamein+"/"+x.name).set({
             answertitle:eachanswer["title"],
             answercorrect:eachanswer["correct"],
           })
@@ -429,12 +431,26 @@ export class DatabaseHandler {
 
   public getExamsForCourses(teacher:Teacher,course:Course,_callback){
     firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()).once("value").then(snapshot=>{
-      snapshot.forEach(examname=>{
-        const eachExam: Exam = new Exam();
-        eachExam.setExamName(examname.val().examname),
-        eachExam.setExamDescription(examname.val().examdescription),
-        console.log(examname.val().examname);
+      const courseCount=snapshot.numChildren();
+      console.log("COURSE COUNT IN GET EXAMS"+courseCount);
+      snapshot.forEach(exam=>{
+        const eExam: Exam = new Exam();
+        eExam.setExamName(exam.val().examname);
+        eExam.setExamDescription(exam.val().examdescription);
+        if(course.getCourseExams().findIndex((data)=>data.getExamName()==exam.val().examname) === -1){
+          course.setAddCourseExams(eExam);
+          if(course.getCourseExams().length===courseCount){
+            _callback();
+          }
+        }
       })
-  })}
+      })
+  }
+
+  public getExamAnswersByName(teacher:Teacher,course:Course,exam:Exam){
+    firebase.database().ref("answers/"+teacher.getUserID()+"/"+course.getCourseName()+"/"+exam.getExamName()).once("value").then(snapshot=>{
+      console.log(snapshot);
+    })
+  }
 
 }

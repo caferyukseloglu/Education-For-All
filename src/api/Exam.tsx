@@ -5,7 +5,7 @@ export class Exam{
     private examName: string;
     private examDescription: string;
     private examDuration: number;
-    private examQuestions: Array<Question>;
+    private examQuestions = new Array<Question>();
 
 
 	public getExamName(): string {

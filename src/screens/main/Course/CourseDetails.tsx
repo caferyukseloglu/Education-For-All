@@ -56,6 +56,18 @@ const CourseDetailScreen = ({route, navigation}) => {
     });
   });
 
+  const [exams, setExams] = React.useState([]);
+  useEffect(() => {
+    userData.userdata.getExamsForCourses(teacher,courseDetails,function () {
+      courseDetails.getCourseExams().forEach((exam) => {
+        setExams((exams) => [...exams, exam]);
+      });
+    });
+  });
+
+
+  console.log(exams);
+
   const [data, setData] = React.useState({
     courseName: '',
     courseDescription: '',

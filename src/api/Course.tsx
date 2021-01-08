@@ -9,7 +9,7 @@ export class Course{
     private courseDescription: string;
     private courseLessons: Array<Lesson> = new Array<Lesson>();
     private numberOfLessons: number;
-	private courseExams: Array<Exam>;
+	private courseExams: Array<Exam>= new Array<Lesson>();
 	private courseCategory: string;
 	private teacher: string;
 
