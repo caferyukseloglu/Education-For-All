@@ -1,6 +1,6 @@
 import React from 'react';
 import {BottomNavigation} from 'react-native-paper';
-import {categoryStackNavigator} from '../navigations/categoryStackNavigator';
+import {categoryStackNavigator} from './categoryStackNavigator';
 import ProfileScreen from '../screens/main/Profile';
 import SubjectScreen from '../screens/main/Subject';
 

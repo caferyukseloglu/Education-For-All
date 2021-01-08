@@ -31,7 +31,8 @@ import {TouchableHighlight} from 'react-native';
 import { Course } from '../../api/Course';
 
 
-const SubjectScreen = ({navigation}) => {
+const SubjectScreen = ({jumpTo}) => {
+  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
   const [visible, setVisible] = React.useState(false);
   const windowHeight = useWindowDimensions().height;
   const showModal = () => setVisible(true);
@@ -63,8 +64,7 @@ const SubjectScreen = ({navigation}) => {
     {name: 'Physics', key: '7', description: 7},
     {name: 'Database', key: '8', description: 5},
   ]);
-
-  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
+  const [value, onChangeText] = React.useState('');
 
   if (userData.userdata.getUser().getUserType() === 1) {
     return (
@@ -193,7 +193,76 @@ const SubjectScreen = ({navigation}) => {
                 icon="close"
                 onPress={hideModal}
               />
-              <ModalCourse />
+              <View>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>Add New Course</Text>
+
+                  <View>
+                    <Text>Course Name:</Text>
+                    <TextInput
+                      style={{
+                        height: 30,
+                        width: 300,
+                        borderColor: 'gray',
+                        borderWidth: 1,
+                      }}
+                      placeholder="  enter course name..."
+                      placeholderTextColor="lightgrey"
+                    />
+                  </View>
+                  <View>
+                    <Text>Course ID:</Text>
+                    <TextInput
+                      style={{
+                        height: 30,
+                        width: 300,
+                        borderColor: 'gray',
+                        borderWidth: 1,
+                      }}
+                      placeholder="  enter course ID..."
+                      placeholderTextColor="lightgrey"
+                    />
+                  </View>
+
+                  <View>
+                    <Text>Course Describtion:</Text>
+                    <UselessTextInput
+                      multiline
+                      numberOfLines={2}
+                      onChangeText={(text) => onChangeText(text)}
+                      value={value}
+                    />
+                  </View>
+
+                  <View>
+                    <DropDownPicker
+                      placeholder="Select a category..."
+                      items={[
+                        {label: 'Mathmatics', value: 'math'},
+                        {label: 'Chemistry', value: 'chem'},
+                        {label: 'Biology', value: 'bio'},
+                        {label: 'physics', value: 'phys'},
+                        {label: 'Coading', value: 'code'},
+                        {label: 'English', value: 'EN'},
+                      ]}
+                      dropDownMaxHeight={70}
+                      containerStyle={{height: 70, width: 300}}
+                    />
+                  </View>
+                  <View style={styles.row}>
+                    <TouchableHighlight
+                      style={{...styles.closeButton, backgroundColor: 'E5E5E5'}}
+                      onPress={() => console.log(navigation)}>
+                      <Text style={styles.textStyle}>Cancel</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                      style={{...styles.closeButton, backgroundColor: 'E5E5E5'}}
+                      onPress={() => jumpTo('main', {screen: 'Course'})}>
+                      <Text style={styles.textStyle}>Save</Text>
+                    </TouchableHighlight>
+                  </View>
+                </View>
+              </View>
             </Body>
           </Modal>
         </Portal>
@@ -233,7 +302,7 @@ const SubjectScreen = ({navigation}) => {
             renderItem={({item}) => (
               <TouchableRipple
                 style={{marginBottom: 20}}
-                onPress={() => navigation.navigate('Course')}
+                onPress={() => console.log('test')}
                 rippleColor="black">
                 <View
                   style={{
@@ -277,91 +346,6 @@ const SubjectScreen = ({navigation}) => {
       </Body>
     );
   }
-};
-
-const ModalCourse = ({navigation}) => {
-  const [text, setText] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
-  const [description, onChangeDescription] = React.useState('');
-  const [courseName, onChangeCourseName] = React.useState('');
-  const [selectedValue, setSelectedValue] = useState('Category...');
-  const [checked, setChecked] = React.useState('first');
-  const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
-
-  const saveCourseandNavigate=()=>{
-    const createdCourse: Course = new Course();
-    createdCourse.setCourseName(courseName);
-    createdCourse.setCourseCategory(selectedValue.label);
-    createdCourse.setCourseDescription(description);
-    userData.userdata.teachCourse(userData.userdata.getUser(),createdCourse);
-    navigation.navigate('CourseDetails',{courseDetails:createdCourse,courseTeacher:userData.userdata.getUser()});
-  } 
-
-  return (
-    <View>
-      <View style={styles.modalView}>
-        <Text style={styles.modalText}>Add New Course</Text>
-
-        <View>
-          <Text>Course Name:</Text>
-          <TextInput
-            style={{
-              height: 30,
-              width: 300,
-              borderColor: 'gray',
-              borderWidth: 1,
-            }}
-            onChangeText={(text) => onChangeCourseName(text)}
-            value={courseName}
-            placeholder="  enter course name..."
-            placeholderTextColor="lightgrey"
-          />
-        </View>
-        <View>
-          <Text>Course Description:</Text>
-          <UselessTextInput
-            multiline
-            numberOfLines={2}
-            onChangeText={(text) => onChangeDescription(text)}
-            value={description}
-          />
-        </View>
-
-        <View>
-          <DropDownPicker
-            placeholder="Select a category..."
-            items={[
-              {label: 'Mathematics', value: 'math'},
-              {label: 'Chemistry', value: 'chem'},
-              {label: 'Biology', value: 'bio'},
-              {label: 'Physics', value: 'phys'},
-              {label: 'Programming', value: 'code'},
-              {label: 'English', value: 'EN'},
-            ]}
-            dropDownMaxHeight={70}
-            containerStyle={{height: 70, width: 300}}
-            onChangeItem={item=>setSelectedValue(item)}
-          />
-        </View>
-        <View style={styles.row}>
-          <TouchableHighlight
-            style={{...styles.closeButton, backgroundColor: 'E5E5E5'}}
-            onPress={() => {
-              setModalVisible(!modalVisible);
-            }}>
-            <Text style={styles.textStyle}>Cancel</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={{...styles.closeButton, backgroundColor: 'E5E5E5'}}
-            onPress={() => {
-              saveCourseandNavigate();
-            }}>
-            <Text style={styles.textStyle}>Save</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
-    </View>
-  );
 };
 
 const UselessTextInput = (props) => {

@@ -16,6 +16,7 @@ import RegisterTypeScreen from '../screens/RegisterType';
 import ForgotScreen from '../screens/Forgot';
 import {DrawerNavigator} from './drawerNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import ExamModalScreen from '../screens/main/Course/AddExam';
 const Stack = createStackNavigator();
 
 export const StackNavigator = () => {
@@ -58,6 +59,11 @@ export const StackNavigator = () => {
         <Stack.Screen
           name="Main"
           component={DrawerNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ExamAddScreen"
+          component={ExamModalScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

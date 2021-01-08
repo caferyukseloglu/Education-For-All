@@ -101,7 +101,7 @@ const CourseDetailScreen = ({route, navigation}) => {
                     Duration: 5 Min{' '}
                   </Duration>
                 </LessonView>
-                <Button onPress={() => navigation.navigate('Exam')}>
+                <Button onPress={() => navigation.navigate('ExamAddScreen')}>
                   Take Exam
                 </Button>
               </View>
