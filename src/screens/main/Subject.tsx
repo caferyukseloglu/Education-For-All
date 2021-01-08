@@ -8,12 +8,12 @@ import {
   Modal,
   Text,
   TextInput,
+  Avatar,
+  Card,
 } from 'react-native-paper';
 //Our Styles for Project
 import {Body} from '../../styles/wrapper';
 import {
-  SubTitle,
-  Title,
   CardTitle,
   CardSubtitle,
   LessonTitle,
@@ -28,13 +28,14 @@ import {View, FlatList, useWindowDimensions, StyleSheet} from 'react-native';
 import {SubjectCard} from '../../styles/cards';
 import {useUserData} from '../../states/useData';
 import {TouchableHighlight} from 'react-native';
-import { Course } from '../../api/Course';
+import {Course} from '../../api/Course';
+import {NavigationContainer} from '@react-navigation/native';
 
-
-const SubjectScreen = ({jumpTo}) => {
+const SubjectScreen = ({navigation}) => {
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
   const [visible, setVisible] = React.useState(false);
   const windowHeight = useWindowDimensions().height;
+  const windowWidth = useWindowDimensions().width;
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = {
@@ -68,66 +69,73 @@ const SubjectScreen = ({jumpTo}) => {
 
   if (userData.userdata.getUser().getUserType() === 1) {
     return (
-      <Body>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 5}}>
-            <CourseTitle>Subjects</CourseTitle>
-            <CourseSubtitle>
-              Today's lesson progress {data.time} min
-            </CourseSubtitle>
-          </View>
-          <View style={{flex: 1}}>
-            <IconButton
-              style={{marginTop: 20}}
-              icon="square-edit-outline"
-              size={25}
-              color="black"
-              onPress={() => console.log('Edit')}
-            />
-          </View>
-        </View>
+      <Body paddings="0px 20px">
         <View
-          // eslint-disable-next-line react-native/no-inline-styles
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            padding: 15,
+            paddingTop: 20,
             alignItems: 'center',
           }}>
-          {Object.keys(data.cards).map((eachCard) => (
-            <SubjectCard key={eachCard}>
-              <IconButton icon="bookmark-plus" size={30} color="green" />
-              <CardTitle>{eachCard}</CardTitle>
-              <CardSubtitle>{data.cards[eachCard]}</CardSubtitle>
-            </SubjectCard>
-          ))}
+          <View>
+            <CourseSubtitle margins="0px">Hello,</CourseSubtitle>
+            <CourseTitle margins="0px">Cafer Y.</CourseTitle>
+          </View>
+          <Avatar.Image
+            size={50}
+            source={require('../../../src/assets/ava11.png')}
+          />
         </View>
-
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 20,
+          }}>
+          <Card style={{width: windowWidth - 40}}>
+            <Card.Cover source={{uri: 'https://picsum.photos/300'}} />
+          </Card>
+        </View>
         <View
           style={{
             flex: 1,
-            backgroundColor: '#CACACA',
             height: '100%',
-            paddingHorizontal: 20,
-            padding: 20,
+            marginTop: 20,
           }}>
-          <View>
-            <RecomTitle>Recommended lessons</RecomTitle>
-            <RecomInfo>
-              You recently completed {data.completedTopicCount} topic.
-            </RecomInfo>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <CourseTitle margins="0px" style={{fontSize: 20}}>
+              Last seen courses
+            </CourseTitle>
+            <IconButton
+              icon="plus-circle"
+              size={20}
+              color="black"
+              onPress={() =>
+                navigation.navigate('Main', {
+                  screen: 'Exam',
+                  params: {user: 'jane'},
+                })
+              }
+            />
           </View>
           <FlatList
+            style={{marginTop: 20}}
             data={courses}
             renderItem={({item}) => (
               <TouchableRipple
                 style={{marginBottom: 20}}
-                onPress={() => navigation.navigate('Course')}
-                rippleColor="black">
+                onPress={() => {}}
+                rippleColor="white">
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}>
                   <View
                     style={{
@@ -136,7 +144,15 @@ const SubjectScreen = ({jumpTo}) => {
                       backgroundColor: 'white',
                       justifyContent: 'space-between',
                     }}>
-                    <IconButton icon="plus-circle" size={40} color="#F2C94C" />
+                    <View
+                      style={{alignItems: 'center', justifyContent: 'center'}}>
+                      <Card style={{width: 40, height: 40, marginTop: 20}}>
+                        <Card.Cover
+                          style={{width: 40, height: 40, resizeMode: 'cover'}}
+                          source={{uri: 'https://picsum.photos/300'}}
+                        />
+                      </Card>
+                    </View>
                   </View>
                   <View style={{flex: 5, height: 82, backgroundColor: 'white'}}>
                     <LessonTitle>{item.name}</LessonTitle>
@@ -151,12 +167,7 @@ const SubjectScreen = ({jumpTo}) => {
                       backgroundColor: 'white',
                       justifyContent: 'center',
                     }}>
-                    <Badge
-                      style={{backgroundColor: 'green', marginRight: 50}}
-                      visible={true}
-                      size={20}>
-                      New
-                    </Badge>
+                    <IconButton icon="play-circle-outline" size={32} />
                   </View>
                 </View>
               </TouchableRipple>
@@ -257,7 +268,7 @@ const SubjectScreen = ({jumpTo}) => {
                     </TouchableHighlight>
                     <TouchableHighlight
                       style={{...styles.closeButton, backgroundColor: 'E5E5E5'}}
-                      onPress={() => jumpTo('main', {screen: 'Course'})}>
+                      onPress={() => jumpTo('Main', {screen: 'Course'})}>
                       <Text style={styles.textStyle}>Save</Text>
                     </TouchableHighlight>
                   </View>

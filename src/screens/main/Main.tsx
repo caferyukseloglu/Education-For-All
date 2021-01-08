@@ -33,14 +33,10 @@ const MainScreen = ({navigation}) => {
   useEffect(() => {
     userData.userdata.setCategories(function () {
       userData.userdata.getCategories().forEach((category) => {
-        setCategories((categories) => [
-          ...categories,
-          category,
-        ]);
+        setCategories((categories) => [...categories, category]);
       });
     });
   });
-
 
   const toCourse = (category: Category) => {
     userData.userdata.getTeachersByCategory(category, function () {
@@ -55,12 +51,6 @@ const MainScreen = ({navigation}) => {
       );
     });
   };
-
-  userData.userdata.getAllCoursesForSpesificTeacher(userData.userdata.getUser(),function(){
-    console.log("COURSESGIVEN");
-    console.log(userData.userdata.getUser().getCoursesGiven());
-  })
-
 
   return (
     <SafeAreaView style={{flex: 1, padding: 10}}>
