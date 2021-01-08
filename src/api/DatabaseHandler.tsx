@@ -387,4 +387,21 @@ export class DatabaseHandler {
     })
   }
 
+  public getAllCoursesForSpesificStudent(student:Student,_callback){
+    firebase.database().ref("studentsenrolled/"+student.getUserID()).once("value").then(snapshot=>{
+      const courseCount=snapshot.numChildren();
+      snapshot.forEach(course=>{
+        const eachCourse: Course = new Course();
+        eachCourse.setCourseName(course.val().coursename),
+        eachCourse.setCourseDescription(course.val().coursedescription),
+        eachCourse.setCourseCategory(course.val().coursecategory),
+        student.addCoursesTaken(eachCourse);
+        if(student.getCoursesTaken().length==courseCount){
+          _callback();
+        }
+      })
+
+    })
+  }
+
 }

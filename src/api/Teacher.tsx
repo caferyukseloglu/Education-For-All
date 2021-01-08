@@ -6,10 +6,6 @@ export class Teacher extends User{
 
     private coursesGiven = new Array<Course>();
 
-    public teachCourse(Database: DatabaseHandler,course:Course){
-        Database.teachCourse(this,course);
-    }
-
     public getCoursesGiven(): Array<Course>{
         return this.coursesGiven;
     }
