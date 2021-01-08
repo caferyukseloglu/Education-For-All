@@ -98,7 +98,7 @@ const MainScreen = ({navigation}) => {
             horizontal={true}>
             {categories.map((category) => {
               return (
-                <TouchableHighlight
+                <TouchableHighlight key={category.categoryId}
                   onPress={() => toCourse(category)}
                   underlayColor="white">
                   <View style={{alignContent: 'center', alignItems: 'center'}}>
@@ -143,10 +143,10 @@ const MainScreen = ({navigation}) => {
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             data={[
-              {name: 'Event1', image: '../../assets/1.jpg'},
-              {name: 'Event2', image: '../../assets/1.jpg'},
-              {name: 'Event3', image: '../../assets/1.jpg'},
-              {name: 'Event4', image: '../../assets/1.jpg'},
+              {key: 'Event1', name: 'Event1', image: '../../assets/1.jpg'},
+              {key: 'Event2', name: 'Event2', image: '../../assets/1.jpg'},
+              {key: 'Event3', name: 'Event3', image: '../../assets/1.jpg'},
+              {key: 'Event4', name: 'Event4', image: '../../assets/1.jpg'},
             ]}
             renderItem={(item) => (
               <View style={{padding: 10}}>
@@ -162,7 +162,7 @@ const MainScreen = ({navigation}) => {
                 />
               </View>
             )}
-            keyExtractor={item => item.name}
+            keyExtractor={item => item.key}
           />
           <Body>
             <HeadText style={{fontWeight: 'bold',color:colors.title1}}>Populer</HeadText>

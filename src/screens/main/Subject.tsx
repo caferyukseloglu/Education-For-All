@@ -235,6 +235,7 @@ const SubjectScreen = ({navigation}) => {
                 </View>
               </TouchableRipple>
             )}
+            keyExtractor={item => item.courseDescription}
           />
         </View>
       </Body>
@@ -406,6 +407,7 @@ const SubjectScreen = ({navigation}) => {
                 </View>
               </TouchableRipple>
             )}
+            keyExtractor={item => item.courseDescription}
           />
         </View>
       </Body>
