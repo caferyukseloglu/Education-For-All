@@ -64,15 +64,16 @@ const SubjectScreen = ({navigation}) => {
     });
   });
 
-  const [courseListForTeacher, CourseListForTeacher] = React.useState([]);
+  const [courseListForTeacher, setCourseListForTeacher] = React.useState([]);
   useEffect(() => {
-    userData.userdata.getAllCoursesForSpesificStudent(userData.userdata.getUser(),function () {
-      userData.userdata.getUser().getCoursesTaken().forEach((courseList) => {
-        setCourseListForStudent((courseListForStudent) => [...courseListForStudent, courseList]);
+    userData.userdata.getAllCoursesForSpesificTeacher(userData.userdata.getUser(),function () {
+      userData.userdata.getUser().getCoursesGiven().forEach((courseList) => {
+        setCourseListForTeacher((courseListForTeacher) => [...courseListForTeacher, courseList]);
       });
     });
   });
 
+  console.log(courseListForTeacher);
   const [courses] = useState([
     {name: 'Programming 101', key: '1', description: 8},
     {name: 'Fun Mathematic', key: '2', description: 9},
@@ -172,7 +173,7 @@ const SubjectScreen = ({navigation}) => {
                     </View>
                   </View>
                   <View style={{flex: 5, height: 82, backgroundColor: 'white'}}>
-                    <LessonTitle>{item.courseName}</LessonTitle>
+                    <LessonTitle>{item.getCourseName()}</LessonTitle>
                   </View>
                   <View
                     style={{
@@ -202,7 +203,7 @@ const SubjectScreen = ({navigation}) => {
           }}>
           <View>
             <CourseSubtitle margins="0px">Hello,</CourseSubtitle>
-            <CourseTitle margins="0px">Cafer Y.</CourseTitle>
+            <CourseTitle margins="0px">{userData.userdata.getUser().getName()+" "+userData.userdata.getUser().getSurname()[0]+"."}</CourseTitle>
           </View>
           <Avatar.Image
             size={50}
@@ -295,11 +296,11 @@ const SubjectScreen = ({navigation}) => {
           </Portal>
           <FlatList
             style={{marginTop: 20}}
-            data={courses}
+            data={courseListForTeacher}
             renderItem={({item}) => (
               <TouchableRipple
                 style={{marginBottom: 20}}
-                onPress={() => {}}
+                onPress={() => navigation.navigate("Main",{screen:"CourseDetails",params:{courseDetails:item,teacher:userData.userdata.getUser()}})}
                 rippleColor="white">
                 <View
                   style={{
@@ -328,10 +329,7 @@ const SubjectScreen = ({navigation}) => {
                     </View>
                   </View>
                   <View style={{flex: 5, height: 82, backgroundColor: 'white'}}>
-                    <LessonTitle>{item.name}</LessonTitle>
-                    <LessonSubtitle>
-                      {item.description} goals were achieved today.
-                    </LessonSubtitle>
+                    <LessonTitle>{item.courseName}</LessonTitle>
                   </View>
                   <View
                     style={{
