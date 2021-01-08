@@ -265,10 +265,16 @@ const SubjectScreen = ({navigation}) => {
                     placeholderStyle={{color: 'black'}}
                     labelStyle={{color: 'black'}}
                     dropDownMaxHeight={windowHeight / 6}
-                    containerStyle={{height: 70,marginTop:20}}
+                    containerStyle={{height: 70, marginTop: 20}}
+                    onChangeItem={(item) =>
+                      setData({
+                        ...data,
+                        courseCategory: item.value,
+                      })
+                    }
                   />
                 </View>
-                <Button style={{marginTop:20}}>Submit</Button>
+                <Button style={{marginTop: 20}}>Submit</Button>
               </Body>
             </Modal>
           </Portal>
