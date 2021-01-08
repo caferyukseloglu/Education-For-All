@@ -155,7 +155,7 @@ export class DatabaseHandler {
   }
 
   public setCourses(_callback): void {
-    firebase.database().ref("courses2").once("value").then(snapshot=>{
+    firebase.database().ref("courses").once("value").then(snapshot=>{
       snapshot.forEach(x=>{
         const eachCourse: Course = new Course();
         eachCourse.setCourseName(x.val().coursename);
@@ -251,7 +251,7 @@ export class DatabaseHandler {
   public getCoursesOfTeacher(teacher:Teacher, category:Category,_callback):void{
     teacher.resetCoursesGiven();
     var count=0;
-    firebase.database().ref("courses2/"+teacher.getUserID()).once("value").then(snapshot=>{
+    firebase.database().ref("courses/"+teacher.getUserID()).once("value").then(snapshot=>{
       snapshot.forEach(course=>{
         if(course.val().coursecategory==category.getCategoryName()){
           count++
@@ -427,7 +427,7 @@ export class DatabaseHandler {
     return eTeacher;
   }
 
-  public getExamsForCourse(teacher:Teacher,course:Course,_callback){
+  public getExamsForCourses(teacher:Teacher,course:Course,_callback){
     firebase.database().ref("exams/"+teacher.getUserID()+"/"+course.getCourseName()).once("value").then(snapshot=>{
       snapshot.forEach(examname=>{
         const eachExam: Exam = new Exam();
@@ -436,6 +436,5 @@ export class DatabaseHandler {
         console.log(examname.val().examname);
       })
   })}
-
 
 }

@@ -58,8 +58,6 @@ const CourseDetailScreen = ({route, navigation}) => {
   console.log("lessonis"+lessons);
 
 
-  userData.userdata.getExamsForCourse(teacher,courseDetails);
-
 
   const [data, setData] = React.useState({
     courseName: '',

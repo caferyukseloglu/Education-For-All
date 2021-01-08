@@ -74,6 +74,8 @@ const SubjectScreen = ({navigation}) => {
     );
   });
 
+  
+
   const [courseListForTeacher, setCourseListForTeacher] = React.useState([]);
   useEffect(() => {
     console.log("calisti");
