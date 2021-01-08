@@ -3,57 +3,57 @@ import React, {useState} from 'react';
 import {
   TouchableRipple,
   IconButton,
-  Badge,
   Portal,
   Modal,
-  Text,
   TextInput,
   Avatar,
   Card,
+  Button,
 } from 'react-native-paper';
 //Our Styles for Project
 import {Body} from '../../styles/wrapper';
 import {
-  CardTitle,
-  CardSubtitle,
   LessonTitle,
   LessonSubtitle,
   CourseTitle,
   CourseSubtitle,
-  RecomTitle,
-  RecomInfo,
 } from '../../styles/text';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {View, FlatList, useWindowDimensions, StyleSheet} from 'react-native';
-import {SubjectCard} from '../../styles/cards';
+import {View, FlatList, useWindowDimensions} from 'react-native';
 import {useUserData} from '../../states/useData';
-import {TouchableHighlight} from 'react-native';
-import {Course} from '../../api/Course';
-import {NavigationContainer} from '@react-navigation/native';
 
 const SubjectScreen = ({navigation}) => {
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
   const [visible, setVisible] = React.useState(false);
+
   const windowHeight = useWindowDimensions().height;
   const windowWidth = useWindowDimensions().width;
+
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
+  const [data, setData] = React.useState({
+    courseName: '',
+    courseDescription: '',
+    courseCategory: '',
+  });
+  const updateName = (name: string) => {
+    setData({
+      ...data,
+      courseName: name,
+    });
+  };
+  const updateDescription = (name: string) => {
+    setData({
+      ...data,
+      courseDescription: name,
+    });
+  };
   const containerStyle = {
     backgroundColor: 'white',
     padding: 20,
     height: windowHeight,
   };
-
-  const [data] = useState({
-    time: '15',
-    subjects: ['Global', 'English', 'Physics', 'Turkish', 'German'],
-    completedTopicCount: 1,
-    cards: {
-      Test: 'General subject information',
-      'Topic Summary': 'Study notes',
-    },
-    cardIcons: {Test: 'bookmark-plus', 'Topic Summary': 'grease-pencil'},
-  });
 
   const [courses] = useState([
     {name: 'Programming 101', key: '1', description: 8},
@@ -65,7 +65,6 @@ const SubjectScreen = ({navigation}) => {
     {name: 'Physics', key: '7', description: 7},
     {name: 'Database', key: '8', description: 5},
   ]);
-  const [value, onChangeText] = React.useState('');
 
   if (userData.userdata.getUser().getUserType() === 1) {
     return (
@@ -178,147 +177,112 @@ const SubjectScreen = ({navigation}) => {
     );
   } else {
     return (
-      <Body>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 5}}>
-            <CourseTitle>Subjects</CourseTitle>
-            <CourseSubtitle>
-              Today's lesson progress {data.time} min
-            </CourseSubtitle>
+      <Body paddings="0px 20px">
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingTop: 20,
+            alignItems: 'center',
+          }}>
+          <View>
+            <CourseSubtitle margins="0px">Hello,</CourseSubtitle>
+            <CourseTitle margins="0px">Cafer Y.</CourseTitle>
           </View>
-          <View style={{flex: 1}}>
+          <Avatar.Image
+            size={50}
+            source={require('../../../src/assets/ava11.png')}
+          />
+        </View>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 20,
+          }}>
+          <Card style={{width: windowWidth - 40}}>
+            <Card.Cover source={{uri: 'https://picsum.photos/300'}} />
+          </Card>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            height: '100%',
+            marginTop: 20,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <CourseTitle margins="0px" style={{fontSize: 20}}>
+              Last seen courses
+            </CourseTitle>
             <IconButton
-              style={{marginTop: 20}}
-              icon="plus-box"
-              size={25}
+              icon="plus-circle"
+              size={20}
               color="black"
               onPress={showModal}
             />
           </View>
-        </View>
-        <Portal>
-          <Modal visible={visible} contentContainerStyle={containerStyle}>
-            <Body>
-              <IconButton
-                style={{alignSelf: 'flex-end'}}
-                icon="close"
-                onPress={hideModal}
-              />
-              <View>
-                <View style={styles.modalView}>
-                  <Text style={styles.modalText}>Add New Course</Text>
-
-                  <View>
-                    <Text>Course Name:</Text>
-                    <TextInput
-                      style={{
-                        height: 30,
-                        width: 300,
-                        borderColor: 'gray',
-                        borderWidth: 1,
-                      }}
-                      placeholder="  enter course name..."
-                      placeholderTextColor="lightgrey"
-                    />
-                  </View>
-                  <View>
-                    <Text>Course ID:</Text>
-                    <TextInput
-                      style={{
-                        height: 30,
-                        width: 300,
-                        borderColor: 'gray',
-                        borderWidth: 1,
-                      }}
-                      placeholder="  enter course ID..."
-                      placeholderTextColor="lightgrey"
-                    />
-                  </View>
-
-                  <View>
-                    <Text>Course Describtion:</Text>
-                    <UselessTextInput
-                      multiline
-                      numberOfLines={2}
-                      onChangeText={(text) => onChangeText(text)}
-                      value={value}
-                    />
-                  </View>
-
-                  <View>
-                    <DropDownPicker
-                      placeholder="Select a category..."
-                      items={[
-                        {label: 'Mathmatics', value: 'math'},
-                        {label: 'Chemistry', value: 'chem'},
-                        {label: 'Biology', value: 'bio'},
-                        {label: 'physics', value: 'phys'},
-                        {label: 'Coading', value: 'code'},
-                        {label: 'English', value: 'EN'},
-                      ]}
-                      dropDownMaxHeight={70}
-                      containerStyle={{height: 70, width: 300}}
-                    />
-                  </View>
-                  <View style={styles.row}>
-                    <TouchableHighlight
-                      style={{...styles.closeButton, backgroundColor: 'E5E5E5'}}
-                      onPress={() => console.log(navigation)}>
-                      <Text style={styles.textStyle}>Cancel</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                      style={{...styles.closeButton, backgroundColor: 'E5E5E5'}}
-                      onPress={() => jumpTo('Main', {screen: 'Course'})}>
-                      <Text style={styles.textStyle}>Save</Text>
-                    </TouchableHighlight>
-                  </View>
+          <Portal>
+            <Modal
+              visible={visible}
+              onDismiss={hideModal}
+              contentContainerStyle={containerStyle}>
+              <Body>
+                <IconButton
+                  style={{alignSelf: 'flex-end'}}
+                  icon="close"
+                  onPress={hideModal}
+                />
+                <CourseTitle>Create A Course</CourseTitle>
+                <TextInput
+                  style={{marginTop: 20}}
+                  label="Course Name"
+                  value={data.courseName}
+                  onChangeText={(val: any) => updateName(val)}
+                />
+                <TextInput
+                  style={{marginTop: 20}}
+                  label="Course Description"
+                  value={data.courseDescription}
+                  onChangeText={(val: any) => updateDescription(val)}
+                />
+                <View>
+                  <DropDownPicker
+                    placeholder="Select a category..."
+                    // eslint-disable-next-line react-native/no-inline-styles
+                    items={[
+                      {label: 'Mathematics', value: 'math'},
+                      {label: 'Programming', value: 'chem'},
+                      {label: 'Engineering', value: 'bio'},
+                      {label: 'Physics', value: 'phys'},
+                      {label: 'Biology', value: 'code'},
+                      {label: 'English', value: 'EN'},
+                    ]}
+                    dropDownMaxHeight={windowHeight / 6}
+                    containerStyle={{height: 70,marginTop:20}}
+                  />
                 </View>
-              </View>
-            </Body>
-          </Modal>
-        </Portal>
-        <View
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 15,
-            alignItems: 'center',
-          }}>
-          {Object.keys(data.cards).map((eachCard) => (
-            <SubjectCard key={eachCard}>
-              <IconButton icon="bookmark-plus" size={30} color="green" />
-              <CardTitle>{eachCard}</CardTitle>
-              <CardSubtitle>{data.cards[eachCard]}</CardSubtitle>
-            </SubjectCard>
-          ))}
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#CACACA',
-            height: '100%',
-            paddingHorizontal: 20,
-            padding: 20,
-          }}>
-          <View>
-            <RecomTitle>Recommended lessons</RecomTitle>
-            <RecomInfo>
-              You recently completed {data.completedTopicCount} topic.
-            </RecomInfo>
-          </View>
+                <Button>Submit</Button>
+              </Body>
+            </Modal>
+          </Portal>
           <FlatList
+            style={{marginTop: 20}}
             data={courses}
             renderItem={({item}) => (
               <TouchableRipple
                 style={{marginBottom: 20}}
-                onPress={() => console.log('test')}
-                rippleColor="black">
+                onPress={() => {}}
+                rippleColor="white">
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}>
                   <View
                     style={{
@@ -327,7 +291,18 @@ const SubjectScreen = ({navigation}) => {
                       backgroundColor: 'white',
                       justifyContent: 'space-between',
                     }}>
-                    <IconButton icon="plus-circle" size={40} color="#F2C94C" />
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Card style={{width: 40, height: 40, marginTop: 20}}>
+                        <Card.Cover
+                          style={{width: 40, height: 40, resizeMode: 'cover'}}
+                          source={{uri: 'https://picsum.photos/300'}}
+                        />
+                      </Card>
+                    </View>
                   </View>
                   <View style={{flex: 5, height: 82, backgroundColor: 'white'}}>
                     <LessonTitle>{item.name}</LessonTitle>
@@ -342,12 +317,7 @@ const SubjectScreen = ({navigation}) => {
                       backgroundColor: 'white',
                       justifyContent: 'center',
                     }}>
-                    <Badge
-                      style={{backgroundColor: 'green', marginRight: 50}}
-                      visible={true}
-                      size={20}>
-                      New
-                    </Badge>
+                    <IconButton icon="play-circle-outline" size={32} />
                   </View>
                 </View>
               </TouchableRipple>
@@ -358,69 +328,5 @@ const SubjectScreen = ({navigation}) => {
     );
   }
 };
-
-const UselessTextInput = (props) => {
-  return (
-    <TextInput
-      style={{height: 100, width: 300, borderColor: 'gray', borderWidth: 1}}
-      {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
-      maxLength={140}
-      placeholder="  enter course description..."
-      placeholderTextColor="lightgrey"
-    />
-  );
-};
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 3.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  openButton: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  closeButton: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: 'black',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'left',
-    alignItems: 'flex-start',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 8,
-    paddingHorizontal: 0,
-    marginTop: 70,
-  },
-});
 
 export default SubjectScreen;
