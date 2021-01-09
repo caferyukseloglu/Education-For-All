@@ -211,7 +211,8 @@ export class DatabaseHandler {
     await firebase.database().ref("courses"+"/"+teacher.getUserID()+"/"+course.getCourseName()).set({
       coursecategory:course.getCourseCategory(),
       coursedescription:course.getCourseDescription(),
-      coursename:course.getCourseName()
+      coursename:course.getCourseName(),
+      courseteacher:teacher.getUserID()
     })
 
     firebase.database().ref("categories/"+course.getCourseCategory()+"/teachers/"+teacher.getUserID()).set({
@@ -418,11 +419,6 @@ export class DatabaseHandler {
   }
 
   public async getTeacherById(teacherid): Promise<Teacher>{
-    /*firebase.database().ref("courses/").once("value").then(teachers=>{
-      teachers.forEach(check=>{
-        console.log(check);
-      })
-    })*/
     const eTeacher: Teacher = new Teacher();
     const snapshot = await firebase.database().ref("teachers/"+teacherid).once("value");
     eTeacher.setName(snapshot.val().name);

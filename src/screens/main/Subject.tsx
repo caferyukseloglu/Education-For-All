@@ -191,7 +191,7 @@ const SubjectScreen = ({navigation}) => {
                     params: {
                       courseDetails: item,
                       teacher: await userData.userdata.getTeacherById(
-                        "Rg4gkC0PSGMrULjUtN1uoSqTYFG3"
+                        item.teacher
                       ),
                     },
                   })
