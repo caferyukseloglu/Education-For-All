@@ -408,7 +408,7 @@ export class DatabaseHandler {
         eachCourse.setCourseName(course.val().coursename),
         eachCourse.setCourseDescription(course.val().coursedescription),
         eachCourse.setCourseCategory(course.val().coursecategory),
-        eachCourse.setTeacher(course.val().teacher),
+        eachCourse.setTeacher(course.val().courseteacher),
         student.addCoursesTaken(eachCourse);
         if(student.getCoursesTaken().length==courseCount){
           _callback();
@@ -419,6 +419,7 @@ export class DatabaseHandler {
   }
 
   public async getTeacherById(teacherid): Promise<Teacher>{
+    console.log(teacherid);
     const eTeacher: Teacher = new Teacher();
     const snapshot = await firebase.database().ref("teachers/"+teacherid).once("value");
     eTeacher.setName(snapshot.val().name);
