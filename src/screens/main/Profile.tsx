@@ -18,11 +18,11 @@ import {Title} from '../../styles/text';
 
 import {useUserData} from '../../states/useData';
 import {User} from '../../api/User';
-const FirstRoute = () => (
+const SecondRoute = () => (
   <View style={[styles.scene, {backgroundColor: '#ff4081'}]} />
 );
 
-const SecondRoute = () => {
+const FirstRoute = () => {
   const {colors} = useTheme();
   const [name, setName] = useState('');
   const [surName, setSurName] = useState('');
@@ -222,8 +222,8 @@ const ProfileScreen = ({navigation}) => {
   const p = 5;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'Performances'},
-    {key: 'second', title: 'Settings'},
+    {key: 'first', title: 'Settings'},
+    {key: 'second', title: 'Performances'},
   ]);
 
   const renderScene = SceneMap({

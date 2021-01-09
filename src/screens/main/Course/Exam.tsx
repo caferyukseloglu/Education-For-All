@@ -14,7 +14,7 @@ import {Body, Line, Scroll} from '../../../styles/wrapper';
 import {View, Text, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BigButton} from '../../../styles/buttons';
-import { CourseSubtitle, CourseTitle} from '../../../styles/text';
+import { CourseSubtitle, CourseTitle, SubTitle} from '../../../styles/text';
 
 const ExamScreen = ({route, navigation}) => {
   const {lessonContent, lessonType} = route.params;
@@ -40,7 +40,10 @@ const ExamScreen = ({route, navigation}) => {
       </View>
       <Scroll>
         {lessonType == 'lesson' ? (
-          <Text>{lessonContent.lessonContent}</Text>
+          <View>
+            <CourseTitle>{lessonContent.lessonName}</CourseTitle>
+            <CourseSubtitle style={{fontSize:18}}>{lessonContent.lessonContent}</CourseSubtitle>
+          </View>
         ) : (
           <View>
             <CourseTitle>{lessonContent.examName}</CourseTitle>
@@ -59,12 +62,14 @@ const ExamScreen = ({route, navigation}) => {
           }}>
           <BigButton
             margins={[10, 10, 20, 20]}
-            text="Next"
+            text="Finish"
             mode="contained"
             bgColor="success"
             textColor="buttonText1"
             height={60}
             radius="5"
+            style={{alignSelf:''}}
+            onPress={() => navigation.navigate('Home')}
           />
         </Body>
       </Scroll>

@@ -11,6 +11,7 @@ import {
   ToggleButton,
   IconButton,
   useTheme,
+  Snackbar,
 } from 'react-native-paper';
 import {
   View,
@@ -30,7 +31,7 @@ import {useState} from 'react';
 import {Category} from '../../api/Category';
 import {Icon} from 'react-native-paper/lib/typescript/src/components/Avatar/Avatar';
 
-const MainScreen = ({navigation}) => {
+const MainScreen = ({route, navigation}) => {
   const {colors} = useTheme();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
@@ -64,12 +65,14 @@ const MainScreen = ({navigation}) => {
         mHorizontal="0px"
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        style={{backgroundColor:colors.background}}>
-        <View style={{marginVertical:10,marginHorizontal:10}}>
-          <View style={{marginHorizontal:20}}>
+        style={{backgroundColor: colors.background}}>
+        <View style={{marginVertical: 10, marginHorizontal: 10}}>
+          <View style={{marginHorizontal: 20}}>
             <Line
               style={{justifyContent: 'space-between', alignItems: 'center'}}>
-              <Title mTop="0px" style={{fontWeight: 'bold',color:colors.title1}}>
+              <Title
+                mTop="0px"
+                style={{fontWeight: 'bold', color: colors.title1}}>
                 Home Page
               </Title>
               <IconButton
@@ -78,27 +81,32 @@ const MainScreen = ({navigation}) => {
                 onPress={() => console.log('Clicked')}
               />
             </Line>
-            <SubTitle style={{color:colors.subtitle1}} left="0" marginTop="0" textAlign="left">
+            <SubTitle
+              style={{color: colors.subtitle1}}
+              left="0"
+              marginTop="0"
+              textAlign="left">
               Choose the course you want
             </SubTitle>
             <Searchbar
-              style={{borderRadius:15,height:43,marginVertical:10}}
+              style={{borderRadius: 15, height: 43, marginVertical: 10}}
               placeholder={'Search for lessons...'}
               onChangeText={onChangeSearch}
               value={searchQuery}
-              inputStyle={{color:colors.title1}}
+              inputStyle={{color: colors.title1}}
               placeholderTextColor={colors.title1}
             />
           </View>
           <Scroll
-            style={{backgroundColor:colors.background}}
+            style={{backgroundColor: colors.background}}
             mHorizontal="0px"
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             horizontal={true}>
-            {categories.map((category) => {
+            {categories.map((category, index) => {
               return (
-                <TouchableHighlight key={category.categoryId}
+                <TouchableHighlight
+                  key={category.categoryId}
                   onPress={() => toCourse(category)}
                   underlayColor="white">
                   <View style={{alignContent: 'center', alignItems: 'center'}}>
@@ -115,7 +123,9 @@ const MainScreen = ({navigation}) => {
                         borderRadius: 60 / 2,
                       }}
                     />
-                    <HPCardsyText style={{color:colors.title1}}>{category.categoryName}</HPCardsyText>
+                    <HPCardsyText style={{color: colors.title1}}>
+                      {category.categoryName}
+                    </HPCardsyText>
                   </View>
                 </TouchableHighlight>
               );
@@ -129,43 +139,69 @@ const MainScreen = ({navigation}) => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <HeadText margins="0px" style={{fontWeight: 'bold',color:colors.title1}}>
+            <HeadText
+              margins="0px"
+              style={{fontWeight: 'bold', color: colors.title1}}>
               Recommended courses
             </HeadText>
-          <Button onPress={() => console.log("More")}><CourseSubtitle style={{color:colors.subtitle1}}>More</CourseSubtitle></Button>
+            <Button onPress={() => console.log('More')}>
+              <CourseSubtitle style={{color: colors.subtitle1}}>
+                More
+              </CourseSubtitle>
+            </Button>
           </View>
           <Body>
             <Categories />
           </Body>
-          <HeadText style={{fontWeight: 'bold',color:colors.title1}}>Today's Events</HeadText>
+          <HeadText style={{fontWeight: 'bold', color: colors.title1}}>
+            Today's Events
+          </HeadText>
           <FlatList
             horizontal
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             data={[
-              {key: 'Event1', name: 'Event1', image: '../../assets/1.jpg'},
-              {key: 'Event2', name: 'Event2', image: '../../assets/1.jpg'},
-              {key: 'Event3', name: 'Event3', image: '../../assets/1.jpg'},
-              {key: 'Event4', name: 'Event4', image: '../../assets/1.jpg'},
+              {
+                key: 'Event1',
+                name: 'Event1',
+                image: require('../../assets/1.jpg'),
+              },
+              {
+                key: 'Event2',
+                name: 'Event2',
+                image: require('../../assets/2.jpg'),
+              },
+              {
+                key: 'Event3',
+                name: 'Event3',
+                image: require('../../assets/3.jpg'),
+              },
+              {
+                key: 'Event4',
+                name: 'Event4',
+                image: require('../../assets/4.jpg'),
+              },
             ]}
             renderItem={(item) => (
               <View style={{padding: 10}}>
                 <View
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={{
-                    backgroundColor: '#C4C4C4',
                     borderWidth: 1,
                     borderColor: '#626262',
-                    height: 150,
-                    width: 330,
-                  }}
-                />
+                    height: 152,
+                    width: 332,
+                  }}>
+                  <Image source={item.item.image} />
+                </View>
               </View>
             )}
-            keyExtractor={item => item.key}
+            keyExtractor={(item) => item.key}
           />
-          <Body>
-            <HeadText style={{fontWeight: 'bold',color:colors.title1}}>Populer</HeadText>
+          <Body paddings="0px 10px" style={{width: windowWidth - 10}}>
+            <HeadText style={{fontWeight: 'bold', color: colors.title1}}>
+              Populer
+            </HeadText>
             <PopView>
               <Avatar1 />
               <Text
@@ -183,7 +219,8 @@ const MainScreen = ({navigation}) => {
               <Text
                 numberOfLines={3}
                 style={{fontWeight: 'bold', fontSize: 18}}>
-                What should we pay attention to while studying ?{' '}
+                Do you think standardized testing is the most effective way to
+                judge learning?
               </Text>
             </PopView>
             <PopView>
