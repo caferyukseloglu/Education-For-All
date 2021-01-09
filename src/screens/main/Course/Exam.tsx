@@ -10,11 +10,11 @@ import {
   Paragraph,
 } from 'react-native-paper';
 //Our Styles for Project
-import {Body, Bottom, Line, Scroll} from '../../../styles/wrapper';
+import {Body, Line, Scroll} from '../../../styles/wrapper';
 import {View, Text, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BigButton} from '../../../styles/buttons';
-import { Title } from '../../../styles/text';
+import { CourseSubtitle, CourseTitle} from '../../../styles/text';
 
 const ExamScreen = ({route, navigation}) => {
   const {lessonContent, lessonType} = route.params;
@@ -43,8 +43,8 @@ const ExamScreen = ({route, navigation}) => {
           <Text>{lessonContent.lessonContent}</Text>
         ) : (
           <View>
-            <Text>{lessonContent.examName}</Text>
-            <Text>{lessonContent.examDescription}</Text>
+            <CourseTitle>{lessonContent.examName}</CourseTitle>
+            <CourseSubtitle>{lessonContent.examDescription}</CourseSubtitle>
             <Exam lesson={lessonContent.examQuestions} />
           </View>
         )}
@@ -80,7 +80,7 @@ const Exam = (exam) => {
         const [checked, setChecked] = useState('-1');
         return (
           <View key={index}>
-            <Text
+            <CourseTitle
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 paddingTop: 10,
@@ -89,7 +89,7 @@ const Exam = (exam) => {
                 alignItems: 'center',
               }}>
               {question.questionTitle}
-            </Text>
+            </CourseTitle>
             <Body
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
@@ -101,6 +101,7 @@ const Exam = (exam) => {
                 return (
                   <View key={indexn}>
                     <TouchableRipple
+                      style={{marginTop:5}}
                       onPress={() =>
                         checked != index.toString() + indexn.toString()
                           ? setChecked(index.toString() + indexn.toString())
