@@ -43,9 +43,9 @@ const ExamScreen = ({route, navigation}) => {
           <Text>{lessonContent.lessonContent}</Text>
         ) : (
           <View>
-          <Text>{lessonContent.examName}</Text>
-          <Text>{lessonContent.examDescription}</Text>
-          <Exam lesson={lessonContent.examQuestions} />
+            <Text>{lessonContent.examName}</Text>
+            <Text>{lessonContent.examDescription}</Text>
+            <Exam lesson={lessonContent.examQuestions} />
           </View>
         )}
 
@@ -74,51 +74,69 @@ const ExamScreen = ({route, navigation}) => {
 
 const Exam = (exam) => {
   const {colors} = useTheme();
-  const [checked, setChecked] = useState(0);
   return (
-    <>
-      <Text
-        style={{
-          paddingTop: 10,
-          color: colors.title1,
-          paddingHorizontal: 30,
-          alignItems: 'center',
-        }}>
-        {console.log(exam,'Bura aşşağı')}
-      </Text>
-      <Body
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-        }}>
-        {exam.lesson.map((quest, index) => {
+    <View>
+      {exam.lesson.map((question,index) =>{
+        const [checked, setChecked] = useState('-1');
+        return (
           <View key={index}>
-            <Title>{console.log(quest.questionAnswers)}</Title>
-            <TouchableRipple
-              onPress={() => (checked != 1 ? setChecked(1) : setChecked(0))}>
-              <View
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingVertical: 8,
-                  paddingHorizontal: 50,
-                  marginHorizontal: 30,
-                  backgroundColor: colors.surface,
-                }}>
-                <Paragraph>Normal</Paragraph>
-                <View pointerEvents="none">
-                  <Checkbox status={checked === 1 ? 'checked' : 'unchecked'} />
-                </View>
-              </View>
-            </TouchableRipple>
-          </View>;
-        })}
-      </Body>
-    </>
+            <Text
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                paddingTop: 10,
+                color: colors.title1,
+                paddingHorizontal: 30,
+                alignItems: 'center',
+              }}>
+              {question.questionTitle}
+            </Text>
+            <Body
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+              }}>
+              {question.questionAnswers.map((quest, indexn) => {
+                return (
+                  <View key={indexn}>
+                    <TouchableRipple
+                      onPress={() =>
+                        checked != index.toString() + indexn.toString()
+                          ? setChecked(index.toString() + indexn.toString())
+                          : setChecked('-1')
+                      }>
+                      <View
+                        // eslint-disable-next-line react-native/no-inline-styles
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          paddingVertical: 8,
+                          paddingHorizontal: 50,
+                          marginHorizontal: 30,
+                          backgroundColor: colors.surface,
+                        }}>
+                        <Paragraph>{quest.answerDescription}</Paragraph>
+                        <View pointerEvents="none">
+                          <Checkbox
+                            status={
+                              checked === index.toString() + indexn.toString()
+                                ? 'checked'
+                                : 'unchecked'
+                            }
+                          />
+                        </View>
+                      </View>
+                    </TouchableRipple>
+                  </View>
+                );
+              })}
+            </Body>
+          </View>
+        );
+      })}
+    </View>
   );
 };
 
