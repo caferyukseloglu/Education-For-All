@@ -157,14 +157,14 @@ export class DatabaseHandler {
   }
 
   public setCourses(_callback): void {
-    firebase.database().ref("courses").once("value").then(snapshot=>{
+    firebase.database().ref("courses/Rg4gkC0PSGMrULjUtN1uoSqTYFG3").once("value").then(snapshot=>{
+      const courseCount=snapshot.numChildren();
       snapshot.forEach(x=>{
         const eachCourse: Course = new Course();
         eachCourse.setCourseName(x.val().coursename);
         eachCourse.setCourseDescription(x.val().coursedescription);
         eachCourse.setCourseCategory(x.val().coursecategory);
         if(this.toCheck.includes(x.val().coursename)==false){
-          console.log("Added.");
           this.toCheck.push(x.val().coursename);
           this.courseList.push(eachCourse);
           if (this.courseList.length == 3) {
