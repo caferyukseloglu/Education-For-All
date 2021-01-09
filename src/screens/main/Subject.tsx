@@ -139,7 +139,10 @@ const SubjectScreen = ({navigation}) => {
           </View>
           <Avatar.Image
             size={50}
-            source={require('../../../src/assets/ava11.png')}
+            source={{
+              uri:
+                'https://pbs.twimg.com/profile_images/1185847811532824578/nZoAdFZ4_200x200.jpg',
+            }}
           />
         </View>
         <View
@@ -167,17 +170,19 @@ const SubjectScreen = ({navigation}) => {
             <CourseTitle margins="0px" style={{fontSize: 20}}>
               Last seen courses
             </CourseTitle>
-            <IconButton
-              icon="plus-circle"
-              size={20}
-              color="black"
-              onPress={() =>
-                navigation.navigate('Main', {
-                  screen: 'Exam',
-                  params: {user: 'jane'},
-                })
-              }
-            />
+            {userData.userdata.getUser().getUserType() === 2 ? (
+              <IconButton
+                icon="plus-circle"
+                size={20}
+                color="black"
+                onPress={() =>
+                  navigation.navigate('Main', {
+                    screen: 'Exam',
+                    params: {user: 'jane'},
+                  })
+                }
+              />
+            ) : null}
           </View>
           <FlatList
             style={{marginTop: 20}}
