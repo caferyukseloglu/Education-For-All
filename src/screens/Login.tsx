@@ -43,6 +43,14 @@ const LoginScreen = ({navigation}) => {
       function () {
         if (myDatabase.getUser().getUserID() != undefined) {
           userData.setData(myDatabase);
+          setData({
+            email: '',
+            password: '',
+            secureTextEntry: true,
+            isValidEmail: null,
+            isValidPassword: null,
+            isChecked: false,
+          });
           navigation.navigate("Main");
         }
       },

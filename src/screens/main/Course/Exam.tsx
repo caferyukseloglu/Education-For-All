@@ -56,7 +56,7 @@ const ExamScreen = ({route, navigation}) => {
       falseCount: falseAnswers.length,
       emptyCount: emptyAnswers.length,
     });
-    ExamData.cleanData()
+    ExamData.cleanData();
   };
 
   const {colors} = useTheme();

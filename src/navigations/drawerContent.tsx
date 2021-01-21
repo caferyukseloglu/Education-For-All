@@ -21,6 +21,8 @@ import {
 import Animated from 'react-native-reanimated';
 import {PreferencesContext} from '../context/preferencesContext';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useUserData} from '../states/useData';
+import { NavigationContainer } from '@react-navigation/native';
 
 type Props = DrawerContentComponentProps<DrawerNavigationProp>;
 
@@ -34,7 +36,7 @@ export function DrawerContent(props: Props) {
     inputRange: [0, 0.5, 0.7, 0.8, 1],
     outputRange: [-100, -85, -70, -45, 0],
   });
-
+  const userData = useUserData();
   return (
     <DrawerContentScrollView {...props}>
       <Animated.View
@@ -60,18 +62,25 @@ export function DrawerContent(props: Props) {
               size={50}
             />
           </TouchableOpacity>
-          <Title style={styles.title}>Cafer Yükseloğlu</Title>
-          <Caption style={styles.caption}>@CaferYukseloglu</Caption>
+          <Title style={styles.title}>
+            {userData.userdata.getUser().getName() +
+              ' ' +
+              userData.userdata.getUser().getSurname()[0] +
+              '.'}
+          </Title>
+          <Caption style={styles.caption}>
+            {userData.userdata.getUser().getEmail()}
+          </Caption>
           <View style={styles.row}>
             <View style={styles.section}>
               <Paragraph style={[styles.paragraph, styles.caption]}>
-                202
+                5
               </Paragraph>
               <Caption style={styles.caption}>Lesson</Caption>
             </View>
             <View style={styles.section}>
               <Paragraph style={[styles.paragraph, styles.caption]}>
-                159
+                1
               </Paragraph>
               <Caption style={styles.caption}>Award</Caption>
             </View>
@@ -106,6 +115,17 @@ export function DrawerContent(props: Props) {
             )}
             label="Bookmarks"
             onPress={() => {}}
+          />
+          <DrawerItem
+            icon={({color, size}) => (
+              <MaterialCommunityIcons
+                name="exit-to-app"
+                color={color}
+                size={size}
+              />
+            )}
+            label="Logout"
+            onPress={() => {props.navigation.navigate("Login")}}
           />
         </Drawer.Section>
         <Drawer.Section title="Preferences">
