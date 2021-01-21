@@ -45,16 +45,20 @@ const CourseDetailScreen = ({route, navigation}) => {
 
   const userData = useUserData(); //Global state instance gets from https://github.com/pmndrs/zustand
 
-
-  const getExamObject = (exam) =>{
+  const getExamObject = (exam) => {
     console.log(exam);
-    userData.userdata.getExamAnswersByName(teacher,courseDetails,exam,function(){
-      navigation.navigate('Exam', {
-        lessonType: 'exam',
-        lessonContent: exam,
-      })
-    });
-  }
+    userData.userdata.getExamAnswersByName(
+      teacher,
+      courseDetails,
+      exam,
+      function () {
+        navigation.navigate('Exam', {
+          lessonType: 'exam',
+          lessonContent: exam,
+        });
+      },
+    );
+  };
 
   const [lessons, setLessons] = React.useState([]);
   useEffect(() => {
@@ -340,7 +344,8 @@ const CourseDetailScreen = ({route, navigation}) => {
                               </CourseTitle>
                               {question.answers.map((answer, answerindex) => {
                                 return (
-                                  <TextInput key={answerindex.toString()}
+                                  <TextInput
+                                    key={answerindex.toString()}
                                     style={{marginBottom: 5}}
                                     placeholder="Enter Answer..."
                                     placeholderTextColor="lightgrey"
@@ -356,9 +361,8 @@ const CourseDetailScreen = ({route, navigation}) => {
                                     right={
                                       <TextInput.Icon
                                         name={
-                                          !questions[index]['answers'][
-                                            answerindex
-                                          ]['correct']
+                                          !questions[index].answers[answerindex]
+                                            .correct
                                             ? 'checkbox-blank-circle-outline'
                                             : 'checkbox-marked-circle'
                                         }
@@ -424,16 +428,18 @@ const CourseDetailScreen = ({route, navigation}) => {
                 <View style={{alignItems: 'center', flexDirection: 'row'}}>
                   <Text
                     style={{
-                    width: 50,
-                    height: 50,
-                    backgroundColor: '#F2C94C',
-                    borderRadius:10,
-                    marginRight: 12,
-                    fontSize:22,
-                    textAlign:'center',
-                    textAlignVertical:'center'
-                    }}
-                  > {item.Type === 'Lesson' ? 'L' : 'E'} </Text>
+                      width: 50,
+                      height: 50,
+                      backgroundColor: '#F2C94C',
+                      borderRadius: 10,
+                      marginRight: 12,
+                      fontSize: 22,
+                      textAlign: 'center',
+                      textAlignVertical: 'center',
+                    }}>
+                    {' '}
+                    {item.Type === 'Lesson' ? 'L' : 'E'}{' '}
+                  </Text>
                   <LessonView>
                     <Lesson style={{color: colors.title1}}>
                       {item.Type === 'Lesson'
