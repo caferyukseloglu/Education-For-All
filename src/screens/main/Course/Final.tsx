@@ -13,15 +13,15 @@ import {
 import {Body, Line, Scroll} from '../../../styles/wrapper';
 import {View, Text, useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useExamData} from '../../../states/useExam';
 import {BigButton} from '../../../styles/buttons';
 import {CourseSubtitle, CourseTitle, SubTitle} from '../../../styles/text';
+import {useExamData} from '../../../states/useExam';
 
 const ExamScreen = ({route, navigation}) => {
   const {lessonContent, lessonType} = route.params;
-  const ExamData = useExamData();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+  const examData = useExamData();
 
   const {colors} = useTheme();
   return (
@@ -44,9 +44,7 @@ const ExamScreen = ({route, navigation}) => {
         {lessonType == 'lesson' ? (
           <View>
             <CourseTitle>{lessonContent.lessonName}</CourseTitle>
-            <CourseSubtitle style={{fontSize: 18}}>
-              {lessonContent.lessonContent}
-            </CourseSubtitle>
+            <CourseSubtitle style={{fontSize:18}}>{lessonContent.lessonContent}</CourseSubtitle>
           </View>
         ) : (
           <View>
@@ -72,8 +70,8 @@ const ExamScreen = ({route, navigation}) => {
             textColor="buttonText1"
             height={60}
             radius="5"
-            style={{alignSelf: ''}}
-            onPress={() => console.log(ExamData.examdata)}
+            style={{alignSelf:''}}
+            onPress={() => navigation.navigate('Home')}
           />
         </Body>
       </Scroll>
@@ -83,10 +81,10 @@ const ExamScreen = ({route, navigation}) => {
 
 const Exam = (exam) => {
   const {colors} = useTheme();
-  const ExamData = useExamData();
   return (
     <View>
-      {exam.lesson.map((question, index) => {
+      {exam.lesson.map((question,index) =>{
+        const [checked, setChecked] = useState('-1');
         return (
           <View key={index}>
             <CourseTitle
@@ -110,20 +108,12 @@ const Exam = (exam) => {
                 return (
                   <View key={indexn}>
                     <TouchableRipple
-                      style={{marginTop: 5}}
-                      onPress={() => {
-                        if (ExamData.examdata['Quiz' + index] !== indexn) {
-                          ExamData.setExamData({
-                            ...ExamData.examdata,
-                            ['Quiz' + index]: indexn,
-                          });
-                        } else {
-                          ExamData.setExamData({
-                            ...ExamData.examdata,
-                            ['Quiz' + index]: -1,
-                          });
-                        }
-                      }}>
+                      style={{marginTop:5}}
+                      onPress={() =>
+                        checked != index.toString() + indexn.toString()
+                          ? setChecked(index.toString() + indexn.toString())
+                          : setChecked('-1')
+                      }>
                       <View
                         // eslint-disable-next-line react-native/no-inline-styles
                         style={{
@@ -139,7 +129,7 @@ const Exam = (exam) => {
                         <View pointerEvents="none">
                           <Checkbox
                             status={
-                              ExamData.examdata['Quiz' + index] === indexn
+                              checked === index.toString() + indexn.toString()
                                 ? 'checked'
                                 : 'unchecked'
                             }
