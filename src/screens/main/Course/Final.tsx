@@ -14,11 +14,15 @@ const FinalScreen = ({route, navigation}) => {
   const {trueCount, falseCount,emptyCount} = route.params;
   const {colors} = useTheme();
   const data = [
-    {y: trueCount, color: colors.success, label: 'True'},
-    {y: falseCount, color: colors.error, label: 'False'},
-    {y: emptyCount, color: colors.text, label: 'Empty'},
+    trueCount !== 0 ? {y: trueCount, color: colors.success, label: 'True: '+trueCount.toString()} : {},
+    falseCount !== 0 ? {y: falseCount, color: colors.error, label: 'False: '+falseCount.toString()} : {},
+    emptyCount !== 0 ? {y: emptyCount, color: colors.text, label: 'Empty: '+emptyCount.toString()} : {},
   ];
-  const defaultGraphicData = [{y: 0}, {y: 0}, {y: 100}];
+  const defaultGraphicData = [
+    {y: 0, color: colors.success, label: 'True'},
+    {y: 0, color: colors.error, label: 'False'},
+    {y: 0, color: colors.text, label: 'Empty'},
+  ];
   const [graphicData, setGraphicData] = useState(defaultGraphicData);
 
   useEffect(() => {
@@ -54,9 +58,10 @@ const FinalScreen = ({route, navigation}) => {
             innerRadius={100}
             labelPosition={'centroid'}
             animate={{duration: 1000, easing: 'exp'}}
+            labels={({ datum }) => datum.label}
             labelRadius={({innerRadius}) => innerRadius + 20}
             data={graphicData}
-            width={320}
+            width={windowWidth}
             height={320}
             style={{
               data: {

@@ -23,29 +23,40 @@ const ExamScreen = ({route, navigation}) => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
-  const finishButton = () =>{
-    let trueAnswers=[]
-    let falseAnswers=[]
-    let emptyAnswers=[]
-    
-    for(let i = 0; i< Object.keys(ExamData.examdata).length ; i++){ 
-      if(lessonContent.examQuestions[i].questionAnswers[ExamData.examdata[("Quiz"+i)]] === -1) {
-        emptyAnswers.push("empty")
-      }
+  const finishButton = () => {
+    let trueAnswers = [];
+    let falseAnswers = [];
+    let emptyAnswers = [];
 
-      else if(lessonContent.examQuestions[i].questionAnswers[ExamData.examdata[("Quiz"+i)]] === undefined){
-        emptyAnswers.push("empty")
-      }
-
-      else if(lessonContent.examQuestions[i].questionAnswers[ExamData.examdata[("Quiz"+i)]].isTrue==true){
-        trueAnswers.push("true")
-      }
-      else{
-        falseAnswers.push("false")
+    for (let i = 0; i < Object.keys(ExamData.examdata).length; i++) {
+      if (
+        lessonContent.examQuestions[i].questionAnswers[
+          ExamData.examdata['Quiz' + i]
+        ] === -1
+      ) {
+        emptyAnswers.push('empty');
+      } else if (
+        lessonContent.examQuestions[i].questionAnswers[
+          ExamData.examdata['Quiz' + i]
+        ] === undefined
+      ) {
+        emptyAnswers.push('empty');
+      } else if (
+        lessonContent.examQuestions[i].questionAnswers[
+          ExamData.examdata['Quiz' + i]
+        ].isTrue == true
+      ) {
+        trueAnswers.push('true');
+      } else {
+        falseAnswers.push('false');
       }
     }
-    navigation.navigate("Final",{trueCount:trueAnswers.length,falseCount:falseAnswers.length,emptyCount:emptyAnswers.length})
-  }
+    navigation.navigate('Final', {
+      trueCount: trueAnswers.length,
+      falseCount: falseAnswers.length,
+      emptyCount: emptyAnswers.length,
+    });
+  };
 
   const {colors} = useTheme();
   return (
