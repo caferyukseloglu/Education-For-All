@@ -167,7 +167,7 @@ export class DatabaseHandler {
         if(this.toCheck.includes(x.val().coursename)==false){
           this.toCheck.push(x.val().coursename);
           this.courseList.push(eachCourse);
-          if (this.courseList.length == 3) {
+          if (this.courseList.length == 1) {
             _callback();
           }
         }
