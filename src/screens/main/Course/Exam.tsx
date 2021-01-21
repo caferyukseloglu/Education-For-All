@@ -73,7 +73,7 @@ const ExamScreen = ({route, navigation}) => {
             height={60}
             radius="5"
             style={{alignSelf: ''}}
-            onPress={() => console.log(ExamData.examdata)}
+            onPress={() => navigation.navigate('Final')}
           />
         </Body>
       </Scroll>
