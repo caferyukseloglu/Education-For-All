@@ -11,11 +11,12 @@ import {VictoryPie, VictoryGroup} from 'victory-native';
 const FinalScreen = ({route, navigation}) => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+  const {trueCount, falseCount,emptyCount} = route.params;
   const {colors} = useTheme();
   const data = [
-    {y: 5, color: colors.success, label: 'True'},
-    {y: 4, color: colors.error, label: 'False'},
-    {y: 1, color: colors.text, label: 'Empty'},
+    {y: trueCount, color: colors.success, label: 'True'},
+    {y: falseCount, color: colors.error, label: 'False'},
+    {y: emptyCount, color: colors.text, label: 'Empty'},
   ];
   const defaultGraphicData = [{y: 0}, {y: 0}, {y: 100}];
   const [graphicData, setGraphicData] = useState(defaultGraphicData);

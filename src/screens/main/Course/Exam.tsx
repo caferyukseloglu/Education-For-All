@@ -44,7 +44,7 @@ const ExamScreen = ({route, navigation}) => {
         falseAnswers.push("false")
       }
     }
-    navigation.navigate("Final")
+    navigation.navigate("Final",{trueCount:trueAnswers.length,falseCount:falseAnswers.length,emptyCount:emptyAnswers.length})
   }
 
   const {colors} = useTheme();
