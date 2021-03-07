@@ -2,6 +2,7 @@
 * This project started without knowledge of mobile programing.
 * This only usable for educatinoal porposes.
 * Project is started at İstanbul Şehir University now at Marmara University.
+* Completed Please Read our Thesis [PDF](https://github.com/samuhay/mobile-project/blob/master/CSE4198_Thesis%20of%20Education%20for%20All.pdf)
 
 ## Dependencies
 * [React Native](https://reactnative.dev)
